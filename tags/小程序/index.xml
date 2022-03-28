@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>小程序 on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</link>
+    <description>Recent content in 小程序 on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Thu, 31 May 2018 16:50:37 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>小程序源码反编译实战笔记</title>
+      <link>https://idoubi.cc/posts/get-wxapkg/</link>
+      <pubDate>Thu, 31 May 2018 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/get-wxapkg/</guid>
+      <description>最近在做微信小程序开发，看到一些做的比较有意思的小程序，想看一看他们的源码，于是研究了一下小程序源码反编译相关的技术。结合本次经历，总结如下。
+手机root 要拿到小程序在手机上的源码包，需要有一台越狱的iphone或者一台拥有root权限的android机，正好我手里有一台闲置的小米4，就拿来用了，试过很多种方式给小米4root，差点搞成板砖机，一直在recorvy模式启动不了，最后尝试了小米官网的刷机方法，把系统刷成了开发版，完美root。
+小米4刷机教程：https://www.miui.com/shuaji-305.html
+手机刷机成功后，开启root权限，并打开USB调试模式
+小米4开发版开启root权限：http://www.miui.com/thread-9625466-1-1.html
+MIUI9开启USB调试：https://jingyan.baidu.com/article/49711c6196e728fa441b7c37.html
+电脑操作 以MacOS操作系统为例，通过USB连接操作Android手机
+ 安装adb工具  在MacOS系统上可以通过brew安装adb工具
+brew cask install android-platform-tools  手机连电脑  通过USB数据线将手机连接到电脑，并在手机端开启USB调试，通过下面的命令测试是否连接成功
+adb devices 连接成功的情况下
+ 查看小程序源码  进入adb shell模式
+adb shell 切换到root权限
+su 进入小程序源码目录
+先进入MicroMsg文件夹，通过ls命令查看文件夹，找到63c92a20722afef36b525ecb04706c15这样的文件夹（不同的微信登录用户，这个文件夹的名称不同），然后再进入appbrand/pkg目录
+cd /data/data/com.tencent.mm/MicroMsg ls cd 63c92a20722afef36b525ecb04706c15/appbrand/pkg 查看小程序源码
+可以先执行rm -rf ./*删除掉当前目录下所有缓存的小程序源码包，然后通过手机端点击进入需要获取源码的小程序，再执行ls -l即可看到最新操作的小程序源码包
+rm -rf ./* ls -l 将小程序源码拷贝到手机SD卡
+cp _1038319936_4.wxapkg /sdcard 新开一个终端窗口，将源码拷贝到电脑
+adb pull sdcard/_1038319936_4.wxapkg /data/weapp/a.wxapkg  操作过程截图   反编译源码  下载nodejs版本的反编译工具并安装相关npm包
+git clone https://github.com/qwerty472123/wxappUnpacker.git cd wxappUnpacker npm install esprima -g npm install css-tree -g npm install cssbeautify -g npm install vm2 -g npm install uglify-es -g 反编译小程序源码</description>
+    </item>
+    
+  </channel>
+</rss>

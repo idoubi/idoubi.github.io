@@ -1,0 +1,647 @@
+<html lang="en-US">
+
+<head>
+    
+<title>AES加解密在php接口请求过程中的应用 - 艾逗笔</title>
+
+<meta property="og:title" content="AES加解密在php接口请求过程中的应用 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="在 php 请求接口的时候，我们经常需要考虑的一个问题就是数据的安全性，因为数据传输过程中很有可能会被用 fillder 这样的抓包工具进行截获。一种比较好的解决方案就是在客户端请求发起之前先对要请求的数据进行加密，服务端 api 接收到请求数据后再对数据进行解密处理，返回结果给客户端的时候也对要返回的数据进行加密，客户端接收到返回数据的时候再解密。因此整个 api 请求过程中数据的安全性有了一定 &amp;hellip;">
+    <meta property="og:description" content="在 php 请求接口的时候，我们经常需要考虑的一个问题就是数据的安全性，因为数据传输过程中很有可能会被用 fillder 这样的抓包工具进行截获。一种比较好的解决方案就是在客户端请求发起之前先对要请求的数据进行加密，服务端 api 接收到请求数据后再对数据进行解密处理，返回结果给客户端的时候也对要返回的数据进行加密，客户端接收到返回数据的时候再解密。因此整个 api 请求过程中数据的安全性有了一定 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">AES加解密在php接口请求过程中的应用</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2016/10/25</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>在 php 请求接口的时候，我们经常需要考虑的一个问题就是数据的安全性，因为数据传输过程中很有可能会被用 fillder 这样的抓包工具进行截获。一种比较好的解决方案就是在客户端请求发起之前先对要请求的数据进行加密，服务端 api 接收到请求数据后再对数据进行解密处理，返回结果给客户端的时候也对要返回的数据进行加密，客户端接收到返回数据的时候再解密。因此整个 api 请求过程中数据的安全性有了一定程度的提高。</p>
+<p>今天结合一个简单的 demo 给大家分享一下 AES 加解密技术在 php 接口请求中的应用。</p>
+<h2 id="aes-加解密基础类">AES 加解密基础类：</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#e6db74">/**
+</span><span style="color:#e6db74"> * 加密基础类
+</span><span style="color:#e6db74"> */</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Crypt_AES</span>
+{
+    <span style="color:#66d9ef">protected</span> $_cipher <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rijndael-128&#34;</span>;
+    <span style="color:#66d9ef">protected</span> $_mode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;cbc&#34;</span>;
+    <span style="color:#66d9ef">protected</span> $_key;
+    <span style="color:#66d9ef">protected</span> $_iv <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+    <span style="color:#66d9ef">protected</span> $_descriptor <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 是否按照PKCS #7 的标准进行填充
+</span><span style="color:#e6db74">     * 为否默认将填充“&amp;#92;&amp;#48;”补位
+</span><span style="color:#e6db74">     * @var boolean
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">protected</span> $_PKCS7 <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 构造函数，对于密钥key应区分2进制字符串和16进制的。
+</span><span style="color:#e6db74">     * 如需兼容PKCS#7标准，应选项设置开启PKCS7，默认关闭
+</span><span style="color:#e6db74">     * @param string $key
+</span><span style="color:#e6db74">     * @param mixed $iv      向量值
+</span><span style="color:#e6db74">     * @param array $options
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct($key <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>, $iv <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>, $options <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
+    {
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> <span style="color:#f92672">!==</span> $key) {
+            $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">setKey</span>($key);
+        }
+
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> <span style="color:#f92672">!==</span> $iv) {
+            $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">setIv</span>($iv);
+        }
+
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> <span style="color:#f92672">!==</span> $options) {
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($options[<span style="color:#e6db74">&#39;chipher&#39;</span>])) {
+                $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">setCipher</span>($options[<span style="color:#e6db74">&#39;chipher&#39;</span>]);
+            }
+
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($options[<span style="color:#e6db74">&#39;PKCS7&#39;</span>])) {
+                $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">isPKCS7Padding</span>($options[<span style="color:#e6db74">&#39;PKCS7&#39;</span>]);
+            }
+
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($options[<span style="color:#e6db74">&#39;mode&#39;</span>])) {
+                $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">setMode</span>($options[<span style="color:#e6db74">&#39;mode&#39;</span>]);
+            }
+        }
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * PKCS#7状态查看，传入Boolean值进行设置
+</span><span style="color:#e6db74">     * @param  boolean  $flag
+</span><span style="color:#e6db74">     * @return boolean
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isPKCS7Padding</span>($flag <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>)
+    {
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> <span style="color:#f92672">===</span> $flag) {
+            <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_PKCS7</span>;
+        }
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_PKCS7</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">bool</span>) $flag;
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 开启加密算法
+</span><span style="color:#e6db74">     * @param  string $algorithm_directory locate the encryption
+</span><span style="color:#e6db74">     * @param  string $mode_directory
+</span><span style="color:#e6db74">     * @return Crypt_AES
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">_openMode</span>($algorithm_directory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34; , </span><span style="color:#e6db74">$mode_directory</span><span style="color:#e6db74"> = &#34;</span>)
+    {
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_descriptor</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">mcrypt_module_open</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_cipher</span>,
+                                                $algorithm_directory,
+                                                $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_mode</span>,
+                                                $mode_directory);
+        <span style="color:#66d9ef">return</span> $this;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getDescriptor</span>()
+    {
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> <span style="color:#f92672">===</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_descriptor</span>) {
+            $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_openMode</span>();
+        }
+        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_descriptor</span>;
+    }
+
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">_genericInit</span>()
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">mcrypt_generic_init</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getDescriptor</span>(), $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getKey</span>(), $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getIv</span>());
+    }
+
+    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">_genericDeinit</span>()
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">mcrypt_generic_deinit</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getDescriptor</span>());
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getMode</span>()
+    {
+        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_mode</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setMode</span>($mode)
+    {
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_mode</span> <span style="color:#f92672">=</span> $mode;
+        <span style="color:#66d9ef">return</span> $this;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getCipher</span>()
+    {
+        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_cipher</span>;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setCipher</span>($cipher)
+    {
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_cipher</span> <span style="color:#f92672">=</span> $cipher;
+        <span style="color:#66d9ef">return</span> $this;
+    }
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 获得key
+</span><span style="color:#e6db74">     * @return string
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getKey</span>()
+    {
+        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_key</span>;
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 设置可以
+</span><span style="color:#e6db74">     * @param string $key
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setKey</span>($key)
+    {
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_key</span> <span style="color:#f92672">=</span> $key;
+        <span style="color:#66d9ef">return</span> $this;
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 获得加密向量块,如果其为null时将追加当前Descriptor的IV大小长度
+</span><span style="color:#e6db74">     *
+</span><span style="color:#e6db74">     * @return string
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getIv</span>()
+    {
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> <span style="color:#f92672">===</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_iv</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">in_array</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_mode</span>, <span style="color:#66d9ef">array</span>( <span style="color:#e6db74">&#34;cbc&#34;</span>, <span style="color:#e6db74">&#34;cfb&#34;</span>, <span style="color:#e6db74">&#34;ofb&#34;</span>, ))) {
+            $size <span style="color:#f92672">=</span> <span style="color:#a6e22e">mcrypt_enc_get_iv_size</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getDescriptor</span>());
+            $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_iv</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_pad</span>(<span style="color:#e6db74">&#34;, 16, &#34;</span><span style="color:#f92672">&amp;</span><span style="color:#75715e">#92;&amp;#48;&#34;);
+</span><span style="color:#75715e"></span>        }
+        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_iv</span>;
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 获得向量块
+</span><span style="color:#e6db74">     *
+</span><span style="color:#e6db74">     * @param  string $iv
+</span><span style="color:#e6db74">     * @return Crypt_AES $this
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setIv</span>($iv)
+    {
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_iv</span> <span style="color:#f92672">=</span> $iv;
+        <span style="color:#66d9ef">return</span> $this;
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 加密
+</span><span style="color:#e6db74">     * @param  string $str 被加密文本
+</span><span style="color:#e6db74">     * @return string
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">encrypt</span>($str){
+        $td <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getDescriptor</span>();
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_genericInit</span>();
+        $bin <span style="color:#f92672">=</span> <span style="color:#a6e22e">mcrypt_generic</span>($td, $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">padding</span>($str));
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_genericDeinit</span>();
+
+        <span style="color:#66d9ef">return</span> $bin;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">padding</span>($dat)
+    {
+        <span style="color:#66d9ef">if</span> ($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">isPKCS7Padding</span>()) {
+            $block <span style="color:#f92672">=</span> <span style="color:#a6e22e">mcrypt_enc_get_block_size</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getDescriptor</span>());
+
+            $len <span style="color:#f92672">=</span> <span style="color:#a6e22e">strlen</span>($dat);
+            $padding <span style="color:#f92672">=</span> $block <span style="color:#f92672">-</span> ($len <span style="color:#f92672">%</span> $block);
+            $dat <span style="color:#f92672">.=</span> <span style="color:#a6e22e">str_repeat</span>(<span style="color:#a6e22e">chr</span>($padding),$padding);
+        }
+
+        <span style="color:#66d9ef">return</span> $dat;
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">unpadding</span>($str)
+    {
+        <span style="color:#66d9ef">if</span> ($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">isPKCS7Padding</span>()) {
+            $pad <span style="color:#f92672">=</span> <span style="color:#a6e22e">ord</span>($str[($len <span style="color:#f92672">=</span> <span style="color:#a6e22e">strlen</span>($str)) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]);
+            $str <span style="color:#f92672">=</span> <span style="color:#a6e22e">substr</span>($str, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">strlen</span>($str) <span style="color:#f92672">-</span> $pad);
+        }
+        <span style="color:#66d9ef">return</span> $str;
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 解密
+</span><span style="color:#e6db74">     * @param  string $str
+</span><span style="color:#e6db74">     * @return string
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">decrypt</span>($str){
+        $td <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getDescriptor</span>();
+
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_genericInit</span>();
+        $text <span style="color:#f92672">=</span> <span style="color:#a6e22e">mdecrypt_generic</span>($td, $str);
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">_genericDeinit</span>();
+
+        <span style="color:#66d9ef">return</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">unpadding</span>($text);
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 16进制转成2进制数据
+</span><span style="color:#e6db74">     * @param  string $hexdata 16进制字符串
+</span><span style="color:#e6db74">     * @return string
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">hex2bin</span>($hexdata)
+    {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">pack</span>(<span style="color:#e6db74">&#34;H*&#34;</span> , $hexdata);
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 字符串转十六进制
+</span><span style="color:#e6db74">     * @param  string $hexdata 16进制字符串
+</span><span style="color:#e6db74">     * @return string
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">strToHex</span>($string)
+    {
+        $hex<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+        <span style="color:#66d9ef">for</span>($i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;$i<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">strlen</span>($string);$i<span style="color:#f92672">++</span>)
+            $hex<span style="color:#f92672">.=</span><span style="color:#a6e22e">dechex</span>(<span style="color:#a6e22e">ord</span>($string[$i]));
+        $hex<span style="color:#f92672">=</span><span style="color:#a6e22e">strtoupper</span>($hex);
+        <span style="color:#66d9ef">return</span> $hex;
+    }
+
+    <span style="color:#e6db74">/**
+</span><span style="color:#e6db74">     * 十六进制转字符串
+</span><span style="color:#e6db74">     * @param  string $hexdata 16进制字符串
+</span><span style="color:#e6db74">     * @return string
+</span><span style="color:#e6db74">     */</span>
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">hexToStr</span>($hex)
+    {
+        $string<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>;
+        <span style="color:#66d9ef">for</span>($i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;$i<span style="color:#f92672">&lt;</span><span style="color:#a6e22e">strlen</span>($hex)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;$i<span style="color:#f92672">+=</span><span style="color:#ae81ff">2</span>)
+            $string<span style="color:#f92672">.=</span><span style="color:#a6e22e">chr</span>(<span style="color:#a6e22e">hexdec</span>($hex[$i]<span style="color:#f92672">.</span>$hex[$i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]));
+        <span style="color:#66d9ef">return</span>  $string;
+    }
+}
+</code></pre></div><h2 id="客户端请求部分">客户端请求部分：</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#66d9ef">include</span> <span style="color:#e6db74">&#39;AES.php&#39;</span>;
+
+$md5Key <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ThisIsAMd5Key&#39;</span>;                              <span style="color:#75715e">// 对应服务端：$md5key = &#39;ThisIsAMd5Key&#39;;
+</span><span style="color:#75715e"></span>$aesKey <span style="color:#f92672">=</span> <span style="color:#a6e22e">Crypt_AES</span><span style="color:#f92672">::</span><span style="color:#a6e22e">strToHex</span>(<span style="color:#e6db74">&#39;1qa2ws4rf3edzxcv&#39;</span>);      <span style="color:#75715e">// 对应服务端：$aesKey = &#39;3171613277733472663365647A786376&#39;;
+</span><span style="color:#75715e"></span>$aesKey <span style="color:#f92672">=</span> <span style="color:#a6e22e">Crypt_AES</span><span style="color:#f92672">::</span><span style="color:#a6e22e">hex2bin</span>($aesKey);
+$aesIV  <span style="color:#f92672">=</span> <span style="color:#a6e22e">Crypt_AES</span><span style="color:#f92672">::</span><span style="color:#a6e22e">strToHex</span>(<span style="color:#e6db74">&#39;dfg452ws&#39;</span>);              <span style="color:#75715e">// 对应服务端：$aesIV = &#39;6466673435327773&#39;;
+</span><span style="color:#75715e"></span>$aes <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Crypt_AES</span>($aesKey,$aesIV,<span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#39;PKCS7&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#66d9ef">true</span>, <span style="color:#e6db74">&#39;mode&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#e6db74">&#39;cbc&#39;</span>));
+
+<span style="color:#75715e">// var_dump($aes);
+</span><span style="color:#75715e"></span>
+$data[<span style="color:#e6db74">&#39;name&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;idoubi&#39;</span>;
+$data[<span style="color:#e6db74">&#39;sex&#39;</span>]<span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;male&#39;</span>;
+$data[<span style="color:#e6db74">&#39;age&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">23</span>;
+$data[<span style="color:#e6db74">&#39;signature&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;白天我是一个程序员，晚上我就是一个有梦想的演员。&#39;</span>;
+
+$content <span style="color:#f92672">=</span> <span style="color:#a6e22e">base64_encode</span>($aes<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">encrypt</span>(<span style="color:#a6e22e">json_encode</span>($data)));
+$content <span style="color:#f92672">=</span> <span style="color:#a6e22e">urlencode</span>($content);
+$sign <span style="color:#f92672">=</span> <span style="color:#a6e22e">md5</span>($content<span style="color:#f92672">.</span>$md5Key);
+
+$url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://localhost/aesdemo/api.php&#39;</span>;
+$params <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;version=1.0&amp;sign=</span><span style="color:#e6db74">$sign</span><span style="color:#e6db74">&amp;content=</span><span style="color:#e6db74">$content</span><span style="color:#e6db74">&#34;</span>;
+
+<span style="color:#75715e">// 请求接口
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">post</span>($url, $params);
+
+<span style="color:#e6db74">/**
+</span><span style="color:#e6db74"> * 接口请求函数
+</span><span style="color:#e6db74"> */</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">post</span>($url, $params) {
+    $curlPost<span style="color:#f92672">=</span> $params;
+    $ch <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_init</span>();      <span style="color:#75715e">//初始化curl
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_URL</span>, $url);    <span style="color:#75715e">//提交到指定网页
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_HEADER</span>, <span style="color:#ae81ff">0</span>);    <span style="color:#75715e">//设置header
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_RETURNTRANSFER</span>, <span style="color:#ae81ff">1</span>);   <span style="color:#75715e">//要求结果为字符串且输出到屏幕上
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_POST</span>, <span style="color:#ae81ff">1</span>);    <span style="color:#75715e">//post提交方式
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_POSTFIELDS</span>, $curlPost);
+    $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_exec</span>($ch);<span style="color:#75715e">//运行curl
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_close</span>($ch);
+    <span style="color:#a6e22e">var_dump</span>(<span style="color:#a6e22e">json_decode</span>($result, <span style="color:#66d9ef">true</span>));
+}
+</code></pre></div><h2 id="接口处理逻辑">接口处理逻辑：</h2>
+<pre><code>&lt;?php
+
+include 'AES.php';
+
+$data = $_POST;  // 接口请求得到的数据
+$content = $data['content'];
+$sign = $data['sign'];
+
+$aesKey = '3171613277733472663365647A786376';
+$aesIV = '6466673435327773';
+$md5key = 'ThisIsAMd5Key';
+
+// 校验数据
+if(strcasecmp(md5(urlencode($content).$md5key),$sign) == 0) {
+    // 数据校验成功
+    $key = Crypt_AES::hex2bin($aesKey);
+    $aes = new Crypt_AES($key, $aesIV, array('PKCS7'=&gt;true, 'mode'=&gt;'cbc'));
+
+    $decrypt = $aes-&gt;decrypt(base64_decode($content));
+    if (!$decrypt) {      // 解密失败
+        echo json_encode('can not decrypt the data');
+    } else {
+        echo json_encode($decrypt);     // 解密成功
+    }
+} else{
+    echo json_encode('data is not integrity');       // 数据校验失败
+}
+
+</code></pre><p>上述接口请求过程中定义了三个加解密需要用到的参数：$aesKey、$aesIV、$md5key，在实际应用过程中，只要与客户端用户约定好这三个参数，客户端程序员利用这几个参数对要请求的数据进行加密后再请求接口，服务端程序员在接收到数据后利用同样的加解密参数对数据进行解密，整个 api 请求过程中的数据就很安全了。</p>
+<p><a href="http://ov13triio.bkt.clouddn.com/2016/10/aesdemo.zip">aesdemo</a></p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/AES%e5%8a%a0%e8%a7%a3%e5%af%86" title="View all posts tagged match">AES加解密</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/php" title="View all posts tagged match">php</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/%E6%B5%85%E8%B0%88shtml%E4%B8%8Ehtml%E7%9A%84%E5%8C%BA%E5%88%AB/"
+                                                    rel="prev">浅谈shtml与html的区别</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/%E8%81%8A%E4%B8%80%E8%81%8A%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/">聊一聊微信开发那些事儿</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,373 @@
+<html lang="en-US">
+
+<head>
+    
+<title>我写了一款企业微信机器人SDK - 艾逗笔</title>
+
+<meta property="og:title" content="我写了一款企业微信机器人SDK - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="在企业微信选择一个群聊，右键点击添加机器人，即可创建一个具备基本消息推送能力的机器人。
+[&amp;hellip;] go get -u github.com/cutesdk/webot 机器人推送消息 使用机器人推送消息非常简单，只需要在创建完机器人之后，拿到机器人的 Webhook地址，使用 SDK 创建一个 Bot 对象，通过链式调用完成消息推送。
+[&amp;hellip;] package main &amp;hellip;">
+    <meta property="og:description" content="在企业微信选择一个群聊，右键点击添加机器人，即可创建一个具备基本消息推送能力的机器人。
+[&amp;hellip;] go get -u github.com/cutesdk/webot 机器人推送消息 使用机器人推送消息非常简单，只需要在创建完机器人之后，拿到机器人的 Webhook地址，使用 SDK 创建一个 Bot 对象，通过链式调用完成消息推送。
+[&amp;hellip;] package main &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/go-sdk-for-wework-robot/">我写了一款企业微信机器人SDK</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2020/12/02</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="创建机器人">创建机器人</h2>
+<p>在企业微信选择一个群聊，右键点击添加机器人，即可创建一个具备基本消息推送能力的机器人。</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/webot1.png" alt=""></p>
+<h2 id="下载sdk">下载SDK</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">go get -u github.com/cutesdk/webot
+</code></pre></div><h2 id="机器人推送消息">机器人推送消息</h2>
+<p>使用机器人推送消息非常简单，只需要在创建完机器人之后，拿到机器人的 Webhook地址，使用 SDK 创建一个 Bot 对象，通过链式调用完成消息推送。</p>
+<h3 id="基本使用">基本使用</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;github.com/cutesdk/webot&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">bot</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">webot</span>.<span style="color:#a6e22e">Bot</span>{
+		<span style="color:#a6e22e">WebhookURL</span>: <span style="color:#e6db74">&#34;https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=b8f1e424-d48d-46cc-a2c7-d360c8e98b3d&#34;</span>,
+	}
+
+	<span style="color:#a6e22e">bot</span>.<span style="color:#a6e22e">Text</span>(<span style="color:#e6db74">&#34;你好，我是机器人&#34;</span>).<span style="color:#a6e22e">Send</span>()
+}
+</code></pre></div><p>运行上面的代码，添加了机器人的群就会收到消息：</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/webot2.png" alt=""></p>
+<h3 id="发送-markdown-类型消息">发送 markdown 类型消息</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#a6e22e">mdmsg</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`*这是一条Markdown消息*
+</span><span style="color:#e6db74">&gt; 这是引用文本
+</span><span style="color:#e6db74">- 这是列表1
+</span><span style="color:#e6db74">- 这是列表2	
+</span><span style="color:#e6db74">`</span>
+	<span style="color:#a6e22e">bot</span>.<span style="color:#a6e22e">Markdown</span>(<span style="color:#a6e22e">mdmsg</span>).<span style="color:#a6e22e">Send</span>()
+</code></pre></div><p>运行上面的代码，机器人会发送 markdown 消息：</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/webot3.png" alt=""></p>
+<h3 id="发送带操作按钮的-markdown-消息">发送带操作按钮的 markdown 消息</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">mdmsg</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`这是一条带操作按钮的 Markdown 消息
+</span><span style="color:#e6db74">	&gt; 请确认你要提交吗？`</span>
+
+<span style="color:#a6e22e">callbackID</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;testwebot&#34;</span>
+<span style="color:#a6e22e">actions</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">webot</span>.<span style="color:#a6e22e">MsgAction</span>{}
+<span style="color:#a6e22e">actions</span> = append(<span style="color:#a6e22e">actions</span>, <span style="color:#a6e22e">webot</span>.<span style="color:#a6e22e">MsgAction</span>{
+	<span style="color:#a6e22e">Text</span>:        <span style="color:#e6db74">&#34;确认&#34;</span>,
+	<span style="color:#a6e22e">Name</span>:        <span style="color:#e6db74">&#34;acts&#34;</span>,
+	<span style="color:#a6e22e">Value</span>:       <span style="color:#e6db74">&#34;confirm&#34;</span>,
+	<span style="color:#a6e22e">ReplaceText</span>: <span style="color:#e6db74">&#34;已确认&#34;</span>,
+	<span style="color:#a6e22e">Type</span>:        <span style="color:#e6db74">&#34;button&#34;</span>,
+	<span style="color:#a6e22e">TextColor</span>:   <span style="color:#e6db74">&#34;2EAB49&#34;</span>,
+	<span style="color:#a6e22e">BorderColor</span>: <span style="color:#e6db74">&#34;2EAB49&#34;</span>,
+})
+<span style="color:#a6e22e">actions</span> = append(<span style="color:#a6e22e">actions</span>, <span style="color:#a6e22e">webot</span>.<span style="color:#a6e22e">MsgAction</span>{
+	<span style="color:#a6e22e">Text</span>:        <span style="color:#e6db74">&#34;取消&#34;</span>,
+	<span style="color:#a6e22e">Name</span>:        <span style="color:#e6db74">&#34;acts&#34;</span>,
+	<span style="color:#a6e22e">Value</span>:       <span style="color:#e6db74">&#34;cancel&#34;</span>,
+	<span style="color:#a6e22e">ReplaceText</span>: <span style="color:#e6db74">&#34;已取消&#34;</span>,
+	<span style="color:#a6e22e">Type</span>:        <span style="color:#e6db74">&#34;button&#34;</span>,
+})
+
+<span style="color:#a6e22e">bot</span>.<span style="color:#a6e22e">Actions</span>(<span style="color:#a6e22e">callbackID</span>, <span style="color:#a6e22e">actions</span>).<span style="color:#a6e22e">Markdown</span>(<span style="color:#a6e22e">mdmsg</span>).<span style="color:#a6e22e">Send</span>()
+</code></pre></div><p>运行上面的代码，机器人发送带有操作按钮的 markdown 消息：</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/webot4.png" alt=""></p>
+<p>点击操作按钮，机器人会给回调地址推送事件消息，开发者可以在回调事件里面进行相应的处理，实现复杂的机器人交互逻辑。</p>
+<h3 id="提醒谁看">提醒谁看</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;这是一条要提示用户&lt;@adam&gt;的文本消息&#34;</span>
+<span style="color:#a6e22e">bot</span>.<span style="color:#a6e22e">Mention</span>([]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;@all&#34;</span>}).<span style="color:#a6e22e">Text</span>(<span style="color:#a6e22e">msg</span>).<span style="color:#a6e22e">Send</span>()
+</code></pre></div><p>运行上面代码，机器人会发送消息，并艾特指定的用户：</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/webot5.png" alt=""></p>
+<p>在文本中艾特人用 <code>&lt;@userid&gt;</code>，艾特全体成员用 <code>@all</code></p>
+<h3 id="指定用户可见">指定用户可见</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;这是一条仅指定用户可见的文本消息&#34;</span>
+<span style="color:#a6e22e">bot</span>.<span style="color:#a6e22e">Target</span>([]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;wrkSFfCgAAIfjQ7pSijsAAx_KpflhDBw&#34;</span>}).<span style="color:#a6e22e">Visible</span>([]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;adam&#34;</span>}).<span style="color:#a6e22e">Text</span>(<span style="color:#a6e22e">msg</span>).<span style="color:#a6e22e">Send</span>()
+</code></pre></div><p>运行上面的代码，机器人会发送消息到群聊，只有指定的群聊中的指定用户可以看到消息：</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/webot6.png" alt=""></p>
+<p><code>Target</code> 用于指定一个或多个群聊的 <code>chatid</code> ，每个群有唯一的 <code>chatid</code> ，在配置了机器人接收消息后，才能获取到群聊的 <code>chatid</code>。</p>
+<h2 id="机器人接收消息">机器人接收消息</h2>
+<p>目前公网版本的企业微信机器人并不支持接收消息配置，暂不能使用机器人完成复杂的交互功能。请关注企业微信官网查看更新动态。</p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/my-new-hugo-theme-like-laruence/"
+                                                    rel="prev">我写了一款跟PHP鸟哥一样的博客皮肤</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/vscode-extension-sqlresult/">开发一款转换sql查询结果的vscode插件</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,352 @@
+<html lang="en-US">
+
+<head>
+    
+<title>「Mac」在iterm2中使用rzsz命令进行文件传输 - 艾逗笔</title>
+
+<meta property="og:title" content="「Mac」在iterm2中使用rzsz命令进行文件传输 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="在 Mac 系统中，我们常用的终端工具是 iterm2，有时候需要通过 ssh 连接上服务器，并在服务器上面通过 rz、sz 命令上传文件或下载文件到本地。要实现此场景下的需求，我们需要在服务器和本地分别配置 lrzsz 命令行工具。
+[&amp;hellip;] 两种安装方式二选一
+[&amp;hellip;] yum install lrzsz  源码编译安装  cd wget &amp;hellip;">
+    <meta property="og:description" content="在 Mac 系统中，我们常用的终端工具是 iterm2，有时候需要通过 ssh 连接上服务器，并在服务器上面通过 rz、sz 命令上传文件或下载文件到本地。要实现此场景下的需求，我们需要在服务器和本地分别配置 lrzsz 命令行工具。
+[&amp;hellip;] 两种安装方式二选一
+[&amp;hellip;] yum install lrzsz  源码编译安装  cd wget &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/mac-use-rzsz-in-iterm2/">「Mac」在iterm2中使用rzsz命令进行文件传输</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2019/05/29</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>在 Mac 系统中，我们常用的终端工具是 iterm2，有时候需要通过 ssh 连接上服务器，并在服务器上面通过 rz、sz 命令上传文件或下载文件到本地。要实现此场景下的需求，我们需要在服务器和本地分别配置 lrzsz 命令行工具。</p>
+<h2 id="服务器上安装-lrzsz">服务器上安装 lrzsz</h2>
+<p>两种安装方式二选一</p>
+<ul>
+<li>yum 安装</li>
+</ul>
+<pre tabindex="0"><code>yum install lrzsz
+</code></pre><ul>
+<li>源码编译安装</li>
+</ul>
+<pre tabindex="0"><code>cd
+wget http://www.ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz
+tar zxvf lrzsz-0.12.20.tar.gz &amp;&amp; cd lrzsz-0.12.20
+./configure &amp;&amp; make &amp;&amp; make install
+</code></pre><p>创建软连接</p>
+<pre tabindex="0"><code>ln -s /usr/local/bin/lrz rz
+ln -s /usr/local/bin/lsz sz
+</code></pre><h2 id="mac-系统安装-lrzsz">Mac 系统安装 lrzsz</h2>
+<pre tabindex="0"><code>brew install lrzsz
+</code></pre><h2 id="iterm2-传输配置">iterm2 传输配置</h2>
+<pre tabindex="0"><code>cd /usr/local/bin
+wget https://raw.githubusercontent.com/aikuyun/iterm2-zmodem/master/iterm2-send-zmodem.sh
+wget https://raw.githubusercontent.com/aikuyun/iterm2-zmodem/master/iterm2-recv-zmodem.sh
+chmod +x /usr/local/bin/iterm2-send-zmodem.sh /usr/local/bin/iterm2-recv-zmodem.sh
+</code></pre><p>点击<code>iTerm2/Preferences/Profiles/default/Advanced/Edit</code></p>
+<p>添加配置</p>
+<table>
+<thead>
+<tr>
+<th>Regular Expression</th>
+<th>Action</th>
+<th>Parameters</th>
+<th>Instant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rz waiting to receive.\*\*B0100</td>
+<td>Run Silent Coprocess</td>
+<td>/usr/local/bin/iterm2-send-zmodem.sh</td>
+<td>checked</td>
+</tr>
+<tr>
+<td>\*\*B00000000000000</td>
+<td>Run Silent Coprocess</td>
+<td>/usr/local/bin/iterm2-recv-zmodem.sh</td>
+<td>checked</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://blogcdn.idoustudio.com/iterm2rzsz.png" alt=""></p>
+<p>配置完成后，在服务器上使用 rz、sz 命令即可进行文件的上传下载操作。</p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/notes/sublime-go-dev/"
+                                                    rel="prev">「Sublime」配置Go开发环境</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/notes/vscode-sublime-theme/">「VS Code」打造类sublime的高颜值编辑器</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

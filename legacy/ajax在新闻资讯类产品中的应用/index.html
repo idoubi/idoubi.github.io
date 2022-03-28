@@ -1,0 +1,366 @@
+<html lang="en-US">
+
+<head>
+    
+<title>ajax在新闻资讯类产品中的应用 - 艾逗笔</title>
+
+<meta property="og:title" content="ajax在新闻资讯类产品中的应用 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="最近一直在做一款叫做“高校头条”的新闻资讯类产品，初衷是想通过数据抓取的技术把大学生最常浏览的新闻资讯类信息汇集到一起，通过一定的算法分析，根据用户的兴趣给他们推荐相应的内容。微信端产品已经上线一段时间了，目前在捣鼓安卓端需要怎么做，希望等安卓端做出来之后就开始推广给所有人用。
+所谓的微信端“高校头条”，其实就是在微信中链接了一个 wap 站点，使用 bootstrap 做了一个移动端适配的前台， &amp;hellip;">
+    <meta property="og:description" content="最近一直在做一款叫做“高校头条”的新闻资讯类产品，初衷是想通过数据抓取的技术把大学生最常浏览的新闻资讯类信息汇集到一起，通过一定的算法分析，根据用户的兴趣给他们推荐相应的内容。微信端产品已经上线一段时间了，目前在捣鼓安卓端需要怎么做，希望等安卓端做出来之后就开始推广给所有人用。
+所谓的微信端“高校头条”，其实就是在微信中链接了一个 wap 站点，使用 bootstrap 做了一个移动端适配的前台， &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/legacy/ajax%E5%9C%A8%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF%E7%B1%BB%E4%BA%A7%E5%93%81%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">ajax在新闻资讯类产品中的应用</a>
+                                        </h2>
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>最近一直在做一款叫做“高校头条”的新闻资讯类产品，初衷是想通过数据抓取的技术把大学生最常浏览的新闻资讯类信息汇集到一起，通过一定的算法分析，根据用户的兴趣给他们推荐相应的内容。微信端产品已经上线一段时间了，目前在捣鼓安卓端需要怎么做，希望等安卓端做出来之后就开始推广给所有人用。</p>
+<p>所谓的微信端“高校头条”，其实就是在微信中链接了一个 wap 站点，使用 bootstrap 做了一个移动端适配的前台，使用 weiphp 作为后台，通过在后台设置抓取地址和一定的抓取规则，使用 curl 技术抓取各个微信订阅号里面的内容，再把抓取到的内容存储到数据库，在 wap 站点直接输出数据库里面的新闻资讯信息，在微信端通过关键词查询获取相应的内容。整个产品的实现原理就是这样子，今天想要总结的一个技术是：通过 ajax 调用数据，在 wap 站点输出新闻列表。</p>
+<p>AJAX 即“Asynchronous Javascript And XML[1] ”（异步 JavaScript 和 XML[1] ），是指一种创建交互式网页应用的网页开发技术。百度百科上是这么解释的。ajax 也是业内评价非常高的一种技术，一般功能较为完善的网站都或多或少使用了 ajax。ajax 最主要的特点是异步，使用异步最主要的作用是提高用户体验，也许我们会经常遇到，在点击某一个网站链接的时候，浏览器跳转半天都不能把我们想看的内容呈现出来，这时候网页浏览者的耐心肯定会受到很大的挑战，也就是所谓的用户体验极差。而使用 ajax 获取数据，一般网页是不会出现这种情况的，ajax 可以设置局部刷新，我们只要把需要通过点击链接而切换内容的区域设置成 ajax 获取数据就行了，这样用户点击某个链接的时候，网站是不会整体跳转的，也不会出现一片空白的情况，用户看到所需内容所等待的时间也非常少，很明显的提高了用户体验。</p>
+<p>不知不觉废话又说了一大堆。现在要开始进入正题了。</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/10/QQ%E5%9B%BE%E7%89%8720141017095834.png" alt="">
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E5%9B%BE%E7%89%8720141017095814.png" alt=""></p>
+<p>先来看一下这两张图片。这是”高校头条“wap 网站上的新闻展示页面，导航栏我们分了”本校“、”考研“、”就业“、”创业“几个栏目。很明显我们希望用户点击每个栏目之后，下面会展示对应栏目下的新闻列表。在没学会 ajax 之前我是怎么做的呢？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">nav</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table-responsive&#34;</span>&gt;
+	&lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table&#34;</span>&gt;
+		&lt;<span style="color:#f92672">tr</span>&gt;	&lt;<span style="color:#f92672">td</span>&gt;&lt;<span style="color:#f92672">if</span> <span style="color:#a6e22e">condition</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$column_id eq &#39;&#39;&#34;</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:U(&#39;index&#39;,array(&#39;school_id&#39;=&gt;$school_id))}&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;active&#34;</span>&gt;&lt;<span style="color:#f92672">else</span>/&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:U(&#39;index&#39;,array(&#39;school_id&#39;=&gt;$school_id))}&#34;</span>&gt;&lt;/<span style="color:#f92672">if</span>&gt;本校&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+			&lt;<span style="color:#f92672">volist</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;columnList&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vo&#34;</span>&gt;
+			&lt;<span style="color:#f92672">td</span>&gt;&lt;<span style="color:#f92672">if</span> <span style="color:#a6e22e">condition</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$column_id eq $vo[&#39;id&#39;]&#34;</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:U(&#39;index&#39;,array(&#39;column_id&#39;=&gt;$vo[&#39;id&#39;]))}&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;active&#34;</span>&gt;&lt;<span style="color:#f92672">else</span>/&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:U(&#39;index&#39;,array(&#39;column_id&#39;=&gt;$vo[&#39;id&#39;]))}&#34;</span>&gt;&lt;/<span style="color:#f92672">if</span>&gt;{$vo.column_name}&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+			&lt;/<span style="color:#f92672">volist</span>&gt;
+		&lt;/<span style="color:#f92672">tr</span>&gt;
+	&lt;/<span style="color:#f92672">table</span>&gt;
+&lt;/<span style="color:#f92672">nav</span>&gt;
+</code></pre></div><p>就像上面代码看到的，我是对每个栏目设置一个<code>&lt;a&gt;</code>标签，然后点击每个栏目之后跳转到 index 方法，传递参数 school_id 或者 column_id 进行处理，然后在 index 方法中根据传递过来的参数去数据库中调用对应栏目下面的新闻，再把调用到的数据输出到前台页面显示。使用这种方法，用户每一次点击栏目时，都会跳转到 index 方法对应的模板 html，所以会在浏览器上看到一个圆圈来回转动（微信浏览器最新版是一条绿色的直线往右挺进）。如果网速慢一点的话，这样的浏览新闻的方式肯定会让用户奔溃，跳转半天看不到所需要的页面是很正常的事情。</p>
+<p>我是一个完美主义者，我肯定不希望使用我产品的用户感觉到如此差的体验。于是我各种百度 ajax 使用方法，终于在一个夜黑风高的日子把 ajax 调用数据的方法学会了，共享出来给各位开发者，希望大家少走弯路。</p>
+<p>首先要做的就是对栏目展示的方式进行一次重构。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">nav</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table-responsive&#34;</span>&gt;
+  &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;columnList&#34;</span>&gt;
+    &lt;<span style="color:#f92672">tr</span>&gt;
+      &lt;<span style="color:#f92672">td</span>&gt;
+        &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:U(&#39;returnNewsJson&#39;)}&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{$school_id}&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;active&#34;</span>
+          &gt;本校&lt;/<span style="color:#f92672">a</span>
+        &gt;
+      &lt;/<span style="color:#f92672">td</span>&gt;
+      &lt;<span style="color:#f92672">volist</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;columnList&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vo&#34;</span>&gt;
+        &lt;<span style="color:#f92672">td</span>&gt;
+          &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:U(&#39;returnNewsJson&#39;)}&#34;</span> <span style="color:#a6e22e">title</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{$vo.id}&#34;</span>&gt;{$vo.column_name}&lt;/<span style="color:#f92672">a</span>&gt;
+        &lt;/<span style="color:#f92672">td</span>&gt;
+      &lt;/<span style="color:#f92672">volist</span>&gt;
+    &lt;/<span style="color:#f92672">tr</span>&gt;
+  &lt;/<span style="color:#f92672">table</span>&gt;
+&lt;/<span style="color:#f92672">nav</span>&gt;
+</code></pre></div><p>现在的这种栏目展示方式较之前的方式而言，首先是把<code>&lt;a&gt;</code>标签的 href 属性去掉了。也就是设置了用户点击栏目链接的时候，网页是不能跳转的。然后就是给<code>&lt;a&gt;</code>标签添加了 rel、type、title 三个属性，其实也不一定非要添加这三个属性，添加其他的属性也是可以的，这样做的关键是为了获取所需属性的值。</p>
+<p>我们到通过修改栏目展示代码后我们去掉了栏目的跳转 href 属性，但是我们添加了一个 rel 属性，属性的值是 returnNewsJson，也就是说用户每次点击栏目链接的时候，我们会通过 ajax 去 returnNewsJson 这个方法中调用数据，再把调用到的数据展示出来。</p>
+<p>看一下 returnNewsJson 这个方法是如何写的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">returnNewsJson</span>(){
+
+	$action<span style="color:#f92672">=</span><span style="color:#a6e22e">I</span>(<span style="color:#e6db74">&#39;action&#39;</span>);
+	$column_id<span style="color:#f92672">=</span><span style="color:#a6e22e">intval</span>(<span style="color:#a6e22e">I</span>(<span style="color:#e6db74">&#39;column_id&#39;</span>));
+	$school_id<span style="color:#f92672">=</span><span style="color:#a6e22e">intval</span>(<span style="color:#a6e22e">I</span>(<span style="color:#e6db74">&#39;school_id&#39;</span>));
+
+	<span style="color:#66d9ef">if</span>($action<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;getNewsJson&#39;</span>){
+
+		<span style="color:#66d9ef">if</span>($column_id <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">amp</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">amp</span>; <span style="color:#f92672">!</span>$school_id){
+			$map[<span style="color:#e6db74">&#39;column_id&#39;</span>]<span style="color:#f92672">=</span>$column_id;
+			$newsList<span style="color:#f92672">=</span><span style="color:#a6e22e">M</span>(<span style="color:#e6db74">&#39;toutiao_news&#39;</span>)<span style="color:#f92672">-&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">gt</span>;<span style="color:#a6e22e">where</span>($map)<span style="color:#f92672">-&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">gt</span>;<span style="color:#a6e22e">order</span>(<span style="color:#e6db74">&#39;date desc&#39;</span>)<span style="color:#f92672">-&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">gt</span>;<span style="color:#a6e22e">select</span>();
+		}
+
+		<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>$column_id <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">amp</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">amp</span>; $school_id){
+			$map[<span style="color:#e6db74">&#39;school_id&#39;</span>]<span style="color:#f92672">=</span>$school_id;
+			$newsList<span style="color:#f92672">=</span><span style="color:#a6e22e">M</span>(<span style="color:#e6db74">&#39;toutiao_news&#39;</span>)<span style="color:#f92672">-&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">gt</span>;<span style="color:#a6e22e">where</span>($map)<span style="color:#f92672">-&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">gt</span>;<span style="color:#a6e22e">order</span>(<span style="color:#e6db74">&#39;date desc&#39;</span>)<span style="color:#f92672">-&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">gt</span>;<span style="color:#a6e22e">select</span>();
+		}
+
+		$newsJson<span style="color:#f92672">=</span><span style="color:#a6e22e">json_encode</span>($newsList);
+		<span style="color:#66d9ef">echo</span> $newsJson;
+	}
+}
+</code></pre></div><p>这个方法很简单，就是根据传递过来的 column_id 和 school_id 去数据库中调用相应的数据，再把数据封装成 json 格式返回给调用者。</p>
+<p>把这些准备工作做好了，我们现在开始要写 ajax 调用数据的代码了。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span><span style="color:#f92672">&gt;</span><span style="color:#75715e">// &lt;![CDATA[
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(document).<span style="color:#a6e22e">ready</span>(<span style="color:#66d9ef">function</span>(){
+	<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;a[rel]&#34;</span>).<span style="color:#a6e22e">click</span>(<span style="color:#66d9ef">function</span>(){
+		<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;a[rel]&#34;</span>).<span style="color:#a6e22e">removeClass</span>(<span style="color:#e6db74">&#34;active&#34;</span>);
+		<span style="color:#75715e">//alert(this.rel);
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">url</span><span style="color:#f92672">=</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">rel</span>;
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">column_id</span><span style="color:#f92672">=</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">title</span>;
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">school_id</span><span style="color:#f92672">=</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">type</span>;
+		<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;a[title=&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">column_id</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;]&#34;</span>).<span style="color:#a6e22e">addClass</span>(<span style="color:#e6db74">&#34;active&#34;</span>);
+		<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;a[type=&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">school_id</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;]&#34;</span>).<span style="color:#a6e22e">addClass</span>(<span style="color:#e6db74">&#34;active&#34;</span>);
+		<span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
+			<span style="color:#a6e22e">type</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;post&#34;</span>,
+			<span style="color:#a6e22e">url</span><span style="color:#f92672">:</span><span style="color:#a6e22e">url</span>,
+			<span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;json&#34;</span>,
+			<span style="color:#a6e22e">data</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;action=getNewsJson&amp;amp;column_id=&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">column_id</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&amp;amp;school_id=&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">school_id</span>,
+			<span style="color:#a6e22e">success</span><span style="color:#f92672">:</span><span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">msg</span>){
+				<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#1&#34;</span>).<span style="color:#a6e22e">html</span>(<span style="color:#e6db74">&#34;&#34;</span>);
+				<span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">each</span>(<span style="color:#a6e22e">msg</span>,<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">i</span>,<span style="color:#a6e22e">item</span>){
+					<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#1&#34;</span>).<span style="color:#a6e22e">append</span>(
+						<span style="color:#e6db74">&#34;&lt;a href=&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">url</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&gt;&#34;</span><span style="color:#f92672">+</span>
+							<span style="color:#e6db74">&#34;&lt;div class=&#39;well&#39;&gt;&#34;</span><span style="color:#f92672">+</span>
+								<span style="color:#e6db74">&#34;&lt;img src=&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">imglink</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&gt;&#34;</span><span style="color:#f92672">+</span>
+									<span style="color:#e6db74">&#34;&lt;h4&gt;&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">title</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&lt;/h4&gt;&#34;</span><span style="color:#f92672">+</span>
+									<span style="color:#e6db74">&#34;&lt;h6&gt;&lt;span&gt;&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">sourcename</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&lt;/span&gt;&amp;amp;nbsp;&amp;amp;nbsp;&lt;span&gt;&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">date</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;&lt;/span&gt;&lt;span class=&#39;pull-right&#39;&gt;浏览：99&lt;/span&gt;&lt;/h6&gt;&#34;</span><span style="color:#f92672">+</span>
+							<span style="color:#e6db74">&#34;&lt;/div&gt;&#34;</span><span style="color:#f92672">+</span>
+						<span style="color:#e6db74">&#34;&lt;/a&gt;&#34;</span>
+					);
+				});
+			}
+		});
+	});
+});
+
+<span style="color:#75715e">// ]]&gt;&lt;/script&gt;
+</span></code></pre></div><p>上面写的是一个 javascript 代码，通过 ajax 调用 returnNewsJson 方法获取数据。对 ajax 的几个参数进行了设置，ajax 的 type 方式设置为 post，url 为需要 post 数据的目标网址，dataType 设置返回数据的格式为 json，data 中设置需要 post 的数据字符串，success 设置如果 post 数据成功之后调用的函数，函数的参数为返回的 json 数据。使用$.each 循环输出返回的数据并把它们展示在新闻列表区域。</p>
+<p>通过上面的几个步骤，使用 ajax 方便的替换掉了原来那种点击跳转的新闻展示方式，极大的提高了用户体验，关注微信公众号”高校头条“，进入 wap 站点击栏目试一下你就知道，新闻列表切换速度快的一笔，毫无违和感。</p>
+<p>总结：</p>
+<p>1、任何技术或者知识不是每个人天生就会的，肯定需要后天付出很多的努力，经过很多次的试错才能最终学会的。（ajax 技术我摸索了一个礼拜，试错了两天，最终才只是入了个门）。</p>
+<p>2、做产品，一定要重视用户体验，只有把用户体验做到极致，你的产品才能获得最后的成功。</p>
+<p>3、产品需要迭代，技术需要总结。对以前写过的代码进行一次重构，可以发现存在的很多问题，重构过程中往往能有新的创意，而进行总结的目的是方便自己在以后遇到类似的问题上方便查询，也能给其他人相应的帮助。</p>
+
+
+                                        
+                                    </div>
+
+                                    
+
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

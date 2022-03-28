@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>goz on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/goz/</link>
+    <description>Recent content in goz on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sat, 15 Feb 2020 16:50:37 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/goz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>「goz」开源库，在Go中快速发起HTTP请求</title>
+      <link>https://idoubi.cc/posts/goz/</link>
+      <pubDate>Sat, 15 Feb 2020 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/goz/</guid>
+      <description>goz 是一个用于在 Go 代码中快速发起 HTTP 请求的开源库， 部分实现参考了 PHP 流行请求库： guzzle
+ 安装 go get -u github.com/idoubi/goz 文档 API 文档地址: https://godoc.org/github.com/idoubi/goz
+基本使用 package main import ( &amp;#34;github.com/idoubi/goz&amp;#34; ) func main() { cli := goz.NewClient() resp, err := cli.Get(&amp;#34;http://127.0.0.1:8091/get&amp;#34;) if err != nil { log.Fatalln(err) } fmt.Printf(&amp;#34;%T&amp;#34;, resp) // Output: *goz.Response } 查询参数  map 形式  cli := goz.NewClient() resp, err := cli.Get(&amp;#34;http://127.0.0.1:8091/get-with-query&amp;#34;, goz.Options{ Query: map[string]interface{}{ &amp;#34;key1&amp;#34;: &amp;#34;value1&amp;#34;, &amp;#34;key2&amp;#34;: []string{&amp;#34;value21&amp;#34;, &amp;#34;value22&amp;#34;}, &amp;#34;key3&amp;#34;: &amp;#34;333&amp;#34;, }, }) if err !</description>
+    </item>
+    
+  </channel>
+</rss>

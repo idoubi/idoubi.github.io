@@ -1,0 +1,361 @@
+<html lang="en-US">
+
+<head>
+    
+<title>阿里2014实习生招聘前端开发笔试题 - 艾逗笔</title>
+
+<meta property="og:title" content="阿里2014实习生招聘前端开发笔试题 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="1、现有一个Page类，其原型对象上有许多以post开头方法（如postMsg）；另有一拦截函数check，只返回true或false。请设计一个函数，该函数应批量改造原Page的postXXX方法，在保留其原有功能的同时，为每个postXXX方法增加拦截验证功能，当check()返回true时继续执行原postXXX方法，返回false时不再执行原postXXX方法。
+2、下面这段代码想要循环延 &amp;hellip;">
+    <meta property="og:description" content="1、现有一个Page类，其原型对象上有许多以post开头方法（如postMsg）；另有一拦截函数check，只返回true或false。请设计一个函数，该函数应批量改造原Page的postXXX方法，在保留其原有功能的同时，为每个postXXX方法增加拦截验证功能，当check()返回true时继续执行原postXXX方法，返回false时不再执行原postXXX方法。
+2、下面这段代码想要循环延 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/%E9%98%BF%E9%87%8C2014%E5%AE%9E%E4%B9%A0%E7%94%9F%E6%8B%9B%E8%81%98%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%AC%94%E8%AF%95%E9%A2%98/">阿里2014实习生招聘前端开发笔试题</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2014/03/31</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>1、现有一个Page类，其原型对象上有许多以post开头方法（如postMsg）；另有一拦截函数check，只返回true或false。请设计一个函数，该函数应批量改造原Page的postXXX方法，在保留其原有功能的同时，为每个postXXX方法增加拦截验证功能，当check()返回true时继续执行原postXXX方法，返回false时不再执行原postXXX方法。</p>
+<p>2、下面这段代码想要循环延时输出结果0 1 2 3 4 , 请问输出结果是否正确，如果不正确，请说明为什么，并请修改循环内的代码使其能输出正确结果。</p>
+<pre><code>for(var i= 0; i &lt; 5; i++){
+    setTimeout(function(){
+       console.log(i+' ');
+    }, 100);
+}
+</code></pre><p>3、在不使用图片的情况下，实现图示的气泡框：
+<img src="http://gtms01.alicdn.com/tps/i1/T1amqaFv0qXXaWY__d-155-50.png" alt=""></p>
+<p>4、请简述用html5实现flappy bird的具体思路以及相关程序设计</p>
+<p>5、实现一个jsonp方法，要求回调函数按照请求发出的顺序依次执行。</p>
+<pre><code>function jsonp(url, data, callback){
+//此处省略一万字
+}
+</code></pre><p>调用方法：</p>
+<pre><code>for (var i = 0; i &lt; 5; i++) {
+    (function (index) {
+        jsonp(&quot;http://ju.taobao.com/api.php&quot;,{
+            cat : 1000,
+            page : 1
+        }, function(){
+            console.log(index);
+        });
+    })(i);
+}
+</code></pre><p>输出：0 1 2 3 4</p>
+<p>6、有一个100项的数组，每一项是一个图片url，如<code>http://test.com/a.jpg</code>，里面有些图片无效了（404），请使用js去除这些无效图片url形成新的数组，数组顺序保持一致。可以借助框架，请写出代码，并说明你这段代码的优缺点？</p>
+<p>7、请使用原生方法实现以下效果：</p>
+<pre><code>&lt;div id='content'&gt;
+&lt;div&gt;1&lt;/div&gt;
+&lt;div&gt;2&lt;/div&gt;
+&lt;div&gt;3&lt;/div&gt;
+&lt;div&gt;4&lt;/div&gt;
+&lt;div&gt;5&lt;/div&gt;
+......
+&lt;div&gt;10000&lt;/div&gt;
+&lt;div id='send'&gt;&lt;/div&gt;
+</code></pre><p>Q: 记录用户每次点击items的内容，并在点击send时按照点击内容从大到小的顺序alert出来。每次点击send后清空记录。
+例：用户第一次点击2，第二次点击3，第三次点击1， 第四次点击3， alert的内容应该为3,3,2,1</p>
+<p>8、假如你是一名互联网创业者，你带领一个小型团队，要快速开发一个全新的社交网站，你会使用哪些开源技术、开发技术、web服务来开发、建立、运维你的网站，能给出选择原因更佳</p>
+<p>9、我们会使用Cookie来记录一些数据在客户端上，这样做的目的是什么，有什么好处和不妥，有更好的方式吗，请给出其中一种或者几种方案的简单JS封装实现(API包含get，set，del，clear)以及场景介绍。</p>
+<p>10、给你一副扑克，共52张，要求打散后随机发到（console 输出）ABCD四个人手中。请使用JS实现（牌用1~52的数字表示）</p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%85%b6%e4%bb%96" title="View all posts in PHP8">其他</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/%e9%9d%a2%e8%af%95%e9%a2%98" title="View all posts tagged match">面试题</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/%e5%89%8d%e7%ab%af" title="View all posts tagged match">前端</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/%E4%BD%A0%E6%98%AF%E5%90%A6%E6%87%82%E5%BE%97%E6%88%91%E7%9A%84%E5%9D%9A%E6%8C%81/"
+                                                    rel="prev">你是否懂得我的坚持</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">阿里云服务器phpmyadmin无法登陆问题及其解决办法</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

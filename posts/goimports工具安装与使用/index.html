@@ -1,0 +1,357 @@
+<html lang="en-US">
+
+<head>
+    
+<title>goimports工具安装与使用 - 艾逗笔</title>
+
+<meta property="og:title" content="goimports工具安装与使用 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="go是一门强类型的编译型语言，有着很严格的类型约束与语法规范，在golang代码中，如果使用到的包没有被引入或者是引入了的包没有被使用，都会编译不通过。所以我们在写go代码的时候，用到包的时候需要首先import一下，不用的时候，要把import包的语句删除或者是注释，但是总是这样手动去操作并不是很方便，比如我们在开发的时候需要用fmt包打印一些调试信息，为了让打印出来的数组或结构体格式好看一点， &amp;hellip;">
+    <meta property="og:description" content="go是一门强类型的编译型语言，有着很严格的类型约束与语法规范，在golang代码中，如果使用到的包没有被引入或者是引入了的包没有被使用，都会编译不通过。所以我们在写go代码的时候，用到包的时候需要首先import一下，不用的时候，要把import包的语句删除或者是注释，但是总是这样手动去操作并不是很方便，比如我们在开发的时候需要用fmt包打印一些调试信息，为了让打印出来的数组或结构体格式好看一点， &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">goimports工具安装与使用</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2017/11/06</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="goimports是干嘛的">goimports是干嘛的</h2>
+<p>go是一门强类型的编译型语言，有着很严格的类型约束与语法规范，在golang代码中，如果使用到的包没有被引入或者是引入了的包没有被使用，都会编译不通过。所以我们在写go代码的时候，用到包的时候需要首先import一下，不用的时候，要把import包的语句删除或者是注释，但是总是这样手动去操作并不是很方便，比如我们在开发的时候需要用<code>fmt</code>包打印一些调试信息，为了让打印出来的数组或结构体格式好看一点，我们有时候需要使用<code>encoding/json</code>包来进行格式化。在调试完成后，我们必须要手动把引入的包删除掉，然后再进行编译。</p>
+<p>针对上面提到的日常开发中经常面对的手动管理包的问题，<code>goimports</code>出现了。<code>goimports</code>可以自动对代码中的依赖包进行管理，如果有用到，就会自动import，也会对没有用到的包进行自动删除。</p>
+<h2 id="安装goimports">安装goimports</h2>
+<p>因为被墙的原因，直接通过<code>go get</code>可能不能正确拉取到<code>goimports</code>包，我们这里使用<code>github</code>源码编译的方式进行安装。</p>
+<ol>
+<li>拉取github上面的tools包源码</li>
+</ol>
+<pre tabindex="0"><code class="language-git" data-lang="git">git clone https://github.com/golang/tools.git /d/go/src/golang.org/x/tools
+</code></pre><ol start="2">
+<li>进入goimports命令包目录</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cd /d/go/src/golang.org/x/tools/cmd/goimports
+</code></pre></div><ol start="3">
+<li>编译源码</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">build</span>
+</code></pre></div><p>编译完成后，在windows下会生成goimports.exe可执行文件，在mac跟linux下的goroot配置的bin目录下会生成goimports可执行文件。如果设置了环境变量，在任意位置可执行goimports命令。</p>
+<h2 id="在sublime配置goimports">在sublime配置goimports</h2>
+<p>在sublime安装GoSublime插件，在插件用户配置文件中写入：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+	<span style="color:#f92672">&#34;fmt_cmd&#34;</span>: [<span style="color:#e6db74">&#34;goimports&#34;</span>]
+}
+</code></pre></div><p>配置完成后在sublime编写go代码时，每次<code>ctrl+s</code>保存文件或者<code>ctrl+b</code>编译文件时，goimports会自动执行并对go代码进行包依赖的检查，对于用到却未引入的包会进行自动引入，对于引入却未使用的包会进行自动删除。</p>
+<h2 id="在gogland中使用goimports">在gogland中使用goimports</h2>
+<p>gogland原生支持goimports，不需要进行额外的配置，保存或编译go代码时会自动进行包的依赖检查。</p>
+
+
+                                        
+                                        
+                                        
+                                        <div class="rp4wp-related-posts">
+                                            <h3>相关文章</h3>
+                                            <ul>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/">golang版本的curl请求库</a>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/go" title="View all posts tagged match">go</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/goimports" title="View all posts tagged match">goimports</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/"
+                                                    rel="prev">golang版本的curl请求库</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/sql2struct%E4%B8%80%E6%AC%BE%E6%A0%B9%E6%8D%AEsql%E8%AF%AD%E5%8F%A5%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90golang%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84chrome%E6%8F%92%E4%BB%B6/">SQL2Struct：一款根据sql语句自动生成golang结构体的chrome插件</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,431 @@
+<html lang="en-US">
+
+<head>
+    
+<title>protobuf快速上手指南 - 艾逗笔</title>
+
+<meta property="og:title" content="protobuf快速上手指南 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准。
+Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。
+[&amp;hellip;] # &amp;hellip;">
+    <meta property="og:description" content="Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准。
+Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。
+[&amp;hellip;] # &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">protobuf快速上手指南</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2017/12/02</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="什么是-protobuf">什么是 protobuf</h2>
+<p>Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准。</p>
+<p>Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。</p>
+<h2 id="如何安装-protobuf">如何安装 protobuf</h2>
+<ul>
+<li>在 github 获取 protobuf 源码，windows 系统可以直接下载 exe 文件：https://github.com/google/protobuf/releases</li>
+</ul>
+<ul>
+<li>macos 和 linux 环境使用源码进行安装的步骤</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 获取源码包</span>
+wget https://github.com/google/protobuf/archive/v3.5.0.tar.gz
+
+<span style="color:#75715e"># 解压缩并进入源码目录</span>
+tar -zxvf v3.5.0.tar.gz
+cd protobuf-3.5.0
+
+<span style="color:#75715e"># 生成configure文件</span>
+./autogen.sh
+
+<span style="color:#75715e"># 编译安装</span>
+./configure
+make
+make check
+make install
+</code></pre></div><blockquote>
+<p>在执行<code>./autogen.sh</code>过程中可能会因缺乏 automake 依赖库而报错：<strong><em>autoreconf: failed to run aclocal: No such file or directory</em></strong>，要解决此错误，在 linux 系统可以通过<code>sudo yum install automake</code>或者<code>sudo apt-get install automake</code>安装 automake，在 macos 系统可以通过<code>brew install automake</code>安装 automake。</p>
+</blockquote>
+<ul>
+<li>检测 protobuf 是否已成功安装</li>
+</ul>
+<p>命令行执行<code>protoc --version</code>。windows 系统需要将 protoc.exe 文件所在的目录添加到环境变量。</p>
+<h2 id="如何使用-protobuf">如何使用 protobuf</h2>
+<p>protobuf 支持跨语言使用，很多主流的开发语言都有 protobuf 支持库，我们用 golang 来演示如何使用 protobuf 进行数据序列化。</p>
+<ul>
+<li>在 golang 中安装 protobuf 相关的库</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">get</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">u</span> <span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">golang</span><span style="color:#f92672">/</span><span style="color:#a6e22e">protobuf</span><span style="color:#f92672">/</span>{<span style="color:#a6e22e">protoc</span><span style="color:#f92672">-</span><span style="color:#a6e22e">gen</span><span style="color:#f92672">-</span><span style="color:#66d9ef">go</span>,<span style="color:#a6e22e">proto</span>}
+</code></pre></div><ul>
+<li>编写.proto 文件</li>
+</ul>
+<p>$GOPATH/src/test/protobuf/pb/user.proto</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-proto" data-lang="proto">syntax <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;proto3&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#f92672">package</span> pb;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">user</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">int32</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> name <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">multi_user</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">repeated</span> user users <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><ul>
+<li>基于.proto 文件生成数据操作代码</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-proto" data-lang="proto">protoc <span style="color:#f92672">--</span>go_out<span style="color:#f92672">=.</span> user.proto<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>执行命令完成，在与<code>user.proto</code>文件同级的目录下生成了一个<code>user.pb.go</code>文件</p>
+<ul>
+<li>数据序列化演示
+$GOPATH/src/test/protobuf/main.go</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;log&#34;</span>
+    <span style="color:#e6db74">&#34;test/protobuf/pb&#34;</span>
+
+    <span style="color:#e6db74">&#34;github.com/golang/protobuf/proto&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">user1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>{
+        <span style="color:#a6e22e">Id</span>:   <span style="color:#f92672">*</span><span style="color:#a6e22e">proto</span>.<span style="color:#a6e22e">Int32</span>(<span style="color:#ae81ff">1</span>),
+        <span style="color:#a6e22e">Name</span>: <span style="color:#f92672">*</span><span style="color:#a6e22e">proto</span>.<span style="color:#a6e22e">String</span>(<span style="color:#e6db74">&#34;Mike&#34;</span>),
+    }
+
+    <span style="color:#a6e22e">user2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>{
+        <span style="color:#a6e22e">Id</span>:   <span style="color:#ae81ff">2</span>,
+        <span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;John&#34;</span>,
+    }
+
+    <span style="color:#a6e22e">users</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MultiUser</span>{
+        <span style="color:#a6e22e">Users</span>: []<span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">User</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user1</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user2</span>},
+    }
+
+    <span style="color:#75715e">// 序列化数据
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">data</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">proto</span>.<span style="color:#a6e22e">Marshal</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">users</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;Marshal data error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    println(<span style="color:#a6e22e">users</span>.<span style="color:#a6e22e">Users</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">GetName</span>()) <span style="color:#75715e">// output: Mike
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">// 对已序列化的数据进行反序列化
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">target</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">MultiUser</span>
+    <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">proto</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">data</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">target</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;Unmarshal data error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    println(<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">GetUsers</span>()[<span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">Name</span>) <span style="color:#75715e">// output: John
+</span><span style="color:#75715e"></span>
+}
+</code></pre></div><h2 id="相关扩展">相关扩展</h2>
+<p>sublime 插件：Protobuf Syntax Hightlighting</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="http://ginobefunny.com/post/learning_protobuf/">Protocol Buffers 简明教程</a></li>
+<li><a href="http://blog.csdn.net/xiexievv/article/details/47396725">linux 下安装 google protobuf（详细）</a></li>
+<li><a href="http://www.jianshu.com/p/1a3f1c3031b5">Golang 序列化之 ProtoBuf</a></li>
+</ul>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/quick%20start" title="View all posts tagged match">quick start</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/protobuf" title="View all posts tagged match">protobuf</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/sql2struct%E4%B8%80%E6%AC%BE%E6%A0%B9%E6%8D%AEsql%E8%AF%AD%E5%8F%A5%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90golang%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84chrome%E6%8F%92%E4%BB%B6/"
+                                                    rel="prev">SQL2Struct：一款根据sql语句自动生成golang结构体的chrome插件</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/golang%E5%AE%9E%E7%8E%B0rpc%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">golang实现RPC的几种方式</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

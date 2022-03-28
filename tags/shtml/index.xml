@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shtml on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/shtml/</link>
+    <description>Recent content in shtml on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Fri, 14 Oct 2016 10:04:29 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/shtml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>浅谈shtml与html的区别</title>
+      <link>https://idoubi.cc/legacy/%E6%B5%85%E8%B0%88shtml%E4%B8%8Ehtml%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Fri, 14 Oct 2016 10:04:29 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E6%B5%85%E8%B0%88shtml%E4%B8%8Ehtml%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <description>遇到有人咨询 shtml 与 html 的区别，顺手查了一波资料，根据我的理解整理一下与大家分享。
+ 何为 shtml？  shtml 跟 html 类似，也是一种用于网页设计的标记型语言，区别在于：html 是一种纯静态的标记型语言，在 html 文档里面写的内容是什么，用户打开浏览器看到的就是什么，而 shtml 是一种半静态半动态的标记型语言，在 shtml 里面可以包含 SSI 命令，当用户在浏览器浏览 shtml 文档的时候，里面包含的 SSI 命令会被解析，然后再呈现内容给用户。
+ 何为 SSI？  SSI 是为 WEB 服务器提供的一套命令，这些命令只要直接嵌入到 HTML 文档的注释内容之中即可。例如： &amp;lt;!--#include file=&amp;quot;index.html&amp;quot;--&amp;gt; &amp;lt;!--#echo var=&amp;quot;DOCUMENT_NAME&amp;quot;--&amp;gt;都属于 SSI 指令。前者用于包含一个 html 文件，后者用于显示当前文档的名称。
+ 举例说明  新建一个 index.html 文件，并输入代码：   &amp;lt;!DOCTYPE HTML&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;了不起的盖茨比&amp;lt;/title&amp;gt; &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;h1&amp;gt;了不起的盖茨比&amp;lt;/h1&amp;gt; &amp;lt;p&amp;gt;1922年的春天，一个想要成名名叫&amp;lt;em&amp;gt;尼克。卡拉威&amp;lt;/em&amp;gt;的作家，离开了美国中西部，来到了纽约。那是一个道德感缺失，爵士乐流行，走私为王，股票飞涨的时代。为了追寻他的&amp;lt;span&amp;gt;美国梦&amp;lt;/span&amp;gt;，他搬入纽约附近一海湾居住。&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;菲茨杰拉德，二十世纪美国文学巨匠之一，兼具作家和编剧双重身份。他以诗人的敏感和戏剧家的想象为&amp;lt;strong&amp;gt;“爵士乐时代”&amp;lt;/strong&amp;gt;吟唱华丽挽歌，其诗人和梦想家的气质亦为那个奢靡年代的不二注解。&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 在浏览器访问该index.html文档，将会显示成这样： ![1](http://blogcdn.idoustudio.com/2016/10/1.png)   新建一个 test.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/hugo/</link>
+    <description>Recent content in Hugo on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sun, 19 Apr 2020 22:11:23 +0800</lastBuildDate><atom:link href="https://idoubi.cc/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于「Hugo」搭建个人博客网站</title>
+      <link>https://idoubi.cc/posts/build-site-with-hugo/</link>
+      <pubDate>Sun, 19 Apr 2020 22:11:23 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/build-site-with-hugo/</guid>
+      <description>前言 搭建个人网站，以前我们一般会选择 WordPress，因为其使用范围广（据说全世界 80%的网站都是用它搭建的）、主题丰富、上手简单。
+近年来，markdown 内容格式渐渐流行，我们更愿意使用 markdown 格式来写文章，写完后用静态网站生成工具把文章内容转换成 html 格式，再发布到个人网站。生成静态网站的工具中，比较优秀的有 Jekyll、Hexo、Hugo 几个。
+简单比较一下动态网站框架 WordPress 与静态网站生成框架 Hexo、Hugo 的区别：
+   项目 开发语言 优势 不便之处     WordPress php 1. 有可视化后台可以编写文章；2. 使用范围广；3. 主题、插件丰富。 1. 依赖过多导致加载较慢；2. 需要服务器部署，依赖数据库；3. 数据需要定时备份。   Hexo nodejs 1. 静态生成，SEO 友好；2. npm 生态有丰富的插件可用于扩展功能。 1. 本地编译生成静态文件速度较慢；2. 调试麻烦，经常遇到 js 报错。   Hugo go 1. 编译速度最快;2. 开发主题非常方便。 1. 目前主题数量较少。    综合来看，我还是比较推荐使用 Hugo 来搭建个人网站。
+安装 Hugo MacOS 系统下，可以使用 brew 来进行安装。</description>
+    </item>
+    
+    <item>
+      <title>在个人博客实现「小课」系统</title>
+      <link>https://idoubi.cc/posts/course-in-blog/</link>
+      <pubDate>Wed, 15 Apr 2020 22:58:04 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/course-in-blog/</guid>
+      <description>程序员这个行业，是一个终身学习的行业，经常会有新技术出现。我是一个很爱学习的人，喜欢尝鲜。每次想去学习一项新技术的时候，总是苦于找不到合适的入门教程。于是有了想自己写个小课系统的想法：希望能通过写一系列的文章，组织成一门小课，帮助想学习某项技术的同学快速入门。
+有了这个想法之后，我开始准备搭建小课平台，一开始想的是做一个前后端分离的网站，后端用 Go 写 API，前端用 vue 写页面。
+使用 vue + ElementUI 搭建出来的第一个版本长这样：
+写完第一个版本之后，仔细想了一下，如果要写好这个小课系统的话，我还得做好几件事：
+ 写 API ，前后端进行数据交互 写 Markdown 编辑器，在线录入课程 做服务端渲染，做 SEO 优化  一想到这里，头开始有点大，第一个对外发布的小课系统，我希望能尽可能简洁，不管是写作，还是展示，都不要太复杂。而且最重要的一点，我希望能有更多人看到我的小课系统，也就是说 SEO 一定要好。
+考虑到这些因素，我决定用静态博客生成系统 Hugo ，基于我的个人博客来完成小课系统的开发。
+使用 Hugo 来开发，有这么几个好处：
+ 不需要写 Markdown 编辑器，基于本地的 md 文件即可生成文章 不需要使用数据库，课程数据都是 md 文件，维护成本低 不需要做 SSR 也能有很好的 SEO  但是也有几个不好的地方：
+ 纯静态网站，没有数据交互，要做付费订阅等功能不太好实现 每次写完文章，需要编译生成静态页面，再提交发布，比较麻烦  管他三七二十一，先撸一个版本出来再说。于是我就这么干了：
+使用 Hugo 搭建了个人博客，采用了 notepadium 这个开源主题。在 Hugo 的 content 里面创建了一个 courses 的 section，并为这一类型的 section 新增了一个首页模板和阅读模板。
+最终写成的效果：
+写完发布上线，我把我之前写的两门小课都放上来了
+ 「VS Code」快速上手指南 分分钟上手「WeiPHP」插件开发  总结一下，我觉得 Hugo 是一个非常优秀的静态网站生成工具，功能非常强大，而且编译速度非常快，甩同类型的 Hexo 几条街。</description>
+    </item>
+    
+  </channel>
+</rss>

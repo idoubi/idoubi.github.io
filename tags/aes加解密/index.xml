@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AES加解密 on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/aes%E5%8A%A0%E8%A7%A3%E5%AF%86/</link>
+    <description>Recent content in AES加解密 on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Tue, 25 Oct 2016 12:10:37 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/aes%E5%8A%A0%E8%A7%A3%E5%AF%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AES加解密在php接口请求过程中的应用</title>
+      <link>https://idoubi.cc/legacy/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Tue, 25 Oct 2016 12:10:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+      <description>在 php 请求接口的时候，我们经常需要考虑的一个问题就是数据的安全性，因为数据传输过程中很有可能会被用 fillder 这样的抓包工具进行截获。一种比较好的解决方案就是在客户端请求发起之前先对要请求的数据进行加密，服务端 api 接收到请求数据后再对数据进行解密处理，返回结果给客户端的时候也对要返回的数据进行加密，客户端接收到返回数据的时候再解密。因此整个 api 请求过程中数据的安全性有了一定程度的提高。
+今天结合一个简单的 demo 给大家分享一下 AES 加解密技术在 php 接口请求中的应用。
+AES 加解密基础类： &amp;lt;?php /** * 加密基础类 */ class Crypt_AES { protected $_cipher = &amp;#34;rijndael-128&amp;#34;; protected $_mode = &amp;#34;cbc&amp;#34;; protected $_key; protected $_iv = null; protected $_descriptor = null; /** * 是否按照PKCS #7 的标准进行填充 * 为否默认将填充“&amp;amp;#92;&amp;amp;#48;”补位 * @var boolean */ protected $_PKCS7 = false; /** * 构造函数，对于密钥key应区分2进制字符串和16进制的。 * 如需兼容PKCS#7标准，应选项设置开启PKCS7，默认关闭 * @param string $key * @param mixed $iv 向量值 * @param array $options */ public function __construct($key = null, $iv = null, $options = null) { if (null !</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,290 @@
+<html lang="en-US">
+
+<head>
+    
+<title>「Fiddler」网页采集必备抓包利器 - 艾逗笔</title>
+
+<meta property="og:title" content="「Fiddler」网页采集必备抓包利器 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="最近这段时间，网页采集方面的工作做得比较多。用curl技术开发了一个微信文章聚合类产品，把抓取到的数据转换成json格式，并在android端调用json数据接口加以显示；基于weiphp做了一个掌上头条插件，也是用的网页采集技术；和一个创业团队一起在做一个高考志愿填报系统，所有的数据也是从别的地方抓取。总而言之，网页抓取与网页采集技术是一项非常实用的技能，他能让我们高效快速的获取我们开发产品所需 &amp;hellip;">
+    <meta property="og:description" content="最近这段时间，网页采集方面的工作做得比较多。用curl技术开发了一个微信文章聚合类产品，把抓取到的数据转换成json格式，并在android端调用json数据接口加以显示；基于weiphp做了一个掌上头条插件，也是用的网页采集技术；和一个创业团队一起在做一个高考志愿填报系统，所有的数据也是从别的地方抓取。总而言之，网页抓取与网页采集技术是一项非常实用的技能，他能让我们高效快速的获取我们开发产品所需 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/legacy/fiddler%E7%BD%91%E9%A1%B5%E9%87%87%E9%9B%86%E5%BF%85%E5%A4%87%E6%8A%93%E5%8C%85%E5%88%A9%E5%99%A8/">「Fiddler」网页采集必备抓包利器</a>
+                                        </h2>
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>最近这段时间，网页采集方面的工作做得比较多。用curl技术开发了一个微信文章聚合类产品，把抓取到的数据转换成json格式，并在android端调用json数据接口加以显示；基于weiphp做了一个掌上头条插件，也是用的网页采集技术；和一个创业团队一起在做一个高考志愿填报系统，所有的数据也是从别的地方抓取。总而言之，网页抓取与网页采集技术是一项非常实用的技能，他能让我们高效快速的获取我们开发产品所需要的一些基本数据。</p>
+<p>网页抓取与网页采集过程中难免需要用到抓包技术，所谓抓包，就是我们在访问一个目标网站的时候，需要分析我们提交给浏览器的一些http请求以及提交给浏览器的一些数据，在知道请求是如何发起的以及post了哪些数据之后，我们才能针对目标网页写出相应的采集程序。特别是在模拟登陆一些需要用户进行登陆验证的网站时，抓包分析就变得很重要。</p>
+<p>一些浏览器自带抓包分析工具或者有其可扩展的抓包插件，像火狐浏览器有firebug插件，IE浏览器有HttpWatch。每个抓包工具都有其独特的功能，这里就不一一介绍了，今天给大家介绍一个好用的抓包工具Fiddler。</p>
+<p>一、下载地址：
+<a href="http://www.telerik.com/download/fiddler">http://www.telerik.com/download/fiddler</a></p>
+<p>二、基本介绍：
+<a href="http://baike.baidu.com/link?url=bwkApJWJszBYm0M-wrzFXIRh9bLWWvEZT2kUXgq9TXkYDryVErL9fuDdmpsya4O4i5EqAHbt4jzREUhn9TaJiK">Fiddler-百度百科</a></p>
+<p>三、使用教程：
+<a href="https://www.jianshu.com/p/99b6b4cd273c">Fiddler教程</a></p>
+<p>四、补充介绍：
+<a href="http://my.oschina.net/u/587105/blog/322952">手机APP抓包</a></p>
+<p>现在我们来结合一个具体的例子来讲一下如何抓包分析手机APP的请求数据，并达到自己的需求。我这里给大家讲一个LOL盒子的抓包实例。</p>
+<p>我们知道，LOL盒子没有网页版，或者说网页版的功能并不像手机APP一样数据整合的那么齐全。如果我们要做一个微信版的LOL盒子，让用户在微信端回复一些关键词就能查看一些基本信息，比如用户在微信中回复“英雄”就能查看LOL全部的英雄信息，包括出装、符文之类的。那么我们想在微信端实现这些功能，肯定需要数据库的支持，如果我们的数据从LOL官网抓取的话，免不了要写很多匹配规则，所以一个简单高效的方法是直接抓取LOL盒子已经整合了的数据。那么正题开始，我们开始抓LOL盒子集成的全部英雄的数据。</p>
+<p>1、首先在手机下载LOL盒子，并进入首页（请忽略我这个战五渣的战斗力指数）</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/333.png" alt=""></p>
+<p>2、打开Fiddler并点Remove  all把抓包信息全部清除</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/QQ%E6%88%AA%E5%9B%BE20141219111325.png" alt=""></p>
+<p>3、在LOL盒子中点击英雄进入查看英雄页面</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/QQ%E6%88%AA%E5%9B%BE20141219111614.png" alt=""></p>
+<p>4、可以看到查看英雄页面有免费、我的英雄、全部三个选项</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/QQ%E6%88%AA%E5%9B%BE20141219111844.png" alt=""></p>
+<p>5、这时候我们可以看到Fiddler已经抓到我们需要的数据接口了</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/QQ%E6%88%AA%E5%9B%BE20141219112035.png" alt=""></p>
+<p>6、我们在其中一个数据接口上面点击右键，复制url地址并在浏览器中打开</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/QQ%E6%88%AA%E5%9B%BE20141219112258.png" alt=""></p>
+<p>7、就能看到我们需要的周免英雄的数据接口了，是json格式的</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/QQ%E6%88%AA%E5%9B%BE20141219112332.png" alt=""></p>
+<p>到此为止，抓包分析的整个流程大家一目了然了，得到了json接口之后，我们就能用curl技术把数据采集下来，并把json格式的数据转换成数组或者其他格式，然后就可以存到我们自己的数据库中了，当用户在微信中回复关键词时，我们就从数据库中取出相应的数据并回复给用户就行了。</p>
+
+
+                                        
+                                    </div>
+
+                                    
+
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,370 @@
+<html lang="en-US">
+
+<head>
+    
+<title>浅谈shtml与html的区别 - 艾逗笔</title>
+
+<meta property="og:title" content="浅谈shtml与html的区别 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="遇到有人咨询 shtml 与 html 的区别，顺手查了一波资料，根据我的理解整理一下与大家分享。
+[&amp;hellip;] shtml 跟 html 类似，也是一种用于网页设计的标记型语言，区别在于：html 是一种纯静态的标记型语言，在 html 文档里面写的内容是什么，用户打开浏览器看到的就是什么，而 shtml 是一种半静态半动态的标记型语言，在 shtml 里面可以包含 SSI 命令，当用户 &amp;hellip;">
+    <meta property="og:description" content="遇到有人咨询 shtml 与 html 的区别，顺手查了一波资料，根据我的理解整理一下与大家分享。
+[&amp;hellip;] shtml 跟 html 类似，也是一种用于网页设计的标记型语言，区别在于：html 是一种纯静态的标记型语言，在 html 文档里面写的内容是什么，用户打开浏览器看到的就是什么，而 shtml 是一种半静态半动态的标记型语言，在 shtml 里面可以包含 SSI 命令，当用户 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/%E6%B5%85%E8%B0%88shtml%E4%B8%8Ehtml%E7%9A%84%E5%8C%BA%E5%88%AB/">浅谈shtml与html的区别</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2016/10/14</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <blockquote>
+<p>遇到有人咨询 <strong><em>shtml</em></strong> 与 <strong><em>html</em></strong> 的区别，顺手查了一波资料，根据我的理解整理一下与大家分享。</p>
+</blockquote>
+<h2 id="何为-shtml">何为 shtml？</h2>
+<blockquote>
+<p>shtml 跟 html 类似，也是一种用于网页设计的标记型语言，区别在于：html 是一种纯静态的标记型语言，在 html 文档里面写的内容是什么，用户打开浏览器看到的就是什么，而 shtml 是一种半静态半动态的标记型语言，在 shtml 里面可以包含 SSI 命令，当用户在浏览器浏览 shtml 文档的时候，里面包含的 SSI 命令会被解析，然后再呈现内容给用户。</p>
+</blockquote>
+<h2 id="何为-ssi">何为 SSI？</h2>
+<blockquote>
+<p>SSI 是为 WEB 服务器提供的一套命令，这些命令只要直接嵌入到 HTML 文档的注释内容之中即可。例如：
+<code>&lt;!--#include file=&quot;index.html&quot;--&gt;</code> <code>&lt;!--#echo var=&quot;DOCUMENT_NAME&quot;--&gt;</code>都属于 SSI 指令。前者用于包含一个 html 文件，后者用于显示当前文档的名称。</p>
+</blockquote>
+<h2 id="举例说明">举例说明</h2>
+<ul>
+<li>新建一个 index.html 文件，并输入代码：</li>
+</ul>
+<pre><code>    &lt;!DOCTYPE HTML&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;了不起的盖茨比&lt;/title&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;了不起的盖茨比&lt;/h1&gt;
+        &lt;p&gt;1922年的春天，一个想要成名名叫&lt;em&gt;尼克。卡拉威&lt;/em&gt;的作家，离开了美国中西部，来到了纽约。那是一个道德感缺失，爵士乐流行，走私为王，股票飞涨的时代。为了追寻他的&lt;span&gt;美国梦&lt;/span&gt;，他搬入纽约附近一海湾居住。&lt;/p&gt;
+        &lt;p&gt;菲茨杰拉德，二十世纪美国文学巨匠之一，兼具作家和编剧双重身份。他以诗人的敏感和戏剧家的想象为&lt;strong&gt;“爵士乐时代”&lt;/strong&gt;吟唱华丽挽歌，其诗人和梦想家的气质亦为那个奢靡年代的不二注解。&lt;/p&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+</code></pre><pre><code>在浏览器访问该index.html文档，将会显示成这样：
+![1](http://blogcdn.idoustudio.com/2016/10/1.png)
+</code></pre>
+<ul>
+<li>新建一个 test.shtml，并输入代码：</li>
+</ul>
+<pre><code>&lt;!--#include file=&quot;index.html&quot;--&gt;
+&lt;!--#echo var=&quot;DOCUMENT_NAME&quot;--&gt;
+</code></pre><p>在浏览器访问该 test.shtml，将会显示成这样：
+<img src="http://blogcdn.idoustudio.com/2016/10/2.png" alt="2"></p>
+<p>可以看到上面显示的内容与 index.html 文件显示的内容完全相同，这也就是<code>&lt;!--#include file=&quot;index.html&quot;--&gt;</code>这个 SSI 指令解析之后的结果，下面显示的 test.shtml 是<code>&lt;!--#echo var=&quot;DOCUMENT_NAME&quot;--&gt;</code>这个 SSI 指令显示的内容。</p>
+<ul>
+<li>两个文件的目录结构如下：
+<img src="http://blogcdn.idoustudio.com/2016/10/3.png" alt="3"></li>
+</ul>
+<h2 id="一点必要的说明">一点必要的说明</h2>
+<p>直接按照上面的演示去创建 index.html 和 test.shtml 两个文件，在浏览器访问 test.shtml 文档的时候会显示一片空白，这是因为 shtml 需要服务器配置支持 SSI 指令后方可解析其中的 SSI 指令。对于只需要了解 html 与 shtml 的区别的同学来说，没有必要再去深入研究。对于装了 apache 服务器的同学，可以按照下面的步骤去更改 apache 配置，让其能支持 shtml。
+1. 打开 apache 的 httpd.conf 文件，搜索“AddType text/html .shtml”
+2. 去掉这两行前面的<code>#</code>注释
+<code># AddType text/html .shtml</code>
+<code># AddOutputFilter INCLUDES .shtml</code>
+3. 搜索<code>Options Indexes FollowSymLinks</code>并将其更改为<code>Options Indexes FollowSymLinks Includes</code>
+4. 保存 httpd.conf，重启 apache</p>
+<h2 id="总结">总结</h2>
+<blockquote>
+<p>html 是纯静态标记语言，在里面写什么内容，浏览器就显示什么内容。shtml 是半静态半动态标记语言，可以在里面包含 SSI 指令，配置服务器支持 shtml 之后，shtml 文件里面的 SSI 指令会被解析，在浏览器浏览 shtml 文档，看到的是 SSI 指令被解析之后的结果。</p>
+</blockquote>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/shtml" title="View all posts tagged match">shtml</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/"
+                                                    rel="prev">git常用命令整理</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">AES加解密在php接口请求过程中的应用</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

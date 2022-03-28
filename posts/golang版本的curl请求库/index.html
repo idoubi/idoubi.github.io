@@ -1,0 +1,425 @@
+<html lang="en-US">
+
+<head>
+    
+<title>golang版本的curl请求库 - 艾逗笔</title>
+
+<meta property="og:title" content="golang版本的curl请求库 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="https://github.com/mikemintang/go-curl
+[&amp;hellip;] go get github.com/mikemintang/go-curl 使用 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/mikemintang/go-curl&amp;#34; ) func main() { url := &amp;hellip;">
+    <meta property="og:description" content="https://github.com/mikemintang/go-curl
+[&amp;hellip;] go get github.com/mikemintang/go-curl 使用 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/mikemintang/go-curl&amp;#34; ) func main() { url := &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/">golang版本的curl请求库</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2017/09/14</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="github地址">Github地址</h2>
+<p><a href="https://github.com/mikemintang/go-curl">https://github.com/mikemintang/go-curl</a></p>
+<h2 id="安装">安装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">get</span> <span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">mikemintang</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span><span style="color:#f92672">-</span><span style="color:#a6e22e">curl</span>
+</code></pre></div><h2 id="使用">使用</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;github.com/mikemintang/go-curl&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#a6e22e">url</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;http://php.dev/api.php&#34;</span>
+
+    <span style="color:#a6e22e">headers</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{
+        <span style="color:#e6db74">&#34;User-Agent&#34;</span>:    <span style="color:#e6db74">&#34;Sublime&#34;</span>,
+        <span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">&#34;Bearer access_token&#34;</span>,
+        <span style="color:#e6db74">&#34;Content-Type&#34;</span>:  <span style="color:#e6db74">&#34;application/json&#34;</span>,
+    }
+
+    <span style="color:#a6e22e">cookies</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{
+        <span style="color:#e6db74">&#34;userId&#34;</span>:    <span style="color:#e6db74">&#34;12&#34;</span>,
+        <span style="color:#e6db74">&#34;loginTime&#34;</span>: <span style="color:#e6db74">&#34;15045682199&#34;</span>,
+    }
+
+    <span style="color:#a6e22e">queries</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{
+        <span style="color:#e6db74">&#34;page&#34;</span>: <span style="color:#e6db74">&#34;2&#34;</span>,
+        <span style="color:#e6db74">&#34;act&#34;</span>:  <span style="color:#e6db74">&#34;update&#34;</span>,
+    }
+
+    <span style="color:#a6e22e">postData</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}{
+        <span style="color:#e6db74">&#34;name&#34;</span>:      <span style="color:#e6db74">&#34;mike&#34;</span>,
+        <span style="color:#e6db74">&#34;age&#34;</span>:       <span style="color:#ae81ff">24</span>,
+        <span style="color:#e6db74">&#34;interests&#34;</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;basketball&#34;</span>, <span style="color:#e6db74">&#34;reading&#34;</span>, <span style="color:#e6db74">&#34;coding&#34;</span>},
+        <span style="color:#e6db74">&#34;isAdmin&#34;</span>:   <span style="color:#66d9ef">true</span>,
+    }
+
+    <span style="color:#75715e">// 链式操作
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">req</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">curl</span>.<span style="color:#a6e22e">NewRequest</span>()
+    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">req</span>.
+        <span style="color:#a6e22e">SetUrl</span>(<span style="color:#a6e22e">url</span>).
+        <span style="color:#a6e22e">SetHeaders</span>(<span style="color:#a6e22e">headers</span>).
+        <span style="color:#a6e22e">SetCookies</span>(<span style="color:#a6e22e">cookies</span>).
+        <span style="color:#a6e22e">SetQueries</span>(<span style="color:#a6e22e">queries</span>).
+        <span style="color:#a6e22e">SetPostData</span>(<span style="color:#a6e22e">postData</span>).
+        <span style="color:#a6e22e">Post</span>()
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">IsOk</span>() {
+            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>)
+        } <span style="color:#66d9ef">else</span> {
+            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Raw</span>)
+        }
+    }
+
+}
+
+</code></pre></div><h2 id="接收请求的apiphp">接收请求的api.php</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>  
+
+<span style="color:#75715e">//echo json_encode($_GET);                      // 获取url地址中的查询参数
+</span><span style="color:#75715e">//echo json_encode(getallheaders());            // 获取请求头
+</span><span style="color:#75715e">//echo json_encode($_COOKIE);                   // 获取cookies
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">file_get_contents</span>(<span style="color:#e6db74">&#34;php://input&#34;</span>);          <span style="color:#75715e">// 获取post提交的数据
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getallheaders</span>() { 
+    $headers <span style="color:#f92672">=</span> []; 
+    <span style="color:#66d9ef">foreach</span> ($_SERVER <span style="color:#66d9ef">as</span> $name <span style="color:#f92672">=&gt;</span> $value) { 
+       <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">substr</span>($name, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;HTTP_&#39;</span>) { 
+           $headers[<span style="color:#a6e22e">str_replace</span>(<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;-&#39;</span>, <span style="color:#a6e22e">ucwords</span>(<span style="color:#a6e22e">strtolower</span>(<span style="color:#a6e22e">str_replace</span>(<span style="color:#e6db74">&#39;_&#39;</span>, <span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#a6e22e">substr</span>($name, <span style="color:#ae81ff">5</span>)))))] <span style="color:#f92672">=</span> $value; 
+       } 
+    } 
+    <span style="color:#66d9ef">return</span> $headers; 
+} 
+</code></pre></div><h2 id="可导出的成员变量和方法">可导出的成员变量和方法</h2>
+<p><img src="http://blogcdn.idoustudio.com/go-curl-2.png" alt=""></p>
+<h2 id="todolist">TodoList</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 以链式操作的方式发起请求</li>
+<li><input disabled="" type="checkbox"> 以函数回调的方式发起请求</li>
+<li><input disabled="" type="checkbox"> 以类Jquery Ajax的方式发起请求</li>
+<li><input checked="" disabled="" type="checkbox"> 发起GET/POST请求</li>
+<li><input disabled="" type="checkbox"> 发起PUT/PATCH/DELETE/OPTIONS操作</li>
+<li><input checked="" disabled="" type="checkbox"> 以application/x-www-form-urlencoded形式提交post数据</li>
+<li><input checked="" disabled="" type="checkbox"> 以application/json形式提交post数据</li>
+<li><input disabled="" type="checkbox"> 以multipart/form-data形式提交post数据</li>
+<li><input disabled="" type="checkbox"> proxy代理设置</li>
+</ul>
+
+
+                                        
+                                        
+                                        
+                                        <div class="rp4wp-related-posts">
+                                            <h3>相关文章</h3>
+                                            <ul>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/legacy/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/">在php中使用curl多线程下载图片</a>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e6%ba%90%e9%a1%b9%e7%9b%ae" title="View all posts in PHP8">开源项目</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/go" title="View all posts tagged match">go</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/curl" title="View all posts tagged match">curl</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/legacy/%E5%85%AB%E6%9C%88%E4%B9%A6%E8%AF%84%E4%BA%8C%E5%88%99/"
+                                                    rel="prev">八月书评二则</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">goimports工具安装与使用</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

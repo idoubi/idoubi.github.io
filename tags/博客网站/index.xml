@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>博客网站 on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/</link>
+    <description>Recent content in 博客网站 on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sun, 19 Apr 2020 22:11:23 +0800</lastBuildDate><atom:link href="https://idoubi.cc/tags/%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于「Hugo」搭建个人博客网站</title>
+      <link>https://idoubi.cc/posts/build-site-with-hugo/</link>
+      <pubDate>Sun, 19 Apr 2020 22:11:23 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/build-site-with-hugo/</guid>
+      <description>前言 搭建个人网站，以前我们一般会选择 WordPress，因为其使用范围广（据说全世界 80%的网站都是用它搭建的）、主题丰富、上手简单。
+近年来，markdown 内容格式渐渐流行，我们更愿意使用 markdown 格式来写文章，写完后用静态网站生成工具把文章内容转换成 html 格式，再发布到个人网站。生成静态网站的工具中，比较优秀的有 Jekyll、Hexo、Hugo 几个。
+简单比较一下动态网站框架 WordPress 与静态网站生成框架 Hexo、Hugo 的区别：
+   项目 开发语言 优势 不便之处     WordPress php 1. 有可视化后台可以编写文章；2. 使用范围广；3. 主题、插件丰富。 1. 依赖过多导致加载较慢；2. 需要服务器部署，依赖数据库；3. 数据需要定时备份。   Hexo nodejs 1. 静态生成，SEO 友好；2. npm 生态有丰富的插件可用于扩展功能。 1. 本地编译生成静态文件速度较慢；2. 调试麻烦，经常遇到 js 报错。   Hugo go 1. 编译速度最快;2. 开发主题非常方便。 1. 目前主题数量较少。    综合来看，我还是比较推荐使用 Hugo 来搭建个人网站。
+安装 Hugo MacOS 系统下，可以使用 brew 来进行安装。</description>
+    </item>
+    
+  </channel>
+</rss>

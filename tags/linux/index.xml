@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/linux/</link>
+    <description>Recent content in linux on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sun, 07 Sep 2014 12:38:13 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>阿里云服务器phpmyadmin无法登陆问题及其解决办法</title>
+      <link>https://idoubi.cc/legacy/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <pubDate>Sun, 07 Sep 2014 12:38:13 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <description>比起一般的虚拟主机，阿里云服务器在访问速度和稳定性方面都有很突出的优势。我是半年前开始使用阿里云的，用的是最低的配置，55 块钱一个月，由于不懂得 Linux 服务器和 shell 编程，所以在买下阿里云服务器之后用的是阿里云官方提供的一键安装 web 服务。http://help.aliyun.com/view/13435438.html
+使用一键安装 web 教程配置好的阿里云服务器使用起来还是挺方便的，就是偶尔会出现一些莫名其妙的问题，比如数据库登录不上，无法更改网站根目录之类的，可惜的是我不懂 linux 服务器，所以出现了什么问题只能求助别人或者各种百度，这样挺不方便的。看来要找个时间好好学一学 linux 服务器。
+记录一下使用阿里云服务器以来遇到最多的数据库登录不上的问题及解决办法：
+通过 xftp 操作阿里云服务器上的文件，提交表单的时候遇到断网，表单提交失败，再去提交的时候就提示数据库连接错误，这时候去访问 phpmyadmin 就会提示 2002 错误，百度解决办法的时候看到的都是说需要更改配置文件，把&#39;127.0.0.1&amp;rsquo;改成&amp;rsquo;localhost&amp;rsquo;之类的。http://www.jb51.net/article/30175.htm
+仿照着去修改了配置文件之后，发现问题还是没有解决。于是用了阿里云的快照回滚，把文件恢复到早期的一个阶段。
+快照回滚之后，阿里云恢复到早期的一个状态，重启系统之后再去访问网址，提示页面打不开。刚开始百度了好久都没找到解决的办法，最后实在搞不定了就求助了一个懂 linux 的小伙伴，才知道原来是阿里云系统重启之后需要重新启动服务。
+简单的两行代码就把阿里云服务启动了，再去访问网站就妥了。
+有时间一定要好好学习 linux 系统和 shell 编程。
+ </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hexo on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/hexo/</link>
+    <description>Recent content in hexo on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sat, 27 Apr 2019 17:01:16 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>「Hexo」设置代码语法高亮</title>
+      <link>https://idoubi.cc/posts/hexo-highlight/</link>
+      <pubDate>Sat, 27 Apr 2019 17:01:16 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/hexo-highlight/</guid>
+      <description>在使用某个hexo主题的时候，我们有时候会觉得文章详情中的代码高亮显示的样式并不是很好看，通过下面的方式我们可以选择一套自己喜爱的代码高亮样式，让我们的文章阅读起来更有视觉触动。
+ 配置markdown渲染引擎  使用新的渲染引擎  npm un hexo-renderer-marked --save npm i hexo-renderer-markdown-it --save  在_config.yml中配置渲染参数  markdown: &#39;commonmark&#39;  重新预览  hexo clean hexo s --draft 配置代码高亮  设置code-prettify  # 下载源码 git clone https://github.com/google/code-prettify.git # 拷贝样式 cp code-prettify/src/prettify.css hexo/themes/hyde/source/css/ cp code-prettify/src/prettify.js hexo/themes/hyde/source/js/  设置皮肤  # 下载源码 git clone https://github.com/jmblog/color-themes-for-google-code-prettify.git # 拷贝样式 cd color-themes-for-google-code-prettify/dist/themes cp tomorrow-night.min.css hexo/themes/hyde/source/css/  禁用默认的高亮设置  # 修改_config.yml highlight: enable: false line_number: false auto_detect: false tab_replace: false  在主题模板文件中设置高亮  # head标签里引入css &amp;lt;%- css(&#39;css/prettify.</description>
+    </item>
+    
+    <item>
+      <title>开源一款hexo工作室主题</title>
+      <link>https://idoubi.cc/posts/hexo-theme-studio/</link>
+      <pubDate>Tue, 15 May 2018 10:47:44 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/hexo-theme-studio/</guid>
+      <description>项目地址 Github: https://github.com/mikemintang/hexo-theme-studio
+项目截图 使用教程  安装 hexo  官网教程：https://hexo.io/zh-cn/docs/
+安装 hexo-theme-studio 主题  git clone https://github.com/mikemintang/hexo-theme-studio.git themes/studio
+安装主题所需依赖  npm install hexo-server hexo-browsersync hexo-renderer-jade hexo-renderer-stylus --save-dev
+使用主题  修改 hexo 项目根目录下的_config.yml，设置theme: studio
+预览主题  hexo s</description>
+    </item>
+    
+  </channel>
+</rss>

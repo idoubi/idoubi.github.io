@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/javascript/</link>
+    <description>Recent content in javascript on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Tue, 03 Nov 2015 12:53:27 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>省市区三级联动js实现</title>
+      <link>https://idoubi.cc/legacy/%E7%9C%81%E5%B8%82%E5%8C%BA%E4%B8%89%E7%BA%A7%E8%81%94%E5%8A%A8js%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 03 Nov 2015 12:53:27 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E7%9C%81%E5%B8%82%E5%8C%BA%E4%B8%89%E7%BA%A7%E8%81%94%E5%8A%A8js%E5%AE%9E%E7%8E%B0/</guid>
+      <description>接了一个广州电信微信公众号开发的单子，用户在兑换礼品的时候需要填写个人信息，这个时候需要用到省市区三级联动的功能。于是开始在网上找省市区三级联动的 js，终于找到一篇：http://www.cnblogs.com/zjfree/archive/2013/08/20/3269864.html
+这是使用 QQ 网站用的 js 来实现省市区三级联动的，既然腾讯都用了，姑且我也用这个 js 吧。
+下面讲一下使用过程：
+复制一份生成省市区联动数据的 js： http://ip.qq.com/js/geo.js
+将 js 文件上传到服务器项目目录下面： 在需要用到省市区联动的 html 页面引入该 js： &amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;{:ADDON_PUBLIC_PATH}/js/geo.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; 给省市区联动的 select 分别添加 id：s1、s2、s3 &amp;lt;select name=&amp;quot;province&amp;quot; id=&amp;quot;s1&amp;quot; disabled=&amp;quot;disabled&amp;quot;&amp;gt; &amp;lt;option&amp;gt;&amp;lt;/option&amp;gt; &amp;lt;/select&amp;gt; &amp;lt;select name=&amp;quot;city&amp;quot; id=&amp;quot;s2&amp;quot;&amp;gt; &amp;lt;option&amp;gt;&amp;lt;/option&amp;gt; &amp;lt;/select&amp;gt; &amp;lt;select name=&amp;quot;area&amp;quot; id=&amp;quot;s3&amp;quot;&amp;gt; &amp;lt;option&amp;gt;&amp;lt;/option&amp;gt; &amp;lt;/select&amp;gt; 给 body 标签绑定 onload 事件用于初始化省市区 &amp;lt;body onload=&amp;quot;setup();preselect(&#39;陕西省&#39;);promptinfo();&amp;quot;&amp;gt; ok，这样就妥了。省市区三级联动完美实现。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,355 @@
+<html lang="en-US">
+
+<head>
+    
+<title>使用Xshell命令配置阿里云运行环境小结 - 艾逗笔</title>
+
+<meta property="og:title" content="使用Xshell命令配置阿里云运行环境小结 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="1、配置服务器连接属性
+2、下载一键安装包并放置在阿里云 root 目录下
+3、输入安装命令
+4、输入 cat account.log 命令查看安装软件登陆信息
+5、进入 Xftp，将网站等应用放置在根目录即可
+6、阿里云一键安装 web &amp;hellip;">
+    <meta property="og:description" content="1、配置服务器连接属性
+2、下载一键安装包并放置在阿里云 root 目录下
+3、输入安装命令
+4、输入 cat account.log 命令查看安装软件登陆信息
+5、进入 Xftp，将网站等应用放置在根目录即可
+6、阿里云一键安装 web &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/%E4%BD%BF%E7%94%A8xshell%E5%91%BD%E4%BB%A4%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%B0%8F%E7%BB%93/">使用Xshell命令配置阿里云运行环境小结</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2014/12/19</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>1、配置服务器连接属性</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/12.png" alt=""></p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/13.png" alt=""></p>
+<p>2、下载一键安装包并放置在阿里云 root 目录下</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/0.png" alt=""></p>
+<p>3、输入安装命令</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/QQ%E6%88%AA%E5%9B%BE20141218221701.png" alt=""></p>
+<p>4、输入 cat account.log 命令查看安装软件登陆信息</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/14.png" alt=""></p>
+<p>5、进入 Xftp，将网站等应用放置在根目录即可</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/12/15.png" alt=""></p>
+<p>6、阿里云一键安装 web 教程及相关软件下载</p>
+<p>linux_setup_1.4.1](<a href="http://blogcdn.idoustudio.com/2014/12/linux_setup_1.4.1.zip">http://blogcdn.idoustudio.com/2014/12/linux_setup_1.4.1.zip</a>)</p>
+<p>附：<a href="https://blog.linuxeye.com/31.html" title="linux服务器环境配置">https://blog.linuxeye.com/31.html</a></p>
+
+
+                                        
+                                        
+                                        
+                                        <div class="rp4wp-related-posts">
+                                            <h3>相关文章</h3>
+                                            <ul>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">阿里云服务器phpmyadmin无法登陆问题及其解决办法</a>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/xshell" title="View all posts tagged match">xshell</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/%e9%98%bf%e9%87%8c%e4%ba%91" title="View all posts tagged match">阿里云</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/%E7%94%A8svn%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E5%9C%A8%E6%9C%AC%E5%9C%B0%E6%8E%A7%E5%88%B6%E4%B9%90%E4%BD%B3%E8%82%B4/"
+                                                    rel="prev">用SVN版本管理工具在本地对项目代码进行管理</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/fiddler%E7%BD%91%E9%A1%B5%E9%87%87%E9%9B%86%E5%BF%85%E5%A4%87%E6%8A%93%E5%8C%85%E5%88%A9%E5%99%A8/">「Fiddler」网页采集必备抓包利器</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,645 @@
+<html lang="en-US">
+
+<head>
+    
+<title>Notes - 艾逗笔</title>
+
+<meta property="og:title" content="Notes - 艾逗笔">
+
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+<link href="/notes/index.xml" rel="alternate" type="application/rss+xml" title="艾逗笔" />
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+    <style>
+        .post-content li {
+            list-style: none;
+            margin: 10px auto;
+        }
+        .post-content li a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        
+                        
+                        
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/rust-quickstart/">「rust」快速上手指南</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><h2 id="安装">安装</h2>
+<ul>
+<li>安装 rustup 命令行工具</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 下载脚本</span>
+curl --proto <span style="color:#e6db74">&#39;=https&#39;</span> --tlsv1.2 https://sh.rustup.rs -sSf | sh
+
+<span style="color:#75715e"># 修改环境变量</span>
+source …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/nginx-config/">「nginx」配置静态网站访问</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><ul>
+<li>Nginx 配置静态网站访问</li>
+</ul>
+<p>支持 HTTP 和 HTTPS。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">server {
+    listen 443 ssl;
+    server_name idoubi.cc; 
+
+    ssl_certificate …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/install-protobuf-in-linux/">在 Linux 系统通过源码安装 Protobuf</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><ol>
+<li>打开源码下载页</li>
+</ol>
+<p><a href="https://github.com/protocolbuffers/protobuf/releases">https://github.com/protocolbuffers/protobuf/releases</a></p>
+<ol start="2">
+<li>下载源码</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">wget …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/install-python-in-linux/">在 Linux 系统通过源码安装 Python3</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><ol>
+<li>打开 python 源码下载页</li>
+</ol>
+<p><a href="https://www.python.org/ftp/python/">https://www.python.org/ftp/python/</a></p>
+<ol start="2">
+<li>下载源码</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">wget …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/use-3rd-lib-in-cpp/">在 C&#43;&#43; 中使用第三方库</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><ol>
+<li>创建项目</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mkdir demo
+cd demo
+</code></pre></div><ol start="2">
+<li>创建 cmake 工程</li>
+</ol>
+<p><code>vi CMakeLists.txt</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">cmake_minimum_required(VERSION 2.8)
+
+project(demo) …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/install-go-in-linux/">在 Linux 系统通过源码安装 Go</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><ol>
+<li>安装旧版本的 Go</li>
+</ol>
+<p>Go 语言是自举的，要安装新版的 Go 语言，需要依赖系统已有的 Go 语言环境。</p>
+<p>在 Centos 中，我们可以通过 yum 来安装 Go 。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">yum install -y go
+</code></pre></div><p>安装完之后查看 Go 版本</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">go …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/cpp-in-vscode/">在「VS Code」搭建「C&#43;&#43;」开发环境</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><p>大家都知道「VS Code」是一个“真香”编辑器，用来做「C++」开发也是一样的香！</p>
+<h2 id="开始写-c-程序">开始写 C++ 程序</h2>
+<p>第一次接触 C++，我们先不折腾编辑器的事情，随便用个能写代码的软件，写一个能输出“Hello World”的可执行程序再说。 …</p></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/vscode-sublime-theme/">「VS Code」打造类sublime的高颜值编辑器</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><p>用惯了 sublime 编辑器，最近因为实在忍受不了 sublime 的低性能，而决定转向<code>vscode</code>。然而 vscode 自带的主题并不能满足我对编辑器颜值的要求，幸好在网上找到一款类似 sublime 的皮肤， …</p></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/sublime-go-dev/">「Sublime」配置Go开发环境</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><h2 id="安装gosublime插件">安装GoSublime插件</h2>
+<p>GoSublime是在Sublimeb编辑器中开发Go语言必备的插件之一，提供Go源码编译、格式化、包自动导入等功能。之前可以通过Sublime的软件仓库直接安装，现在的版本已经搜不到这个插件了，我们需要通过源码 …</p></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/docker-usage/">「docker」基本使用</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><h2 id="在-centos-安装-docker">在 Centos 安装 docker</h2>
+<ul>
+<li>卸载原来的版本</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">yum remove docker <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>        docker-client <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>        docker-client-latest <span style="color:#ae81ff">\ …</span></code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/gvm-usage/">「gvm」Go 多版本管理工具</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><p>项目地址：<a href="https://github.com/moovweb/gvm">gvm</a></p>
+<h2 id="安装依赖">安装依赖</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">yum install -y bison
+</code></pre></div><h2 id="安装-gvm">安装 gvm</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">bash &lt; &lt;<span style="color:#f92672">(</span>curl -s -S -L …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/helm-usage/">「helm」基本使用</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><ul>
+<li>安装 helm</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod <span style="color:#ae81ff">700 …</span></code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/hugo-usage/">「hugo」使用教程</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><h2 id="安装">安装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 下载二进制</span>
+wget https://github.com/gohugoio/hugo/releases/download/v0.87.0/hugo_0.87.0_Linux-64bit.tar.gz
+<span style="color:#75715e"># 解压缩</span>
+tar …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/k3d-usage/">「k3d」基本使用</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><blockquote>
+<p>确保机器上 docker 已安装</p>
+</blockquote>
+<ul>
+<li>安装 k3d</li>
+</ul>
+<p><code>wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash</code></p>
+<ul>
+<li>查看 k3d …</li></ul></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/nvm-usage/">「nvm」nodejs 多版本管理工具</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><p>项目地址：<a href="https://github.com/nvm-sh/nvm">nvm</a></p>
+<h2 id="安装-nvm">安装 nvm</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+
+export NVM_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span><span style="color:#f92672">[ …</span></code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                        <div
+                            class="post-6033 post type-post status-publish format-standard hentry category-php8 category-php-usage category-notes tag-match tag-match-expressionswitch tag-php-8 tag-php8 entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/notes/oh-my-zsh-usage/">「oh-my-zsh」使用说明</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post-content">
+                                        
+                                        
+                                        
+                                        
+                                        <p><ul>
+<li>安装</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 安装 zsh</span>
+yum install -y zsh
+<span style="color:#75715e"># 安装 oh-my-zsh</span>
+sh -c <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL …</code></pre></div></p>
+                                    </div>
+                            </article>
+                        </div>
+                        
+                
+                    </div>
+                
+                
+                    <nav class="navigation pagination" role="navigation" aria-label="Posts">
+                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <div class="nav-links">
+                            
+                            
+                            
+                            <span aria-current="page" class="page-numbers current">1</span>
+                            
+                            
+                            
+                            
+                        </div>
+                    </nav>
+                </section> 
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

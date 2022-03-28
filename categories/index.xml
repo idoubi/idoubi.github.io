@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on 艾逗笔</title>
+    <link>https://idoubi.cc/categories/</link>
+    <description>Recent content in Categories on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Fri, 28 May 2021 10:29:34 +0000</lastBuildDate><atom:link href="https://idoubi.cc/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开发笔记</title>
+      <link>https://idoubi.cc/categories/%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Fri, 28 May 2021 10:29:34 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/categories/%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>开源项目</title>
+      <link>https://idoubi.cc/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</link>
+      <pubDate>Sat, 15 Feb 2020 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>系列分享</title>
+      <link>https://idoubi.cc/categories/%E7%B3%BB%E5%88%97%E5%88%86%E4%BA%AB/</link>
+      <pubDate>Mon, 08 Jul 2019 21:43:33 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/categories/%E7%B3%BB%E5%88%97%E5%88%86%E4%BA%AB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>随笔杂感</title>
+      <link>https://idoubi.cc/categories/%E9%9A%8F%E7%AC%94%E6%9D%82%E6%84%9F/</link>
+      <pubDate>Sat, 26 Aug 2017 11:18:40 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/categories/%E9%9A%8F%E7%AC%94%E6%9D%82%E6%84%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>其他</title>
+      <link>https://idoubi.cc/categories/%E5%85%B6%E4%BB%96/</link>
+      <pubDate>Mon, 31 Mar 2014 19:24:29 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/categories/%E5%85%B6%E4%BB%96/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,436 @@
+<html lang="en-US">
+
+<head>
+    
+<title>基于「Hugo」搭建个人博客网站 - 艾逗笔</title>
+
+<meta property="og:title" content="基于「Hugo」搭建个人博客网站 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="搭建个人网站，以前我们一般会选择 WordPress，因为其使用范围广（据说全世界 80%的网站都是用它搭建的）、主题丰富、上手简单。
+近年来，markdown 内容格式渐渐流行，我们更愿意使用 markdown 格式来写文章，写完后用静态网站生成工具把文章内容转换成 html 格式，再发布到个人网站。生成静态网站的工具中，比较优秀的有 Jekyll、Hexo、Hugo 几个。
+简单比较一下动态网 &amp;hellip;">
+    <meta property="og:description" content="搭建个人网站，以前我们一般会选择 WordPress，因为其使用范围广（据说全世界 80%的网站都是用它搭建的）、主题丰富、上手简单。
+近年来，markdown 内容格式渐渐流行，我们更愿意使用 markdown 格式来写文章，写完后用静态网站生成工具把文章内容转换成 html 格式，再发布到个人网站。生成静态网站的工具中，比较优秀的有 Jekyll、Hexo、Hugo 几个。
+简单比较一下动态网 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/build-site-with-hugo/">基于「Hugo」搭建个人博客网站</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2020/04/19</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="前言">前言</h2>
+<p>搭建个人网站，以前我们一般会选择 <code>WordPress</code>，因为其使用范围广（据说全世界 80%的网站都是用它搭建的）、主题丰富、上手简单。</p>
+<p>近年来，<code>markdown</code> 内容格式渐渐流行，我们更愿意使用 <code>markdown</code> 格式来写文章，写完后用静态网站生成工具把文章内容转换成 <code>html</code> 格式，再发布到个人网站。生成静态网站的工具中，比较优秀的有 <code>Jekyll</code>、<code>Hexo</code>、<code>Hugo</code> 几个。</p>
+<p>简单比较一下动态网站框架 <code>WordPress</code> 与静态网站生成框架 <code>Hexo</code>、<code>Hugo</code> 的区别：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>开发语言</th>
+<th>优势</th>
+<th>不便之处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WordPress</td>
+<td>php</td>
+<td>1. 有可视化后台可以编写文章；<!-- raw HTML omitted -->2. 使用范围广；<!-- raw HTML omitted -->3. 主题、插件丰富。</td>
+<td>1. 依赖过多导致加载较慢；<!-- raw HTML omitted -->2. 需要服务器部署，依赖数据库；<!-- raw HTML omitted -->3. 数据需要定时备份。</td>
+</tr>
+<tr>
+<td>Hexo</td>
+<td>nodejs</td>
+<td>1. 静态生成，SEO 友好；<!-- raw HTML omitted -->2. npm 生态有丰富的插件可用于扩展功能。</td>
+<td>1. 本地编译生成静态文件速度较慢；<!-- raw HTML omitted -->2. 调试麻烦，经常遇到 js 报错。</td>
+</tr>
+<tr>
+<td>Hugo</td>
+<td>go</td>
+<td>1. 编译速度最快;<!-- raw HTML omitted --> 2. 开发主题非常方便。</td>
+<td>1. 目前主题数量较少。</td>
+</tr>
+</tbody>
+</table>
+<p>综合来看，我还是比较推荐使用 <code>Hugo</code> 来搭建个人网站。</p>
+<h2 id="安装-hugo">安装 Hugo</h2>
+<p>MacOS 系统下，可以使用 <code>brew</code> 来进行安装。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">brew install hugo
+</code></pre></div><p>安装完后，可以全局使用 <code>Hugo</code> 命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo version
+</code></pre></div><h2 id="创建个人网站">创建个人网站</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo new site myblog
+</code></pre></div><p>进入创建的 <code>myblog</code> 目录，可以看到生成的目录结构长这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">.
+├── archetypes
+│   └── default.md
+├── config.toml
+├── content
+├── data
+├── layouts
+├── static
+└── themes
+</code></pre></div><h2 id="选择一个主题">选择一个主题</h2>
+<p>创建完网站之后，我们可以在 <code>Hugo</code> 官方的 <a href="https://themes.gohugo.io/">主题商店</a> 选择一个自己喜欢的主题，并下载下来使用。</p>
+<p>这里以 <a href="https://github.com/cntrump/hugo-notepadium">hugo-notepadium</a> 这个主题为例，进入上一步创建的个人网站，并克隆主题到 <code>themes</code> 文件夹：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git clone https://github.com/cntrump/hugo-notepadium.git themes/hugo-notepadium
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">.
+├── archetypes
+│   └── default.md
+├── config.toml
+├── content
+├── data
+├── layouts
+├── static
+└── themes
+    └── hugo-notepadium
+</code></pre></div><h2 id="修改网站配置">修改网站配置</h2>
+<p>修改站点配置文件 <code>config.toml</code> ，填写自己的网站信息和使用的主题名称，也可以根据 <a href="https://github.com/cntrump/hugo-notepadium">主题说明</a> 里示例的配置信息来自定义网站内容。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml"><span style="color:#a6e22e">baseURL</span> = <span style="color:#e6db74">&#34;https://example.com&#34;</span>
+<span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#34;MyBlog&#34;</span>
+<span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#34;hugo-notepadium&#34;</span>
+<span style="color:#a6e22e">copyright</span> = <span style="color:#e6db74">&#34;©2020 my name.&#34;</span>
+</code></pre></div><h2 id="创建文章">创建文章</h2>
+<p>接下来我们可以开始写文章了，通过：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo new posts/helloworld.md
+</code></pre></div><p>新建一篇文章。在生成的文件中使用 <code>markdown</code> 格式来书写文章内容。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: &#34;Helloworld&#34;
+date: 2020-04-19T23:56:47+08:00
+draft: true
+---
+
+<span style="color:#75715e">## 说明
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">
+</span><span style="color:#66d9ef">&gt; </span><span style="font-style:italic">HelloWorld
+</span><span style="font-style:italic"></span>
+这是内容
+</code></pre></div><h2 id="网站预览">网站预览</h2>
+<p>执行 <code>server</code> 命令，对所有已发布和编辑中的文章进行预览：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo server -D
+</code></pre></div><h2 id="发布内容">发布内容</h2>
+<p>写完文章，预览没问题后，可以更改文章的草稿状态 <code>draft: false</code>，然后编译生成静态网站内容了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo -t hugo-notepadium
+</code></pre></div><p>可以看到，几乎瞬间完成编译工作。生成的静态内容都在 <code>public</code> 目录下面：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">public
+├── 404.html
+├── categories
+├── css
+├── index.html
+├── index.xml
+├── page
+├── posts
+├── sitemap.xml
+└── tags
+</code></pre></div><h2 id="部署到线上">部署到线上</h2>
+<p>最简单的部署方式，只需要把 <code>public</code> 目录下的内容上传到 <code>Github</code>，并使用 <code>Github Pages</code> 创建一个站点，就可以通过：<code>xxx.github.io</code> 访问了，还可以绑定自定义域名。</p>
+<p>也可以自己写一个 <code>shell</code> 脚本，做到每次编译完文章后自动同步 <code>public</code> 目录下的内容到 <code>Github</code> 或者自己的服务器，来保持线上站点的内容及时更新。</p>
+<h2 id="总结">总结</h2>
+<p>通过前面的步骤我们看到通过 <code>Hugo</code> 创建静态网站是非常方便的，并且发布前的编译速度也非常快。比起传统的动态网站，可能不足的地方在于没有可视化后台来随时新增或修改 <code>markdown</code> 内容，但是实际上也是可以做到的，我们可以选择开发自己的主题，在主题开发过程中，我们可以通过 <code>getJSON</code> 来获取 <code>API</code> 传递的动态数据，有了这个功能，说不定就可以很好的结合动态网站与静态网站的优势了。以后有时间再讲一下如何开发自定义主题吧。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://gohugo.io/getting-started/quick-start/">Hugo 官方文档</a></li>
+<li><a href="https://themes.gohugo.io/">Hugo 主题商城</a></li>
+<li><a href="https://github.com/cntrump/hugo-notepadium">hugo-notepadium</a></li>
+</ul>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/Hugo" title="View all posts tagged match">Hugo</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/%e5%8d%9a%e5%ae%a2%e7%bd%91%e7%ab%99" title="View all posts tagged match">博客网站</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/course-in-blog/"
+                                                    rel="prev">在个人博客实现「小课」系统</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/go-dev-with-air/">使用「Air」实现热加载，助力「Go」项目开发调试</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

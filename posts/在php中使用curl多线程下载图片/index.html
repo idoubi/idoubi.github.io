@@ -1,0 +1,482 @@
+<html lang="en-US">
+
+<head>
+    
+<title>在php中使用curl多线程下载图片 - 艾逗笔</title>
+
+<meta property="og:title" content="在php中使用curl多线程下载图片 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="遇到一个需求：要下载这个网站http://www.laredoute.com/上面的商品图片到本地。 分析了一下，这个网站是一个国外的站点，受 cdn 节点的影响，在国内打开的速度比较慢。另一方面，要下载的商品图片较大，单张图片的大小有超过 200kb 的。 现在的需求是，要在短时间内批量下载该网站上面的商品图片到本地，鉴于这两点考虑，如果使用 php 来做的话， &amp;hellip;">
+    <meta property="og:description" content="遇到一个需求：要下载这个网站http://www.laredoute.com/上面的商品图片到本地。 分析了一下，这个网站是一个国外的站点，受 cdn 节点的影响，在国内打开的速度比较慢。另一方面，要下载的商品图片较大，单张图片的大小有超过 200kb 的。 现在的需求是，要在短时间内批量下载该网站上面的商品图片到本地，鉴于这两点考虑，如果使用 php 来做的话， &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/">在php中使用curl多线程下载图片</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2016/12/30</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <blockquote>
+<p>遇到一个需求：要下载这个网站<a href="http://www.laredoute.com/">http://www.laredoute.com/</a>上面的商品图片到本地。
+分析了一下，这个网站是一个国外的站点，受 cdn 节点的影响，在国内打开的速度比较慢。另一方面，要下载的商品图片较大，单张图片的大小有超过 200kb 的。
+现在的需求是，要在短时间内批量下载该网站上面的商品图片到本地，鉴于这两点考虑，如果使用 php 来做的话，单纯的用 file_get_contents 可能行不通，于是想到了用 php 的 curl 库来处理。</p>
+</blockquote>
+<p>虽然用 curl 来下载图片比起用 file_get_contents 来处理效率更高，稳定性更好，但是如果使用 curl 单线程来处理的话，效率并不会得到非常明显的提升。所幸的是，curl 库提供了 curl_multi 功能，让我们可以使用 curl 多线程来处理业务逻辑，可以显著的提升效率。下面拿下载上述站点上面的 8 张图片为例，分别使用 curl 单线程和 curl 多线程来进行图片下载，并对两者的效率做一个比较。</p>
+<h2 id="singlephpcurl-单线程下载图片">single.php：curl 单线程下载图片</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#e6db74">/**
+</span><span style="color:#e6db74"> * 单线程下载远程图片
+</span><span style="color:#e6db74"> * @author 艾逗笔&lt;765532665@qq.com&gt;
+</span><span style="color:#e6db74"> */</span>
+
+<span style="color:#a6e22e">set_time_limit</span>(<span style="color:#ae81ff">300</span>);                        <span style="color:#75715e">// 设置程序执行超时时间为5分钟
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 要下载的图片数组
+</span><span style="color:#75715e"></span>$pics <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_90_CO_1_2850804.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_2_2850799.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/57/02/02/57020206_1_CO_1_057020206-9be173d2-6bc3-44ba-b9cb-111010ed0051.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_1_2850800.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/42/350042687_1_CO_1_7639577.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/34/350034174_1_CO_1_7669890.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/42/350042718_1_CO_1_7009919.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/39/350039748_1_CO_3_6958274.jpg&#39;</span>
+);
+
+$beginTime <span style="color:#f92672">=</span> <span style="color:#a6e22e">time</span>();            <span style="color:#75715e">// 开始下载图片的时间
+</span><span style="color:#75715e"></span>$lastTime <span style="color:#f92672">=</span> $beginTime;         <span style="color:#75715e">// 上一次下载图片的时间
+</span><span style="color:#75715e"></span>$count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;                     <span style="color:#75715e">// 计数器
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;begin download at &#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">date</span>(<span style="color:#e6db74">&#39;Y-m-d H:i:s&#39;</span>, $beginTime) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;br/&gt;&#39;</span>;      <span style="color:#75715e">// 输出开始下载图片的时间
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 循环下载图片
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">foreach</span> ($pics <span style="color:#66d9ef">as</span> $k <span style="color:#f92672">=&gt;</span> $v) {
+    $ch <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_init</span>();                                      <span style="color:#75715e">// 初始化curl句柄
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_URL</span>, $v);                      <span style="color:#75715e">// 设置要下载的图片
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_RETURNTRANSFER</span>, <span style="color:#ae81ff">1</span>);            <span style="color:#75715e">// 设置获取图片内容而不直接在浏览器输出
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_HEADER</span>, <span style="color:#ae81ff">0</span>);                    <span style="color:#75715e">// 设置只获取图片内容，不返回header头信息
+</span><span style="color:#75715e"></span>    $content <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_exec</span>($ch);                              <span style="color:#75715e">// 获取图片内容
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_close</span>($ch);                                        <span style="color:#75715e">// 关闭curl句柄
+</span><span style="color:#75715e"></span>    $picName <span style="color:#f92672">=</span> <span style="color:#a6e22e">substr</span>($v, <span style="color:#a6e22e">strrpos</span>($v, <span style="color:#e6db74">&#39;/&#39;</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);              <span style="color:#75715e">// 获取图片名称
+</span><span style="color:#75715e"></span>    $savePath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./single/&#39;</span>;                                <span style="color:#75715e">// 设置保存图片的路径
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">is_dir</span>($savePath)) {                               <span style="color:#75715e">// 如果图片路径不存在，则创建路径
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">@</span><span style="color:#a6e22e">mkdir</span>($savePath, <span style="color:#ae81ff">0777</span>);
+    }
+    $saveName <span style="color:#f92672">=</span> $savePath <span style="color:#f92672">.</span> $picName;                       <span style="color:#75715e">// 设置图片保存为的文件名称
+</span><span style="color:#75715e"></span>    $fp <span style="color:#f92672">=</span> <span style="color:#f92672">@</span><span style="color:#a6e22e">fopen</span>($saveName, <span style="color:#e6db74">&#39;w&#39;</span>);                           <span style="color:#75715e">// 打开文件
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fwrite</span>($fp, $content);                                  <span style="color:#75715e">// 把获取到的图片内容写入到新图片
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fclose</span>($fp);                                            <span style="color:#75715e">// 关闭文件句柄
+</span><span style="color:#75715e"></span>    $nowTime <span style="color:#f92672">=</span> <span style="color:#a6e22e">time</span>();                                      <span style="color:#75715e">// 当前时间
+</span><span style="color:#75715e"></span>    $takeTime <span style="color:#f92672">=</span> $nowTime <span style="color:#f92672">-</span> $lastTime;                       <span style="color:#75715e">// 下载此张图片消耗的时间
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">++</span>$count;                                               <span style="color:#75715e">// 计数器+1
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;downloaded &#39;</span> <span style="color:#f92672">.</span> $count <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;th picture take time &#39;</span> <span style="color:#f92672">.</span> $takeTime <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;s&lt;br/&gt;&#39;</span>;               <span style="color:#75715e">// 输出下载当前图片消耗的时间
+</span><span style="color:#75715e"></span>    $lastTime <span style="color:#f92672">=</span> $nowTime;                                   <span style="color:#75715e">// 把当前时间设置为上一张图片下载时间
+</span><span style="color:#75715e"></span>
+}
+
+$endTime <span style="color:#f92672">=</span> <span style="color:#a6e22e">time</span>();                                          <span style="color:#75715e">// 结束下载图片的时间
+</span><span style="color:#75715e"></span>$totalTime <span style="color:#f92672">=</span> $endTime <span style="color:#f92672">-</span> $beginTime;                         <span style="color:#75715e">// 总耗时
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;end download at &#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">date</span>(<span style="color:#e6db74">&#39;Y-m-d H:i:s&#39;</span>, $endTime) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;br/&gt;&#39;</span>;          <span style="color:#75715e">// 输出下载图片完成的时间
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;downloaded &#39;</span> <span style="color:#f92672">.</span> $count <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39; pictures take time &#39;</span> <span style="color:#f92672">.</span> $totalTime <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39; s&lt;br/&gt;&#39;</span>;         <span style="color:#75715e">// 输出总耗时
+</span></code></pre></div><p>在浏览器执行 single.php，程序运行结束后，我们看到要下载的 8 张图片已经全部下载到了本地：
+<img src="http://blogcdn.idoustudio.com/2016/12/00.png" alt="00"></p>
+<p>因为在上述代码中写了一部分调试代码，所以在浏览器我们可以看到这样的输出结果：
+<img src="http://blogcdn.idoustudio.com/2016/12/42.png" alt="42"></p>
+<h2 id="multiphpcurl-多线程下载图片">multi.php：curl 多线程下载图片</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#e6db74">/**
+</span><span style="color:#e6db74"> * 多线程下载远程图片
+</span><span style="color:#e6db74"> * @author 艾逗笔&lt;765532665@qq.com&gt;
+</span><span style="color:#e6db74"> */</span>
+
+<span style="color:#a6e22e">set_time_limit</span>(<span style="color:#ae81ff">300</span>);                        <span style="color:#75715e">// 设置程序执行超时时间为5分钟
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 要下载的图片数组
+</span><span style="color:#75715e"></span>$pics <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_90_CO_1_2850804.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_2_2850799.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/57/02/02/57020206_1_CO_1_057020206-9be173d2-6bc3-44ba-b9cb-111010ed0051.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_1_2850800.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/42/350042687_1_CO_1_7639577.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/34/350034174_1_CO_1_7669890.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/42/350042718_1_CO_1_7009919.jpg&#39;</span>,
+    <span style="color:#e6db74">&#39;http://media.laredoute.com/products/641by641/35/00/39/350039748_1_CO_3_6958274.jpg&#39;</span>
+);
+
+$beginTime <span style="color:#f92672">=</span> <span style="color:#a6e22e">time</span>();            <span style="color:#75715e">// 开始下载图片的时间
+</span><span style="color:#75715e"></span>$lastTime <span style="color:#f92672">=</span> $beginTime;         <span style="color:#75715e">// 上一次下载图片的时间
+</span><span style="color:#75715e"></span>$count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;                     <span style="color:#75715e">// 计数器
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;begin download at &#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">date</span>(<span style="color:#e6db74">&#39;Y-m-d H:i:s&#39;</span>, $beginTime) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;br/&gt;&#39;</span>;      <span style="color:#75715e">// 输出开始下载图片的时间
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 循环添加curl句柄
+</span><span style="color:#75715e"></span>$mh <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_multi_init</span>();                                        <span style="color:#75715e">// 开启curl多线程
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">foreach</span> ($pics <span style="color:#66d9ef">as</span> $k <span style="color:#f92672">=&gt;</span> $v) {
+    $ch[$k] <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_init</span>();                                      <span style="color:#75715e">// 初始化curl句柄
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch[$k], <span style="color:#a6e22e">CURLOPT_URL</span>, $v);                      <span style="color:#75715e">// 设置要下载的图片
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch[$k], <span style="color:#a6e22e">CURLOPT_RETURNTRANSFER</span>, <span style="color:#ae81ff">1</span>);            <span style="color:#75715e">// 设置获取图片内容而不直接在浏览器输出
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_setopt</span>($ch[$k], <span style="color:#a6e22e">CURLOPT_HEADER</span>, <span style="color:#ae81ff">0</span>);                    <span style="color:#75715e">// 设置只获取图片内容，不返回header头信息
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">curl_multi_add_handle</span>($mh, $ch[$k]);                        <span style="color:#75715e">// 添加curl多线程句柄
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// 开启curl多线程下载图片
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">do</span> {
+    $status <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_multi_exec</span>($mh, $active);
+    $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_multi_info_read</span>($mh);
+    <span style="color:#66d9ef">if</span> ($result <span style="color:#f92672">!==</span> <span style="color:#66d9ef">false</span>) {
+        $content <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_multi_getcontent</span>($result[<span style="color:#e6db74">&#39;handle&#39;</span>]);                          <span style="color:#75715e">// 获取图片内容
+</span><span style="color:#75715e"></span>        $picName <span style="color:#f92672">=</span> <span style="color:#a6e22e">substr</span>($pics[$count], <span style="color:#a6e22e">strrpos</span>($pics[$count], <span style="color:#e6db74">&#39;/&#39;</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);              <span style="color:#75715e">// 获取图片名称
+</span><span style="color:#75715e"></span>        $savePath <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./multi/&#39;</span>;                                 <span style="color:#75715e">// 设置保存图片的路径
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">is_dir</span>($savePath)) {                               <span style="color:#75715e">// 如果图片路径不存在，则创建路径
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">@</span><span style="color:#a6e22e">mkdir</span>($savePath, <span style="color:#ae81ff">0777</span>);
+        }
+        $saveName <span style="color:#f92672">=</span> $savePath <span style="color:#f92672">.</span> $picName;                       <span style="color:#75715e">// 设置图片保存为的文件名称
+</span><span style="color:#75715e"></span>        $fp <span style="color:#f92672">=</span> <span style="color:#f92672">@</span><span style="color:#a6e22e">fopen</span>($saveName, <span style="color:#e6db74">&#39;w&#39;</span>);                           <span style="color:#75715e">// 打开文件
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fwrite</span>($fp, $content);                                  <span style="color:#75715e">// 把获取到的图片内容写入到新图片
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fclose</span>($fp);                                            <span style="color:#75715e">// 关闭文件句柄
+</span><span style="color:#75715e"></span>        $nowTime <span style="color:#f92672">=</span> <span style="color:#a6e22e">time</span>();                                      <span style="color:#75715e">// 当前时间
+</span><span style="color:#75715e"></span>        $takeTime <span style="color:#f92672">=</span> $nowTime <span style="color:#f92672">-</span> $lastTime;                       <span style="color:#75715e">// 下载此张图片消耗的时间
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">++</span>$count;                                               <span style="color:#75715e">// 计数器+1
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;downloaded &#39;</span> <span style="color:#f92672">.</span> $count <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;th picture take time &#39;</span> <span style="color:#f92672">.</span> $takeTime <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;s&lt;br/&gt;&#39;</span>;               <span style="color:#75715e">// 输出下载当前图片消耗的时间
+</span><span style="color:#75715e"></span>        $lastTime <span style="color:#f92672">=</span> $nowTime;                                   <span style="color:#75715e">// 把当前时间设置为上一张图片下载时间
+</span><span style="color:#75715e"></span>    }
+} <span style="color:#66d9ef">while</span> ($status <span style="color:#f92672">==</span> <span style="color:#a6e22e">CURLM_CALL_MULTI_PERFORM</span> <span style="color:#f92672">||</span> $active);
+<span style="color:#a6e22e">curl_multi_close</span>($mh);                                      <span style="color:#75715e">// 关闭curl多线程句柄
+</span><span style="color:#75715e"></span>
+$endTime <span style="color:#f92672">=</span> <span style="color:#a6e22e">time</span>();                                          <span style="color:#75715e">// 结束下载图片的时间
+</span><span style="color:#75715e"></span>$totalTime <span style="color:#f92672">=</span> $endTime <span style="color:#f92672">-</span> $beginTime;                         <span style="color:#75715e">// 总耗时
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;end download at &#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">date</span>(<span style="color:#e6db74">&#39;Y-m-d H:i:s&#39;</span>, $endTime) <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39;&lt;br/&gt;&#39;</span>;          <span style="color:#75715e">// 输出下载图片完成的时间
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;downloaded &#39;</span> <span style="color:#f92672">.</span> $count <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39; pictures take time &#39;</span> <span style="color:#f92672">.</span> $totalTime <span style="color:#f92672">.</span> <span style="color:#e6db74">&#39; s&lt;br/&gt;&#39;</span>;         <span style="color:#75715e">// 输出总耗时
+</span></code></pre></div><p>对 single.php 进行简单的修改，我们在 multi.php 中使用 curl_multi 来初始化多个 curl 句柄，使用 curl 多线程来下载图片，在浏览器执行 multi.php，程序执行完毕后我们可以看到远程的 8 张图片也下载到了本地：
+<img src="http://blogcdn.idoustudio.com/2016/12/01.png" alt="01"></p>
+<p>依然来看一下浏览器输出的调试结果：
+<img src="http://blogcdn.idoustudio.com/2016/12/41.png" alt="41"></p>
+<blockquote>
+<p>通过上面的结果对比，我们可以大概的看出使用 curl 单线程与 curl 多线程下载图片的效率差别：curl 单线程下载是一个同步执行的过程，在循环下载图片的过程中，每张图片的下载耗时基本一致。而 curl 多线程下载图片是一个异步执行的过程，curl 句柄会持续的请求需要下载的图片，直到图片被成功下载为止，平均每张图片的下载耗时明显小于 curl 单线程下载的耗时。</p>
+</blockquote>
+<p>为了验证上述结论，我们可以多执行几次，看一看二者的对比：
+<img src="http://blogcdn.idoustudio.com/2016/12/11.png" alt="11"></p>
+<p><img src="http://blogcdn.idoustudio.com/2016/12/12.png" alt="12"></p>
+<p><img src="http://blogcdn.idoustudio.com/2016/12/21.png" alt="21"></p>
+<p><img src="http://blogcdn.idoustudio.com/2016/12/22.png" alt="22"></p>
+<p><img src="http://blogcdn.idoustudio.com/2016/12/31.png" alt="31"></p>
+<p><img src="http://blogcdn.idoustudio.com/2016/12/32.png" alt="32"></p>
+<blockquote>
+<p>通过上面的几次执行结果的对比，我们可以很肯定的说，使用 curl 多线程下载图片，效率有很大的提升。</p>
+</blockquote>
+<h2 id="关于提升业务处理效率的更多想法">关于提升业务处理效率的更多想法</h2>
+<p>针对上面的需求，我们最终要完成的目标是在最短时间内把所需的图片全部下载下来，上面给出的 demo 都是通过在浏览器执行 php 脚本来进行图片下载的，但是如果一次性要下载的图片数量过多，网络存在延迟的情况下，很有可能会出现 php 脚本超时的问题。所以提升业务处理效率的一方面是：我们可以把 multi.php 放到 linux 服务器，通过 crontab 执行定时任务来下载图片。另一方面，为了进一步提升业务处理效率，缩短图片下载总耗时，我们可以使用 php 的 swoole 扩展。上文提到的多线程下载图片只是针对 curl 库的一种异步多线程模式，并非 php 的多线程，我们知道 php 是没有多线程的。而 swoole 扩展刚刚提供了解决了这个问题，使得 php 也能具备多线程事务处理能力。使用 swoole+crontab+curl_multi，我们就可以在短时间内批量下载所需的图片。</p>
+<p>更多关于 swoole 与 curl_multi 的知识请自行查阅相关资料。本文所用 demo 源码下载请点此：<a href="http://blogcdn.idoustudio.com/2016/12/download-picture.zip">download-picture</a></p>
+
+
+                                        
+                                        
+                                        
+                                        <div class="rp4wp-related-posts">
+                                            <h3>相关文章</h3>
+                                            <ul>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">AES加解密在php接口请求过程中的应用</a>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/php" title="View all posts tagged match">php</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/curl" title="View all posts tagged match">curl</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/%E8%81%8A%E4%B8%80%E8%81%8A%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/"
+                                                    rel="prev">聊一聊微信开发那些事儿</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85/">开发一个自己的composer包</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,489 @@
+<html lang="en-US">
+
+<head>
+    
+<title>开发一款转换sql查询结果的vscode插件 - 艾逗笔</title>
+
+<meta property="og:title" content="开发一款转换sql查询结果的vscode插件 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="做开发的同事应该很多人有过类似的经历：运营同事找过来，让我们帮忙导一份用户下单的数据。
+我们一般的操作流程是：登录跳板机，连上数据库，输入查询 sql，复制 sql 查询结果，发给运营同事。
+sql 查询结果一般长这样： 我们把查询结果保存到一个 txt 文件，发给运营同事，以为万事大吉了。
+结果运营同事回这么一句： 运营同事用 windows 系统的记事本打开这个 txt 文件，看到的格式是乱 &amp;hellip;">
+    <meta property="og:description" content="做开发的同事应该很多人有过类似的经历：运营同事找过来，让我们帮忙导一份用户下单的数据。
+我们一般的操作流程是：登录跳板机，连上数据库，输入查询 sql，复制 sql 查询结果，发给运营同事。
+sql 查询结果一般长这样： 我们把查询结果保存到一个 txt 文件，发给运营同事，以为万事大吉了。
+结果运营同事回这么一句： 运营同事用 windows 系统的记事本打开这个 txt 文件，看到的格式是乱 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/vscode-extension-sqlresult/">开发一款转换sql查询结果的vscode插件</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2021/03/19</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="背景">背景</h2>
+<p>做开发的同事应该很多人有过类似的经历：运营同事找过来，让我们帮忙导一份用户下单的数据。</p>
+<p>我们一般的操作流程是：登录跳板机，连上数据库，输入查询 sql，复制 sql 查询结果，发给运营同事。</p>
+<p>sql 查询结果一般长这样：
+<img src="http://blogcdn.idoustudio.com/pic/sqlresult_1.png" alt="enter image description here"></p>
+<p>我们把查询结果保存到一个 txt 文件，发给运营同事，以为万事大吉了。</p>
+<p>结果运营同事回这么一句：
+<img src="http://blogcdn.idoustudio.com/pic/sqlresult_2.png" alt="enter image description here"></p>
+<p>运营同事用 windows 系统的记事本打开这个 txt 文件，看到的格式是乱的，他们希望我们给到的是一个 csv 或者 excel 表格文件。</p>
+<p>作为一个开发，我们可能会想，这种小事情，写个插件来搞定吧。</p>
+<p>所以进入到了今天的主题：</p>
+<p>开发一个 vscode 插件，将 sql 查询结果转换成表格形式，并保存为 csv 文件。</p>
+<h2 id="vscode-插件开发">vscode 插件开发</h2>
+<p>vscode 插件开发的详细步骤我就不写了，贴一篇我看过的教程，有兴趣的同学可以移步 <a href="https://liiked.github.io/VS-Code-Extension-Doc-ZH/#/get-started/your-first-extension">这里</a> 去看。</p>
+<ul>
+<li>安装命令行</li>
+</ul>
+<p><code>npm i -g yo generator-code</code></p>
+<ul>
+<li>创建插件</li>
+</ul>
+<p>在终端执行 <code>yo code</code>，根据提示一步一步输入插件信息之后，我创建了一个目录名为 <code>sqlresult</code> 的插件。</p>
+<p>vscode 打开插件目录，可以看到自动生成的插件文件结构长这样：
+<img src="http://blogcdn.idoustudio.com/pic/sqlresult_3.png" alt="enter image description here"></p>
+<p>其中 <code>package.json</code> 是插件信息文件，<code>src/extension.ts</code> 是插件的主逻辑。</p>
+<ul>
+<li>定义插件子命令</li>
+</ul>
+<p>修改 <code>package.json</code> ，定义一个保存文件内容到 csv 的命令：
+<img src="http://blogcdn.idoustudio.com/pic/sqlresult_4.png" alt="enter image description here"></p>
+<p>在 <code>src/extension.ts</code> 文件里面注册命令，编写命令的运行逻辑：
+<img src="http://blogcdn.idoustudio.com/pic/sqlresult_5.png" alt="enter image description here"></p>
+<ul>
+<li>插件调试</li>
+</ul>
+<p>在编辑器按 F5，打开一个新的编辑器窗口调试插件功能。</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_6.png" alt="enter image description here"></p>
+<p>按 <code>command+shift+p</code> 弹出命令输入框，运行我们的自定义命令。</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_7.png" alt="enter image description here"></p>
+<p>命令执行后，通过 <code>vscode.window.showInformationMessage</code> 输出的调试信息在编辑器右下角弹出显示。</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_8.png" alt="enter image description here"></p>
+<p>通过 <code>console.log</code> 输出的调试信息在编辑器下方的调试控制台输出。</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_9.png" alt="enter image description here"></p>
+<p>调试搞定了，接下来就专注开发插件主逻辑了。</p>
+<h2 id="编写插件主逻辑">编写插件主逻辑</h2>
+<ul>
+<li>获取编辑器内容</li>
+</ul>
+<p>我们需要获取到用户在编辑器里选择的文本内容，才能完成后续的转换</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">editor</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">activeTextEditor</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">selection</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">editor</span><span style="color:#f92672">?</span>.<span style="color:#a6e22e">selection</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">editor</span><span style="color:#f92672">?</span>.document.<span style="color:#a6e22e">getText</span>(<span style="color:#a6e22e">selection</span>);
+</code></pre></div><ul>
+<li>内容替换</li>
+</ul>
+<p>插件的核心功能是把编辑器选择的 sql 查询结果转换成能保存到 csv 文件的内容。
+我们分析后发现，sql 查询结果通过大量的“|”来做内容的分割，而一个 csv 文件，用文本框打开后是用“,”分割单元格的。</p>
+<p>所以我们要做的是把“|”替换成“，”，并且要去掉表头和表尾的分割线。</p>
+<p><code>sql result</code></p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_10.png" alt="enter image description here"></p>
+<p><code>csv content</code></p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_11.png" alt="enter image description here"></p>
+<p>要做内容替换，比较简单的方式就是用正则表达式。</p>
+<p>打开 <a href="https://regex101.com/">https://regex101.com/</a>，粘贴我们要替换的内容，通过调试找到一个正确的正则表达式：<code>/\|((.*)\|){1,}/g</code> 可以用来做多行匹配。</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_12.png" alt="enter image description here"></p>
+<p>匹配后获得的每一行数据都是这种格式</p>
+<p><code>| 6f9fa41be49979251202a5cf23d500da | 1 | 2021-03-19 12:01:52 |</code></p>
+<p>我们只需要把“|”替换成“,”，再去除首尾的“,”就行了。</p>
+<p>最后写出来的转换逻辑是这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">editor</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">activeTextEditor</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">selection</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">editor</span><span style="color:#f92672">?</span>.<span style="color:#a6e22e">selection</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">editor</span><span style="color:#f92672">?</span>.document.<span style="color:#a6e22e">getText</span>(<span style="color:#a6e22e">selection</span>);
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">text</span><span style="color:#f92672">?</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/\|((.*)\|){1,}/g</span>);
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">newArr</span>: <span style="color:#66d9ef">string</span>[] <span style="color:#f92672">=</span> [];
+
+<span style="color:#a6e22e">arr</span><span style="color:#f92672">?</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">item</span>, <span style="color:#a6e22e">i</span>) {
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">str</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\s*\|\s*/g</span>, <span style="color:#e6db74">&#34;,&#34;</span>);
+  <span style="color:#a6e22e">str</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">str</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\,/</span>, <span style="color:#e6db74">&#34;&#34;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\,$/</span>, <span style="color:#e6db74">&#34;&#34;</span>);
+  <span style="color:#a6e22e">newArr</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">str</span>);
+});
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">newArr</span>.<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;\n&#34;</span>);
+</code></pre></div><ul>
+<li>保存文件</li>
+</ul>
+<p>完成内容转换后，下一步我们就可以写保存文件的逻辑了。vscode 已经封装了相关的 api，我们只需要通过几行代码即可完成调用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#75715e">// 打开文件保存对话框
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">uri</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">showSaveDialog</span>({
+  <span style="color:#a6e22e">filters</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">csv</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;csv&#34;</span>],
+  },
+});
+
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">uri</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">undefined</span>) {
+  <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">showErrorMessage</span>(<span style="color:#e6db74">&#34;invalid save path&#34;</span>);
+  <span style="color:#66d9ef">return</span>;
+}
+
+<span style="color:#75715e">// 保存文件
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">writeData</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#66d9ef">from</span>(<span style="color:#a6e22e">content</span>, <span style="color:#e6db74">&#34;utf8&#34;</span>);
+<span style="color:#a6e22e">vscode</span>.<span style="color:#a6e22e">workspace</span>.<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">writeFile</span>(<span style="color:#a6e22e">uri</span>, <span style="color:#a6e22e">writeData</span>);
+</code></pre></div><ul>
+<li>完整逻辑</li>
+</ul>
+<p>最后再加上必要的错误提示，和保存后打开文件的操作，这个插件的核心逻辑就写完了。</p>
+<p><code>src/extension.ts</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ts" data-lang="ts"><span style="color:#75715e">// The module &#39;vscode&#39; contains the VS Code extensibility API
+</span><span style="color:#75715e">// Import the module and reference it with the alias vscode in your code below
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">vscode</span> <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#34;vscode&#34;</span>;
+
+<span style="color:#75715e">// this method is called when your extension is activated
+</span><span style="color:#75715e">// your extension is activated the very first time the command is executed
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">activate</span>(<span style="color:#a6e22e">context</span>: <span style="color:#66d9ef">vscode.ExtensionContext</span>) {
+  <span style="color:#75715e">// Use the console to output diagnostic information (console.log) and errors (console.error)
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// This line of code will only be executed once when your extension is activated
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Congratulations, your extension &#34;sqlresult&#34; is now active!&#39;</span>);
+
+  <span style="color:#75715e">// The command has been defined in the package.json file
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Now provide the implementation of the command with registerCommand
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// The commandId parameter must match the command field in package.json
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">disposable</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">vscode</span>.<span style="color:#a6e22e">commands</span>.<span style="color:#a6e22e">registerCommand</span>(
+    <span style="color:#e6db74">&#34;sqlresult.tocsv&#34;</span>,
+    <span style="color:#66d9ef">async</span> () <span style="color:#f92672">=&gt;</span> {
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">editor</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">activeTextEditor</span>;
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">selection</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">editor</span><span style="color:#f92672">?</span>.<span style="color:#a6e22e">selection</span>;
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">editor</span><span style="color:#f92672">?</span>.document.<span style="color:#a6e22e">getText</span>(<span style="color:#a6e22e">selection</span>);
+
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">text</span><span style="color:#f92672">?</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/\|((.*)\|){1,}/g</span>);
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">newArr</span>: <span style="color:#66d9ef">string</span>[] <span style="color:#f92672">=</span> [];
+
+      <span style="color:#a6e22e">arr</span><span style="color:#f92672">?</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">item</span>, <span style="color:#a6e22e">i</span>) {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">str</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\s*\|\s*/g</span>, <span style="color:#e6db74">&#34;,&#34;</span>);
+        <span style="color:#a6e22e">str</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">str</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\,/</span>, <span style="color:#e6db74">&#34;&#34;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\,$/</span>, <span style="color:#e6db74">&#34;&#34;</span>);
+        <span style="color:#a6e22e">newArr</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">str</span>);
+      });
+
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">newArr</span>.<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;\n&#34;</span>);
+
+      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">content</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+        <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">showErrorMessage</span>(<span style="color:#e6db74">&#34;invalid content&#34;</span>);
+        <span style="color:#66d9ef">return</span>;
+      }
+
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">uri</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">showSaveDialog</span>({
+        <span style="color:#a6e22e">filters</span><span style="color:#f92672">:</span> {
+          <span style="color:#a6e22e">csv</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;csv&#34;</span>],
+        },
+      });
+
+      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">uri</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">undefined</span>) {
+        <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">showErrorMessage</span>(<span style="color:#e6db74">&#34;invalid save path&#34;</span>);
+        <span style="color:#66d9ef">return</span>;
+      }
+
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">writeData</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#66d9ef">from</span>(<span style="color:#a6e22e">content</span>, <span style="color:#e6db74">&#34;utf8&#34;</span>);
+      <span style="color:#a6e22e">vscode</span>.<span style="color:#a6e22e">workspace</span>.<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">writeFile</span>(<span style="color:#a6e22e">uri</span>, <span style="color:#a6e22e">writeData</span>);
+
+      <span style="color:#75715e">// Display a message box to the user
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">openFile</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Open File&#34;</span>;
+      <span style="color:#a6e22e">vscode</span>.window
+        .<span style="color:#a6e22e">showInformationMessage</span>(<span style="color:#e6db74">&#34;file saved&#34;</span>, <span style="color:#a6e22e">openFile</span>)
+        .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">value</span>) <span style="color:#f92672">=&gt;</span> {
+          <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">value</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">openFile</span>) {
+            <span style="color:#a6e22e">vscode</span>.window.<span style="color:#a6e22e">showTextDocument</span>(<span style="color:#a6e22e">uri</span><span style="color:#f92672">!</span>, {});
+          }
+        });
+    }
+  );
+
+  <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">subscriptions</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">disposable</span>);
+}
+
+<span style="color:#75715e">// this method is called when your extension is deactivated
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">deactivate() {</span>}
+</code></pre></div><h2 id="插件使用">插件使用</h2>
+<p>在 vscode 扩展中心搜索<code>sqlresult</code>并安装插件</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_13_1.png" alt="enter image description here"></p>
+<p>安装完插件，复制 sql 查询结果到编辑器，全选内容，执行插件保存 csv 文件的命令：</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_14_1.png" alt="enter image description here"></p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_15.png" alt="enter image description here"></p>
+<p>打开保存后的 csv 文件，内容看起来非常工整。</p>
+<p><img src="http://blogcdn.idoustudio.com/pic/sqlresult_16.png" alt="enter image description here"></p>
+<p>最后把 csv 文件发给运营同事，就可以收工了。</p>
+<h2 id="总结">总结</h2>
+<p>本文从实际需求出发，写了一个能帮助开发者日常导数据的小插件。vscode 是一个“真香”神器，丰富的插件给了开发者很多想象的空间，强烈安利一波。</p>
+<p>插件源码奉上，欢迎赐教：<a href="https://github.com/idoubi/sqlresult">https://github.com/idoubi/sqlresult</a></p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/go-sdk-for-wework-robot/"
+                                                    rel="prev">我写了一款企业微信机器人SDK</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/notes/install-go-in-linux/">在 Linux 系统通过源码安装 Go</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

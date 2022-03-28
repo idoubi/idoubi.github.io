@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>开发笔记 on 艾逗笔</title>
+    <link>https://idoubi.cc/categories/%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 开发笔记 on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Fri, 28 May 2021 10:29:34 +0000</lastBuildDate><atom:link href="https://idoubi.cc/categories/%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 Linux 系统通过源码安装 Python3</title>
+      <link>https://idoubi.cc/notes/install-python-in-linux/</link>
+      <pubDate>Fri, 28 May 2021 10:29:34 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/install-python-in-linux/</guid>
+      <description> 打开 python 源码下载页  https://www.python.org/ftp/python/
+下载源码  wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz 解压缩  tar -zxvf Python-3.9.5.tgz 安装  cd Python-3.9.5 ./configure --prefix=/usr/local/python3 make &amp;amp;&amp;amp; make install 设置环境变量  export PATH=$PATH:/usr/local/python3/bin 备份原来版本  python --version pip --version which python which pip mv /usr/bin/python /usr/bin/python2.7.5 mv /usr/bin/pip /usr/bin/pip2.7.5 使用新版本  ln -s /usr/local/python3/bin/python3 /usr/bin/python ln -s /usr/local/python3/bin/pip3 /usr/bin/pip 查看新版本  python --version pip --version </description>
+    </item>
+    
+    <item>
+      <title>基于「Hugo」搭建个人博客网站</title>
+      <link>https://idoubi.cc/posts/build-site-with-hugo/</link>
+      <pubDate>Sun, 19 Apr 2020 22:11:23 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/build-site-with-hugo/</guid>
+      <description>前言 搭建个人网站，以前我们一般会选择 WordPress，因为其使用范围广（据说全世界 80%的网站都是用它搭建的）、主题丰富、上手简单。
+近年来，markdown 内容格式渐渐流行，我们更愿意使用 markdown 格式来写文章，写完后用静态网站生成工具把文章内容转换成 html 格式，再发布到个人网站。生成静态网站的工具中，比较优秀的有 Jekyll、Hexo、Hugo 几个。
+简单比较一下动态网站框架 WordPress 与静态网站生成框架 Hexo、Hugo 的区别：
+   项目 开发语言 优势 不便之处     WordPress php 1. 有可视化后台可以编写文章；2. 使用范围广；3. 主题、插件丰富。 1. 依赖过多导致加载较慢；2. 需要服务器部署，依赖数据库；3. 数据需要定时备份。   Hexo nodejs 1. 静态生成，SEO 友好；2. npm 生态有丰富的插件可用于扩展功能。 1. 本地编译生成静态文件速度较慢；2. 调试麻烦，经常遇到 js 报错。   Hugo go 1. 编译速度最快;2. 开发主题非常方便。 1. 目前主题数量较少。    综合来看，我还是比较推荐使用 Hugo 来搭建个人网站。
+安装 Hugo MacOS 系统下，可以使用 brew 来进行安装。</description>
+    </item>
+    
+    <item>
+      <title>在个人博客实现「小课」系统</title>
+      <link>https://idoubi.cc/posts/course-in-blog/</link>
+      <pubDate>Wed, 15 Apr 2020 22:58:04 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/course-in-blog/</guid>
+      <description>程序员这个行业，是一个终身学习的行业，经常会有新技术出现。我是一个很爱学习的人，喜欢尝鲜。每次想去学习一项新技术的时候，总是苦于找不到合适的入门教程。于是有了想自己写个小课系统的想法：希望能通过写一系列的文章，组织成一门小课，帮助想学习某项技术的同学快速入门。
+有了这个想法之后，我开始准备搭建小课平台，一开始想的是做一个前后端分离的网站，后端用 Go 写 API，前端用 vue 写页面。
+使用 vue + ElementUI 搭建出来的第一个版本长这样：
+写完第一个版本之后，仔细想了一下，如果要写好这个小课系统的话，我还得做好几件事：
+ 写 API ，前后端进行数据交互 写 Markdown 编辑器，在线录入课程 做服务端渲染，做 SEO 优化  一想到这里，头开始有点大，第一个对外发布的小课系统，我希望能尽可能简洁，不管是写作，还是展示，都不要太复杂。而且最重要的一点，我希望能有更多人看到我的小课系统，也就是说 SEO 一定要好。
+考虑到这些因素，我决定用静态博客生成系统 Hugo ，基于我的个人博客来完成小课系统的开发。
+使用 Hugo 来开发，有这么几个好处：
+ 不需要写 Markdown 编辑器，基于本地的 md 文件即可生成文章 不需要使用数据库，课程数据都是 md 文件，维护成本低 不需要做 SSR 也能有很好的 SEO  但是也有几个不好的地方：
+ 纯静态网站，没有数据交互，要做付费订阅等功能不太好实现 每次写完文章，需要编译生成静态页面，再提交发布，比较麻烦  管他三七二十一，先撸一个版本出来再说。于是我就这么干了：
+使用 Hugo 搭建了个人博客，采用了 notepadium 这个开源主题。在 Hugo 的 content 里面创建了一个 courses 的 section，并为这一类型的 section 新增了一个首页模板和阅读模板。
+最终写成的效果：
+写完发布上线，我把我之前写的两门小课都放上来了
+ 「VS Code」快速上手指南 分分钟上手「WeiPHP」插件开发  总结一下，我觉得 Hugo 是一个非常优秀的静态网站生成工具，功能非常强大，而且编译速度非常快，甩同类型的 Hexo 几条街。</description>
+    </item>
+    
+    <item>
+      <title>使用「Go」语言开发命令行工具</title>
+      <link>https://idoubi.cc/posts/create-a-cli-tool-in-macos/</link>
+      <pubDate>Sat, 04 Jan 2020 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/create-a-cli-tool-in-macos/</guid>
+      <description>使用 MacOS 做开发的朋友都知道，我们一般会使用 Homebrew 做软件包管理，经常会用到 brew install [soft] 来安装各种各样的命令行软件。今天通过一个百科查找的命令行工具（tellme）示例，我们来学习一下如何使用 Go 语言开发自己的命令行软件。
+我们需要用到 cobra 这个 Go 模块来做命令行工具开发，这个开源库其实是对 Go 官方库 flag 的一个封装，可以简化获取参数的操作。
+创建命令行项目  开启 Go Module  export GO111MODULE=on  安装 cobra 工具  go get -u github.com/spf13/cobra/cobra  创建命令行项目  # 创建项目目录 mkdir -p /data/idoubi/tellme &amp;amp;&amp;amp; cd /data/idoubi/tellme # 定义模块 go mod init github.com/idoubi/tellme # 初始化命令行项目 cobra init --pkg-name github.com/idoubi/tellme  检测运行  go run main.go -h 执行完上述操作后，如果控制台输出了帮助信息，证明我们的命令行项目创建成功了。
+新建子命令  新建子命令  cobra add baike  编写业务逻辑  在生成的子命令文件 /data/idoubi/tellme/cmd/baike.</description>
+    </item>
+    
+    <item>
+      <title>Mysql百万级数据迁移实战笔记</title>
+      <link>https://idoubi.cc/legacy/mysql-data-migration/</link>
+      <pubDate>Sat, 30 Jun 2018 20:34:20 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/mysql-data-migration/</guid>
+      <description>背景 上个月跟朋友一起做了个微信小程序，趁着5.20节日的热度，两个礼拜内迅速积累了一百多万用户，我们在小程序页面增加了收集formid的埋点，用于给微信用户发送模板消息通知。
+这个小程序一开始的后端逻辑是用douchat框架写的，使用框架自带的dc_mp_fans表存储微信端授权登录的用户信息，使用dc_mp_tempmsg表存储formid。截止到目前，收集到的数据超过380万，很大一部分formid都已经成功使用给用户发送过模板通知，起到了较好的二次推广的效果。
+随着数据量的增大，之前使用的服务器空间开始有点不够用，最近新写了一个专门用于做小程序后台开发的框架，于是想把原来的数据迁移到新系统的数据库。买了一台4核8G的机器，开始做数据迁移。下面对迁移过程做一个简单的记录。 方案选择  mysqldump迁移  平常开发中，我们比较经常使用的数据备份迁移方式是用mysqldump工具导出一个sql文件，再在新数据库中导入sql来完成数据迁移。试验发现，通过mysqldump导出百万级量的数据库成一个sql文件，大概耗时几分钟，导出的sql文件大小在1G左右，然后再把这个1G的sql文件通过scp命令复制到另一台服务器，大概也需要耗时几分钟。在新服务器的数据库中通过source命令来导入数据，我跑了一晚上都没有把数据导入进来，cpu跑满。
+ 脚本迁移  直接通过命令行操作数据库进行数据的导出和导入是比较便捷的方式，但是数据量较大的情况下往往会比较耗时，对服务器性能要求也比较高。如果对数据迁移时间要求不是很高，可以尝试写脚本来迁移数据。虽然没有实际尝试，但是我想过大概有两种脚本方案。
+第一种方式，在迁移目标服务器跑一个迁移脚本，远程连接源数据服务器的数据库，通过设置查询条件，分块读取源数据，并在读取完之后写入目标数据库。这种迁移方式效率可能会比较低，数据导出和导入相当于是一个同步的过程，需要等到读取完了才能写入。如果查询条件设计得合理，也可以通过多线程的方式启动多个迁移脚本，达到并行迁移的效果。
+第二种方式，可以结合redis搭建一个“生产+消费”的迁移方案。源数据服务器可以作为数据生产者，在源数据服务器上跑一个多线程脚本，并行读取数据库里面的数据，并把数据写入到redis队列。目标服务器作为一个消费者，在目标服务器上也跑一个多线程脚本，远程连接redis，并行读取redis队列里面的数据，并把读取到的数据写入到目标数据库。这种方式相对于第一种方式，是一种异步方案，数据导入和数据导出可以同时进行，通过redis做数据的中转站，效率会有较大的提升。
+可以使用go语言来写迁移脚本，利用其原生的并发特性，可以达到并行迁移数据的目的，提升迁移效率。
+ 文件迁移  第一种迁移方案效率太低，第二种迁移方案编码代价较高，通过对比和在网上找的资料分析，我最终选择了通过mysql的select data into outfile file.txt、load data infile file.txt into table的命令，以导入导出文件的形式完成了百万级数据的迁移。
+迁移过程  在源数据库中导出数据文件  select * from dc_mp_fans into outfile &amp;#39;/data/fans.txt&amp;#39;; 复制数据文件到目标服务器  zip fans.zip /data/fans.txt scp fans.zip root@ip:/data/ 在目标数据库导入文件  unzip /data/fans.zip load data infile &amp;#39;/data/fans.txt&amp;#39; into table wxa_fans(id,appid,openid,unionid,@dummy,created_at,@dummy,nickname,gender,avatar_url,@dummy,@dummy,@dummy,@dummy,language,country,province,city,@dummy,@dummy,@dummy,@dummy,@dummy,@dummy,@dummy,@dummy,@dummy); 按照这么几个步骤操作，几分钟内就完成了一个百万级数据表的跨服务器迁移工作。
+注意项  mysql安全项设置
+ 在mysql执行load data infile和into outfile命令都需要在mysql开启了secure_file_priv选项， 可以通过show global variables like &#39;%secure%&#39;;查看mysql是否开启了此选项，默认值Null标识不允许执行导入导出命令。通过vim /etc/my.</description>
+    </item>
+    
+    <item>
+      <title>小程序源码反编译实战笔记</title>
+      <link>https://idoubi.cc/posts/get-wxapkg/</link>
+      <pubDate>Thu, 31 May 2018 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/get-wxapkg/</guid>
+      <description>最近在做微信小程序开发，看到一些做的比较有意思的小程序，想看一看他们的源码，于是研究了一下小程序源码反编译相关的技术。结合本次经历，总结如下。
+手机root 要拿到小程序在手机上的源码包，需要有一台越狱的iphone或者一台拥有root权限的android机，正好我手里有一台闲置的小米4，就拿来用了，试过很多种方式给小米4root，差点搞成板砖机，一直在recorvy模式启动不了，最后尝试了小米官网的刷机方法，把系统刷成了开发版，完美root。
+小米4刷机教程：https://www.miui.com/shuaji-305.html
+手机刷机成功后，开启root权限，并打开USB调试模式
+小米4开发版开启root权限：http://www.miui.com/thread-9625466-1-1.html
+MIUI9开启USB调试：https://jingyan.baidu.com/article/49711c6196e728fa441b7c37.html
+电脑操作 以MacOS操作系统为例，通过USB连接操作Android手机
+ 安装adb工具  在MacOS系统上可以通过brew安装adb工具
+brew cask install android-platform-tools  手机连电脑  通过USB数据线将手机连接到电脑，并在手机端开启USB调试，通过下面的命令测试是否连接成功
+adb devices 连接成功的情况下
+ 查看小程序源码  进入adb shell模式
+adb shell 切换到root权限
+su 进入小程序源码目录
+先进入MicroMsg文件夹，通过ls命令查看文件夹，找到63c92a20722afef36b525ecb04706c15这样的文件夹（不同的微信登录用户，这个文件夹的名称不同），然后再进入appbrand/pkg目录
+cd /data/data/com.tencent.mm/MicroMsg ls cd 63c92a20722afef36b525ecb04706c15/appbrand/pkg 查看小程序源码
+可以先执行rm -rf ./*删除掉当前目录下所有缓存的小程序源码包，然后通过手机端点击进入需要获取源码的小程序，再执行ls -l即可看到最新操作的小程序源码包
+rm -rf ./* ls -l 将小程序源码拷贝到手机SD卡
+cp _1038319936_4.wxapkg /sdcard 新开一个终端窗口，将源码拷贝到电脑
+adb pull sdcard/_1038319936_4.wxapkg /data/weapp/a.wxapkg  操作过程截图   反编译源码  下载nodejs版本的反编译工具并安装相关npm包
+git clone https://github.com/qwerty472123/wxappUnpacker.git cd wxappUnpacker npm install esprima -g npm install css-tree -g npm install cssbeautify -g npm install vm2 -g npm install uglify-es -g 反编译小程序源码</description>
+    </item>
+    
+    <item>
+      <title>SeasLog快速上手指南</title>
+      <link>https://idoubi.cc/posts/seaslog%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Sun, 10 Dec 2017 13:08:22 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/seaslog%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</guid>
+      <description>什么是 SeasLog log 日志，通常是系统或软件、应用的运行记录。通过 log 的分析，可以方便用户了解系统或软件、应用的运行情况；如果你的应用 log 足够丰富，也可以分析以往用户的操作行为、类型喜好、地域分布或其他更多信息；如果一个应用的 log 同时也分了多个级别，那么可以很轻易地分析得到该应用的健康状况，及时发现问题并快速定位、解决问题，补救损失。
+SeasLog是一个 C 语言编写的 PHP 扩展，提供一组规范标准的功能函数，在 PHP 项目中方便、规范、高效地写日志，以及快速地读取和查询日志。SeasLog 具备以下几个特点：
+ 高性能  SeasLog 使用 C 语言编写，并带有缓冲池的功能。每次写入的日志，是先写入到内存当中，当达到一定的数量时，才写入到文件当中。
+ 配置简单  SeasLog 的配置十分简单，甚至不需要配置就可以直接使用。
+ 功能完善，使用简单  支持日志级别 支持日志分模块存放 支持日志统计，分析
+如何安装 SeasLog   SeasLog 源码下载地址：https://pecl.php.net/package/SeasLog
+  SeasLog 源码安装过程（Linux）
+  # 下载源码 wget https://pecl.php.net/get/SeasLog-1.6.9.tgz # 解压缩源码 tar -zxvf SeasLog-1.6.9.tgz # phpize工具生源码编译文件 cd SeasLog-1.6.9 phpize # 源码编译安装 ./configure make make install # 修改php.ini文件添加扩展 vi /path/to/php.</description>
+    </item>
+    
+    <item>
+      <title>golang实现RPC的几种方式</title>
+      <link>https://idoubi.cc/posts/golang%E5%AE%9E%E7%8E%B0rpc%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Sun, 03 Dec 2017 11:45:26 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/golang%E5%AE%9E%E7%8E%B0rpc%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
+      <description>什么是RPC 远程过程调用（Remote Procedure Call，缩写为 RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。 如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作远程调用或远程方法调用。维基百科：远程过程调用
+用通俗易懂的语言描述就是：RPC允许跨机器、跨语言调用计算机程序方法。打个比方，我用go语言写了个获取用户信息的方法getUserInfo，并把go程序部署在阿里云服务器上面，现在我有一个部署在腾讯云上面的php项目，需要调用golang的getUserInfo方法获取用户信息，php跨机器调用go方法的过程就是RPC调用。
+golang中如何实现RPC 在golang中实现RPC非常简单，有封装好的官方库和一些第三方库提供支持。Go RPC可以利用tcp或http来传递数据，可以对要传递的数据使用多种类型的编解码方式。golang官方的net/rpc库使用encoding/gob进行编解码，支持tcp或http数据传输方式，由于其他语言不支持gob编解码方式，所以使用net/rpc库实现的RPC方法没办法进行跨语言调用。
+golang官方还提供了net/rpc/jsonrpc库实现RPC方法，JSON RPC采用JSON进行数据编解码，因而支持跨语言调用。但目前的jsonrpc库是基于tcp协议实现的，暂时不支持使用http进行数据传输。
+除了golang官方提供的rpc库，还有许多第三方库为在golang中实现RPC提供支持，大部分第三方rpc库的实现都是使用protobuf进行数据编解码，根据protobuf声明文件自动生成rpc方法定义与服务注册代码，在golang中可以很方便的进行rpc服务调用。
+net/rpc库 下面的例子演示一下如何使用golang官方的net/rpc库实现RPC方法，使用http作为RPC的载体，通过net/http包监听客户端连接请求。
+$GOPATH/src/test/rpc/rpc_server.go
+package main import ( &amp;#34;errors&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;net&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;net/rpc&amp;#34; &amp;#34;os&amp;#34; ) // 算数运算结构体 type Arith struct { } // 算数运算请求结构体 type ArithRequest struct { A int B int } // 算数运算响应结构体 type ArithResponse struct { Pro int // 乘积  Quo int // 商  Rem int // 余数 } // 乘法运算方法 func (this *Arith) Multiply(req ArithRequest, res *ArithResponse) error { res.</description>
+    </item>
+    
+    <item>
+      <title>protobuf快速上手指南</title>
+      <link>https://idoubi.cc/posts/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Sat, 02 Dec 2017 14:08:15 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</guid>
+      <description>什么是 protobuf Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准。
+Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。
+如何安装 protobuf  在 github 获取 protobuf 源码，windows 系统可以直接下载 exe 文件：https://github.com/google/protobuf/releases   macos 和 linux 环境使用源码进行安装的步骤  # 获取源码包 wget https://github.com/google/protobuf/archive/v3.5.0.tar.gz # 解压缩并进入源码目录 tar -zxvf v3.5.0.tar.gz cd protobuf-3.5.0 # 生成configure文件 ./autogen.sh # 编译安装 ./configure make make check make install  在执行./autogen.sh过程中可能会因缺乏 automake 依赖库而报错：autoreconf: failed to run aclocal: No such file or directory，要解决此错误，在 linux 系统可以通过sudo yum install automake或者sudo apt-get install automake安装 automake，在 macos 系统可以通过brew install automake安装 automake。</description>
+    </item>
+    
+    <item>
+      <title>goimports工具安装与使用</title>
+      <link>https://idoubi.cc/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 06 Nov 2017 10:40:16 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+      <description>goimports是干嘛的 go是一门强类型的编译型语言，有着很严格的类型约束与语法规范，在golang代码中，如果使用到的包没有被引入或者是引入了的包没有被使用，都会编译不通过。所以我们在写go代码的时候，用到包的时候需要首先import一下，不用的时候，要把import包的语句删除或者是注释，但是总是这样手动去操作并不是很方便，比如我们在开发的时候需要用fmt包打印一些调试信息，为了让打印出来的数组或结构体格式好看一点，我们有时候需要使用encoding/json包来进行格式化。在调试完成后，我们必须要手动把引入的包删除掉，然后再进行编译。
+针对上面提到的日常开发中经常面对的手动管理包的问题，goimports出现了。goimports可以自动对代码中的依赖包进行管理，如果有用到，就会自动import，也会对没有用到的包进行自动删除。
+安装goimports 因为被墙的原因，直接通过go get可能不能正确拉取到goimports包，我们这里使用github源码编译的方式进行安装。
+ 拉取github上面的tools包源码  git clone https://github.com/golang/tools.git /d/go/src/golang.org/x/tools 进入goimports命令包目录  cd /d/go/src/golang.org/x/tools/cmd/goimports 编译源码  go build 编译完成后，在windows下会生成goimports.exe可执行文件，在mac跟linux下的goroot配置的bin目录下会生成goimports可执行文件。如果设置了环境变量，在任意位置可执行goimports命令。
+在sublime配置goimports 在sublime安装GoSublime插件，在插件用户配置文件中写入：
+{ &amp;#34;fmt_cmd&amp;#34;: [&amp;#34;goimports&amp;#34;] } 配置完成后在sublime编写go代码时，每次ctrl+s保存文件或者ctrl+b编译文件时，goimports会自动执行并对go代码进行包依赖的检查，对于用到却未引入的包会进行自动引入，对于引入却未使用的包会进行自动删除。
+在gogland中使用goimports gogland原生支持goimports，不需要进行额外的配置，保存或编译go代码时会自动进行包的依赖检查。</description>
+    </item>
+    
+    <item>
+      <title>开发一个自己的composer包</title>
+      <link>https://idoubi.cc/legacy/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85/</link>
+      <pubDate>Mon, 21 Aug 2017 17:04:20 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85/</guid>
+      <description>php的composer类似于node的包管理机制，都是可以通过一些命令操作下载开发者发布的功能包，并且包之间可以互相依赖，管理起来比较方便。下面根据自己踩过的坑总结一下如何创建一个自己的composer包。
+ 创建一个composer包 在packages目录下面创建一个自己的composer包：mikephp-db，composer.json里面填写包的基本信息，src目录下面是包的功能代码。
+composer.json的内容
+{ &amp;#34;name&amp;#34;: &amp;#34;mikephp/db&amp;#34;, &amp;#34;description&amp;#34;: &amp;#34;this is a libriary for db oprate&amp;#34;, &amp;#34;autoload&amp;#34;: { &amp;#34;psr-4&amp;#34;: { &amp;#34;Db\\&amp;#34;: &amp;#34;src/&amp;#34; } } }  包的名称叫：mikephp/db，一旦包发布到网上，其他开发者就可以通过composer require mikephp/db来下载使用这个包。autoload配置使用psr-4自动加载规范，把Db命名空间映射到包的src目录下
+ Mysql.php的内容
+&amp;amp;lt;?php namespace Db; class Mysql { public function __construct() { echo &amp;#39;this is mysql db&amp;#39;; } }  包的src下的功能文件都应该使用命令空间，如果功能文件在src的一级目录，例如src/Mysql.php，命名空间是Db，如果是二级目录，例如src/Pdo/Mysql.php，那么命名空间就应该是Db\Pdo，在使用功能类的时候就通过new Db\Mysql()或者Db\Pdo\Mysql()使用
+ 开发过程中调试创建的composer包 在把自己创建的composer包发布到网上供其他开发者使用前，我们需要不断调试以验证包的功能是否能正常使用。可以在项目不依赖composer包的前提下，通过配置autoload自动加载来关联开发中的composer包。下面的例子以composer为项目根目录，需要使用packages里面的正在开发的包。composer.json文件里面填写此项目需要依赖或者关联的包，如果有配置require，则在执行composer install或者composer update的时候，被依赖的包会被下载到vendor目录下。此处演示在项目根目录下通过autoload自动加载关联开发中的composer包，此情况下被关联的包不会被下载到vendor下。
+composer.json的内容
+{ &amp;#34;require&amp;#34;: { }, &amp;#34;autoload&amp;#34;: { &amp;#34;psr-4&amp;#34;: { &amp;#34;Db\\&amp;#34;: &amp;#34;packages/mikephp-db/src/&amp;#34; } } }  使用psr-4自动加载规范，把Db命名空间映射到自己创建的composer包的src目录下</description>
+    </item>
+    
+    <item>
+      <title>在php中使用curl多线程下载图片</title>
+      <link>https://idoubi.cc/legacy/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/</link>
+      <pubDate>Fri, 30 Dec 2016 10:25:39 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/</guid>
+      <description>遇到一个需求：要下载这个网站http://www.laredoute.com/上面的商品图片到本地。 分析了一下，这个网站是一个国外的站点，受 cdn 节点的影响，在国内打开的速度比较慢。另一方面，要下载的商品图片较大，单张图片的大小有超过 200kb 的。 现在的需求是，要在短时间内批量下载该网站上面的商品图片到本地，鉴于这两点考虑，如果使用 php 来做的话，单纯的用 file_get_contents 可能行不通，于是想到了用 php 的 curl 库来处理。
+ 虽然用 curl 来下载图片比起用 file_get_contents 来处理效率更高，稳定性更好，但是如果使用 curl 单线程来处理的话，效率并不会得到非常明显的提升。所幸的是，curl 库提供了 curl_multi 功能，让我们可以使用 curl 多线程来处理业务逻辑，可以显著的提升效率。下面拿下载上述站点上面的 8 张图片为例，分别使用 curl 单线程和 curl 多线程来进行图片下载，并对两者的效率做一个比较。
+single.php：curl 单线程下载图片 &amp;lt;?php /** * 单线程下载远程图片 * @author 艾逗笔&amp;lt;765532665@qq.com&amp;gt; */ set_time_limit(300); // 设置程序执行超时时间为5分钟  // 要下载的图片数组 $pics = array( &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_90_CO_1_2850804.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_2_2850799.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/57/02/02/57020206_1_CO_1_057020206-9be173d2-6bc3-44ba-b9cb-111010ed0051.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_1_2850800.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/42/350042687_1_CO_1_7639577.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/34/350034174_1_CO_1_7669890.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/42/350042718_1_CO_1_7009919.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/39/350039748_1_CO_3_6958274.jpg&amp;#39; ); $beginTime = time(); // 开始下载图片的时间 $lastTime = $beginTime; // 上一次下载图片的时间 $count = 0; // 计数器 echo &amp;#39;begin download at &amp;#39; .</description>
+    </item>
+    
+    <item>
+      <title>聊一聊微信开发那些事儿</title>
+      <link>https://idoubi.cc/legacy/%E8%81%8A%E4%B8%80%E8%81%8A%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/</link>
+      <pubDate>Wed, 02 Nov 2016 13:12:18 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E8%81%8A%E4%B8%80%E8%81%8A%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/</guid>
+      <description> Programming make the world a better place, anyone can be anything
+ 前言 微信公众号2012年正式推出，至今已走过5个年头，在这五年的时间内，很多微信第三方企业迅速崛起，典型代表有微盟、微客来这些以公众号托管为主的企业。而今天我想跟大家聊的是微信公众号开发这个领域的一些事情。
+经历 我是2013年末接触微信开发的，那时候还在上学，有朋友说想在学校搞一个微信公众号卖水果，于是我开始接触微信开发。最开始是看青龙老贼的教程入门的，后来接触到了github上面一个非常流行的类库wechat-php-sdk，再后来接触到了weiphp、微擎这样的开发框架，再到现在自己写的框架豆信，在微信开发这个领域已经走过了3个年头，期间开发过微商城、微餐饮、微投票等多款微信端应用，对于微信官方提供的接口算得上是滚瓜烂熟。
+产品 最近这段时间，微信小程序（应用号）被炒的非常火，很多企业和个人都等着在下一个风口起飞，渐渐的就有些人不那么看好微信公众号了。作为一个纯技术爱好者，我不敢对公众号或者是小程序未来几年的市场情况和流行度做一个评价。单从开发的角度，给想接触微信开发的朋友介绍几款产品。
+  wechat-php-sdk wechat-php-sdk是一个专门用于微信开发的类库，在github上面开源，有3000+的star，市面上很多与微信公众号相关的产品都有用到这个类库，其对微信官方提供的接口进行了高度封装，集成此类库后，在自己的应用中只需要简单的配置即可调用微信官方开放的诸多功能。对于产品形态不过度依赖微信，只想在自己的产品中简单集成微信端功能的开发者来说，可以选择此类库进行开发，此类库支持composer依赖安装。  weiphp 在搜索引擎上搜索微信开发框架，排在前面的几个产品中便有weiphp。weiphp是一个专门用于微信公众号开发的CMF系统（内容管理框架），基于onethink开发，支持通过插件来扩展功能，目前最新的版本是3.0。我是2014年夏天接触到weiphp的，花了差不多一年的时间，成为了weiphp社区最活跃的开发者，写了几篇**《分分钟上手weiphp插件开发》**系列教程，还录制过几个weiphp插件开发的视频。后来因为不是很喜欢weiphp框架的一些特性，便退出了weiphp的圈子。总的来说，weiphp的优点是上手容易、扩展方便、商业友好，自己改一改拿来给客户做做微信外包还是很方便的。缺点就是社区不够活跃，官方支持不够，产品迭代速度太慢。
+  微擎 在我看来，微擎可以算得上是目前国内最成熟的微信开发框架，功能非常完善，开发者众多，社区活跃，官方应用商城拥有3000+的扩展功能，诸多的商业用户支持。我最开始接触微擎也是在2014年夏天，那时候在微擎与weiphp之间，我选择了后者，原因是因为微擎的开发文档内容太多，看起来有点摸不着头脑，觉得入门可能比较困难，便放弃了。后来看到微擎逐渐把开发者分成机制完善，很多做微擎的开发者在微擎的平台上获得了不菲的收入，心里多少感觉有点遗憾。对于想要选择微擎进行开发的开发者来说，有几点是需要考虑的。首先是微擎的框架相比于thinkphp、YII这种的主流框架来说，上手不是特别容易。再就是微擎的功能虽多，但是对于喜欢小而美，不需要集成过多微信端功能的产品来说，过多的封装显得不是很灵活。第三点，也是最重要的一点，安装微擎框架后需要连接云服务才能更新框架，并且需要购买商业版才能去除版权，对于喜欢商业友好，不愿意花钱买商业版的开发者来说，微擎可能不是最好的选择。
+  豆信 豆信是一款专注于微信公众号开发的框架，基于thinkphp3.2.3开发而成，自主研发的插件扩展机制、模板视图工具使得豆信可以用来快速的集成微信公众号常用的功能。豆信官网的宣传语是“从未见过哪一款开发框架，如此这般简洁优雅”，虽然说的有点夸张，但是通读豆信源代码，可以在很多地方看到框架设计的优雅之处：核心源代码压缩后仅2.4M，真正的小而美；使用豆信封装的视图工具，20行以内的代码可以实现一个功能后台的增删改查；使用豆信封装的微信接口，三行代码可以搞定微信支付；高度集成wechat-php-sdk，能够灵活的处理微信端的各类消息；代码极其注重工整性，处处体现细节。豆信是一款商业友好的框架，基于apache2.0协议在github开源，官方提供社区支持与扩展服务。
+   顺便提一句，豆信是我一个人独立开发的产品，虽然再说下去有王婆卖瓜的嫌疑，但是下面我还是想用几张图来简单介绍一下这一款优雅的微信开发框架。
+  简洁 豆信是一个非常简洁的开源框架，对业务逻辑进行了高度封装，自主研发的视图构建工具大大简化了模板布局的工作，豆信核心文件的代码体积压缩后仅2.4M，功能完整性丝毫不亚于市面上已有的体积为几十M的框架。   高效 豆信引入了github上最为流行的wechat-php-sdk，对微信接口进行了高度封装，系统内核封装的微信交互Api能够对微信端发送的文本、语音、图片、位置、链接、短视频等类型的消息进行高效的处理，同时能够通过后台配置把用户关注、取消关注、点击菜单、上报地理位置、扫描带参数二维码等事件型消息分发到插件进行处理，这让微信交互处理变得非常灵活。   优雅 豆信是一个非常优雅的开发框架，非常注重代码的工整性、可复用性，和功能的实用性、易扩展性。通读豆信源代码，在很多地方都能看到注重细节的体现。   易扩展 豆信自主研发了一套插件扩展机制，可以把微信消息分发到插件进行处理，在插件中可以获取粉丝信息、自定义分享、发起微信支付、调用模板通知等。通过插件来扩展功能变得非常容易。   社区支持 为了让框架能够更加快速良好的发展，豆信提供了社区支持：http://bbs.douchat.cc/ 在豆信社区可看到豆信框架的更新动态、发布的扩展功能，也可以在这里提交豆信使用过程中发现的BUG、一些功能建议，还能跟所有的社区成员一起讨论、交流、分享你在开发或使用过程中的心得与感悟。   扩展服务 豆信云商城提供多款官方/开发者发布的插件，在这里你可以找到你想要的资源。    写在最后 </description>
+    </item>
+    
+    <item>
+      <title>AES加解密在php接口请求过程中的应用</title>
+      <link>https://idoubi.cc/legacy/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Tue, 25 Oct 2016 12:10:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+      <description>在 php 请求接口的时候，我们经常需要考虑的一个问题就是数据的安全性，因为数据传输过程中很有可能会被用 fillder 这样的抓包工具进行截获。一种比较好的解决方案就是在客户端请求发起之前先对要请求的数据进行加密，服务端 api 接收到请求数据后再对数据进行解密处理，返回结果给客户端的时候也对要返回的数据进行加密，客户端接收到返回数据的时候再解密。因此整个 api 请求过程中数据的安全性有了一定程度的提高。
+今天结合一个简单的 demo 给大家分享一下 AES 加解密技术在 php 接口请求中的应用。
+AES 加解密基础类： &amp;lt;?php /** * 加密基础类 */ class Crypt_AES { protected $_cipher = &amp;#34;rijndael-128&amp;#34;; protected $_mode = &amp;#34;cbc&amp;#34;; protected $_key; protected $_iv = null; protected $_descriptor = null; /** * 是否按照PKCS #7 的标准进行填充 * 为否默认将填充“&amp;amp;#92;&amp;amp;#48;”补位 * @var boolean */ protected $_PKCS7 = false; /** * 构造函数，对于密钥key应区分2进制字符串和16进制的。 * 如需兼容PKCS#7标准，应选项设置开启PKCS7，默认关闭 * @param string $key * @param mixed $iv 向量值 * @param array $options */ public function __construct($key = null, $iv = null, $options = null) { if (null !</description>
+    </item>
+    
+    <item>
+      <title>浅谈shtml与html的区别</title>
+      <link>https://idoubi.cc/legacy/%E6%B5%85%E8%B0%88shtml%E4%B8%8Ehtml%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Fri, 14 Oct 2016 10:04:29 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E6%B5%85%E8%B0%88shtml%E4%B8%8Ehtml%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <description>遇到有人咨询 shtml 与 html 的区别，顺手查了一波资料，根据我的理解整理一下与大家分享。
+ 何为 shtml？  shtml 跟 html 类似，也是一种用于网页设计的标记型语言，区别在于：html 是一种纯静态的标记型语言，在 html 文档里面写的内容是什么，用户打开浏览器看到的就是什么，而 shtml 是一种半静态半动态的标记型语言，在 shtml 里面可以包含 SSI 命令，当用户在浏览器浏览 shtml 文档的时候，里面包含的 SSI 命令会被解析，然后再呈现内容给用户。
+ 何为 SSI？  SSI 是为 WEB 服务器提供的一套命令，这些命令只要直接嵌入到 HTML 文档的注释内容之中即可。例如： &amp;lt;!--#include file=&amp;quot;index.html&amp;quot;--&amp;gt; &amp;lt;!--#echo var=&amp;quot;DOCUMENT_NAME&amp;quot;--&amp;gt;都属于 SSI 指令。前者用于包含一个 html 文件，后者用于显示当前文档的名称。
+ 举例说明  新建一个 index.html 文件，并输入代码：   &amp;lt;!DOCTYPE HTML&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;了不起的盖茨比&amp;lt;/title&amp;gt; &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;h1&amp;gt;了不起的盖茨比&amp;lt;/h1&amp;gt; &amp;lt;p&amp;gt;1922年的春天，一个想要成名名叫&amp;lt;em&amp;gt;尼克。卡拉威&amp;lt;/em&amp;gt;的作家，离开了美国中西部，来到了纽约。那是一个道德感缺失，爵士乐流行，走私为王，股票飞涨的时代。为了追寻他的&amp;lt;span&amp;gt;美国梦&amp;lt;/span&amp;gt;，他搬入纽约附近一海湾居住。&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;菲茨杰拉德，二十世纪美国文学巨匠之一，兼具作家和编剧双重身份。他以诗人的敏感和戏剧家的想象为&amp;lt;strong&amp;gt;“爵士乐时代”&amp;lt;/strong&amp;gt;吟唱华丽挽歌，其诗人和梦想家的气质亦为那个奢靡年代的不二注解。&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 在浏览器访问该index.html文档，将会显示成这样： ![1](http://blogcdn.idoustudio.com/2016/10/1.png)   新建一个 test.</description>
+    </item>
+    
+    <item>
+      <title>git常用命令整理</title>
+      <link>https://idoubi.cc/legacy/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/</link>
+      <pubDate>Mon, 21 Mar 2016 18:20:13 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/</guid>
+      <description>拉取分支代码：git clone -b [branch_name] [remote_url] 查看所有远程分支：git branch -a 查看本地分支：git branch 创建分支：git branch [branch_name] 切换到分支：git checkout [branch_name] 删除本地分支：git branch -d [branch_name] 删除远程分支：git push origin --delete [branch_name] 拉取远程分支：git fetch origin [branc_name] 合并本地分支：git merge [branch_name] 撤销合并：git reset --hard [commit_id] 重命名本地分支：git branch -m [old_branch_name] [new_branch_name] 丢弃未提交的更改：git clean -df 丢弃所有已commit的修改：git checkout . 将更改暂存：git stash 拉取代码: git pull 恢复暂存：git stash pop 将远程仓库与本地仓库关联：git remote add origin [remote_url] 删除远程仓库与本地仓库的关联：git remote rm origin 将本地的代码推送到关联的远程仓库：git push -u origin [branch_name] http://developer.</description>
+    </item>
+    
+    <item>
+      <title>使用Apache的ab工具进行网站性能压力测试</title>
+      <link>https://idoubi.cc/legacy/%E4%BD%BF%E7%94%A8apache%E7%9A%84ab%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Mon, 15 Feb 2016 09:06:02 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E4%BD%BF%E7%94%A8apache%E7%9A%84ab%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</guid>
+      <description>年前给中百仓促超市做了微信摇一摇抽奖的功能开发，顾客凭借在中百购物的发票联可以在微信中参与抽奖。由于中百仓储超市微信公众号的关注量较大，客户担心太多用户同时参与抽奖的话会导致服务器崩溃而不能给用户提供正常的服务，因此要求我们对中百仓促超市微信公众号接入的网站性能进行压力测试。下面总结一下使用 Apache 的 ab 工具进行压力测试的过程。
+装了 wampserver 的情况下可以直接使用 ab 工具，win+R 后输入 cmd 弹出 dos 命令窗口，进入 wamp 的安装目录并且启动 ab 工具。
+1000 请求，200 并发下的压力测试结果： 1000 请求，300 并发下的压力测试结果： 1000 请求，100 并发下的压力测试结果： 由上面的测试结果分析可知，这台服务器的最佳并发量应该控制在 100 以下。
+参考资料：
+如何使用 Apache 的 ab 工具进行网站性能测试：
+http://jingyan.baidu.com/article/e3c78d647a57833c4c85f502.html
+ab 压力测试 命令详解与结果分析：
+http://lihuipeng007.blog.163.com/blog/static/121084388201082542924962/
+压力测试所用工具下载：
+wampserver：https://www.baidu.com/s?ie=UTF-8&amp;amp;wd=wampserver
+测试程序：
+&amp;lt;?php class Test { function yao($invoice, $mobile) { $key = &amp;#39;a63d590******190af93fe5387045795&amp;#39;; $corpid = &amp;#39;1**1&amp;#39;; $action = &amp;#39;check&amp;#39;; $tel = $mobile; $reciptnum = $invoice; $tmpArr = array($key, $corpid, $action, $tel, $reciptnum); sort($tmpArr); $tmpStr = implode($tmpArr); $sign = sha1($tmpStr); $url = &amp;#39;http://1************3:8001/lottery/ws/api/win?</description>
+    </item>
+    
+    <item>
+      <title>省市区三级联动js实现</title>
+      <link>https://idoubi.cc/legacy/%E7%9C%81%E5%B8%82%E5%8C%BA%E4%B8%89%E7%BA%A7%E8%81%94%E5%8A%A8js%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 03 Nov 2015 12:53:27 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E7%9C%81%E5%B8%82%E5%8C%BA%E4%B8%89%E7%BA%A7%E8%81%94%E5%8A%A8js%E5%AE%9E%E7%8E%B0/</guid>
+      <description>接了一个广州电信微信公众号开发的单子，用户在兑换礼品的时候需要填写个人信息，这个时候需要用到省市区三级联动的功能。于是开始在网上找省市区三级联动的 js，终于找到一篇：http://www.cnblogs.com/zjfree/archive/2013/08/20/3269864.html
+这是使用 QQ 网站用的 js 来实现省市区三级联动的，既然腾讯都用了，姑且我也用这个 js 吧。
+下面讲一下使用过程：
+复制一份生成省市区联动数据的 js： http://ip.qq.com/js/geo.js
+将 js 文件上传到服务器项目目录下面： 在需要用到省市区联动的 html 页面引入该 js： &amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;{:ADDON_PUBLIC_PATH}/js/geo.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; 给省市区联动的 select 分别添加 id：s1、s2、s3 &amp;lt;select name=&amp;quot;province&amp;quot; id=&amp;quot;s1&amp;quot; disabled=&amp;quot;disabled&amp;quot;&amp;gt; &amp;lt;option&amp;gt;&amp;lt;/option&amp;gt; &amp;lt;/select&amp;gt; &amp;lt;select name=&amp;quot;city&amp;quot; id=&amp;quot;s2&amp;quot;&amp;gt; &amp;lt;option&amp;gt;&amp;lt;/option&amp;gt; &amp;lt;/select&amp;gt; &amp;lt;select name=&amp;quot;area&amp;quot; id=&amp;quot;s3&amp;quot;&amp;gt; &amp;lt;option&amp;gt;&amp;lt;/option&amp;gt; &amp;lt;/select&amp;gt; 给 body 标签绑定 onload 事件用于初始化省市区 &amp;lt;body onload=&amp;quot;setup();preselect(&#39;陕西省&#39;);promptinfo();&amp;quot;&amp;gt; ok，这样就妥了。省市区三级联动完美实现。</description>
+    </item>
+    
+    <item>
+      <title>「Fiddler」网页采集必备抓包利器</title>
+      <link>https://idoubi.cc/legacy/fiddler%E7%BD%91%E9%A1%B5%E9%87%87%E9%9B%86%E5%BF%85%E5%A4%87%E6%8A%93%E5%8C%85%E5%88%A9%E5%99%A8/</link>
+      <pubDate>Fri, 19 Dec 2014 11:30:29 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/fiddler%E7%BD%91%E9%A1%B5%E9%87%87%E9%9B%86%E5%BF%85%E5%A4%87%E6%8A%93%E5%8C%85%E5%88%A9%E5%99%A8/</guid>
+      <description>最近这段时间，网页采集方面的工作做得比较多。用curl技术开发了一个微信文章聚合类产品，把抓取到的数据转换成json格式，并在android端调用json数据接口加以显示；基于weiphp做了一个掌上头条插件，也是用的网页采集技术；和一个创业团队一起在做一个高考志愿填报系统，所有的数据也是从别的地方抓取。总而言之，网页抓取与网页采集技术是一项非常实用的技能，他能让我们高效快速的获取我们开发产品所需要的一些基本数据。
+网页抓取与网页采集过程中难免需要用到抓包技术，所谓抓包，就是我们在访问一个目标网站的时候，需要分析我们提交给浏览器的一些http请求以及提交给浏览器的一些数据，在知道请求是如何发起的以及post了哪些数据之后，我们才能针对目标网页写出相应的采集程序。特别是在模拟登陆一些需要用户进行登陆验证的网站时，抓包分析就变得很重要。
+一些浏览器自带抓包分析工具或者有其可扩展的抓包插件，像火狐浏览器有firebug插件，IE浏览器有HttpWatch。每个抓包工具都有其独特的功能，这里就不一一介绍了，今天给大家介绍一个好用的抓包工具Fiddler。
+一、下载地址： http://www.telerik.com/download/fiddler
+二、基本介绍： Fiddler-百度百科
+三、使用教程： Fiddler教程
+四、补充介绍： 手机APP抓包
+现在我们来结合一个具体的例子来讲一下如何抓包分析手机APP的请求数据，并达到自己的需求。我这里给大家讲一个LOL盒子的抓包实例。
+我们知道，LOL盒子没有网页版，或者说网页版的功能并不像手机APP一样数据整合的那么齐全。如果我们要做一个微信版的LOL盒子，让用户在微信端回复一些关键词就能查看一些基本信息，比如用户在微信中回复“英雄”就能查看LOL全部的英雄信息，包括出装、符文之类的。那么我们想在微信端实现这些功能，肯定需要数据库的支持，如果我们的数据从LOL官网抓取的话，免不了要写很多匹配规则，所以一个简单高效的方法是直接抓取LOL盒子已经整合了的数据。那么正题开始，我们开始抓LOL盒子集成的全部英雄的数据。
+1、首先在手机下载LOL盒子，并进入首页（请忽略我这个战五渣的战斗力指数）
+2、打开Fiddler并点Remove all把抓包信息全部清除
+3、在LOL盒子中点击英雄进入查看英雄页面
+4、可以看到查看英雄页面有免费、我的英雄、全部三个选项
+5、这时候我们可以看到Fiddler已经抓到我们需要的数据接口了
+6、我们在其中一个数据接口上面点击右键，复制url地址并在浏览器中打开
+7、就能看到我们需要的周免英雄的数据接口了，是json格式的
+到此为止，抓包分析的整个流程大家一目了然了，得到了json接口之后，我们就能用curl技术把数据采集下来，并把json格式的数据转换成数组或者其他格式，然后就可以存到我们自己的数据库中了，当用户在微信中回复关键词时，我们就从数据库中取出相应的数据并回复给用户就行了。</description>
+    </item>
+    
+    <item>
+      <title>使用Xshell命令配置阿里云运行环境小结</title>
+      <link>https://idoubi.cc/legacy/%E4%BD%BF%E7%94%A8xshell%E5%91%BD%E4%BB%A4%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Fri, 19 Dec 2014 10:23:52 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E4%BD%BF%E7%94%A8xshell%E5%91%BD%E4%BB%A4%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%B0%8F%E7%BB%93/</guid>
+      <description>1、配置服务器连接属性
+2、下载一键安装包并放置在阿里云 root 目录下
+3、输入安装命令
+4、输入 cat account.log 命令查看安装软件登陆信息
+5、进入 Xftp，将网站等应用放置在根目录即可
+6、阿里云一键安装 web 教程及相关软件下载
+linux_setup_1.4.1](http://blogcdn.idoustudio.com/2014/12/linux_setup_1.4.1.zip)
+附：https://blog.linuxeye.com/31.html</description>
+    </item>
+    
+    <item>
+      <title>用SVN版本管理工具在本地对项目代码进行管理</title>
+      <link>https://idoubi.cc/legacy/%E7%94%A8svn%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E5%9C%A8%E6%9C%AC%E5%9C%B0%E6%8E%A7%E5%88%B6%E4%B9%90%E4%BD%B3%E8%82%B4/</link>
+      <pubDate>Tue, 21 Oct 2014 11:50:02 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E7%94%A8svn%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E5%9C%A8%E6%9C%AC%E5%9C%B0%E6%8E%A7%E5%88%B6%E4%B9%90%E4%BD%B3%E8%82%B4/</guid>
+      <description>对于一个程序开发人员来说，对代码的版本控制毫无疑问是一个非常关键的工作。因为一直都是一个人在写程序做产品，没有团队协作的概念，所以我以前做一些产品的时候基本上就是有了一个想法立马就去开始写程序了。没有写过需求文档，没有进行过市场调研，更没有规范化的开发进度控制、代码管理等，因此我以前做过的“武大微淘”、“凌波微购”、“厚德网”等产品的完整源代码现在都找不到了，有时候想起来还是觉得挺悲伤的。就拿“武大微淘”来说，我记得我是从 2014 年 2 月 15 号，也就是大三下学期刚开学开始，每天都去图书馆写程序，大概写了半个月才把“武大微淘”的基本功能写完，那时候的功能想想还是很不错的，虽然做的也是一个微信电商平台，但“武大微淘”相比于其他的微信购物类产品而言还是有很多亮点，比如说支持用户直接在微信中回复关键词查询商品分类、商品列表等，还有就是通过回复“商品编号+份数+地址”可以在微信中直接提交订单、管理员输入“查询+订单号”直接在微信中查看订单等。
+如果可以的话我还是希望 能把以前做的一些产品的源代码找到，稍微修改一下还能继续使用，指不定还能卖给某些感兴趣的人。可惜的是以前图样图森破，不懂得对代码进行管理，导致现在想找都很难找到了。因此，以后开发什么产品一定要学会用代码管理工具，把每个版本的代码完整的保留下来。
+ok。现在开始进入正题。分享如何在本地配置 SVN。
+准备工作：
+下载并安装 svn 服务器：http://www.visualsvn.com/server/download/
+下载并安装 svn 客户端：http://tortoisesvn.net/downloads.html
+与 SVN 配置相关的教程： http://www.cnblogs.com/elesos/archive/2012/12/09/2810449.html http://www.cnblogs.com/skyway/archive/2011/08/10/2133399.html
+本地配置 SVN
+1、在任意目录下新建 SVN 仓库 2、复制仓库地址 3、SVN 仓库创建成功 4、选择需要导入的项目文件夹 5、填写 SVN 仓库地址和项目版本信息 6、导入项目至 SVN 仓库 7、从 SVN 仓库到处项目至新的文件夹 8、填写 SVN 仓库地址及导出到的路径 9、导出项目源代码 10、用 SVN 进行管理 </description>
+    </item>
+    
+    <item>
+      <title>ajax在新闻资讯类产品中的应用</title>
+      <link>https://idoubi.cc/legacy/ajax%E5%9C%A8%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF%E7%B1%BB%E4%BA%A7%E5%93%81%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Fri, 17 Oct 2014 11:15:17 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/ajax%E5%9C%A8%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF%E7%B1%BB%E4%BA%A7%E5%93%81%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+      <description>最近一直在做一款叫做“高校头条”的新闻资讯类产品，初衷是想通过数据抓取的技术把大学生最常浏览的新闻资讯类信息汇集到一起，通过一定的算法分析，根据用户的兴趣给他们推荐相应的内容。微信端产品已经上线一段时间了，目前在捣鼓安卓端需要怎么做，希望等安卓端做出来之后就开始推广给所有人用。
+所谓的微信端“高校头条”，其实就是在微信中链接了一个 wap 站点，使用 bootstrap 做了一个移动端适配的前台，使用 weiphp 作为后台，通过在后台设置抓取地址和一定的抓取规则，使用 curl 技术抓取各个微信订阅号里面的内容，再把抓取到的内容存储到数据库，在 wap 站点直接输出数据库里面的新闻资讯信息，在微信端通过关键词查询获取相应的内容。整个产品的实现原理就是这样子，今天想要总结的一个技术是：通过 ajax 调用数据，在 wap 站点输出新闻列表。
+AJAX 即“Asynchronous Javascript And XML[1] ”（异步 JavaScript 和 XML[1] ），是指一种创建交互式网页应用的网页开发技术。百度百科上是这么解释的。ajax 也是业内评价非常高的一种技术，一般功能较为完善的网站都或多或少使用了 ajax。ajax 最主要的特点是异步，使用异步最主要的作用是提高用户体验，也许我们会经常遇到，在点击某一个网站链接的时候，浏览器跳转半天都不能把我们想看的内容呈现出来，这时候网页浏览者的耐心肯定会受到很大的挑战，也就是所谓的用户体验极差。而使用 ajax 获取数据，一般网页是不会出现这种情况的，ajax 可以设置局部刷新，我们只要把需要通过点击链接而切换内容的区域设置成 ajax 获取数据就行了，这样用户点击某个链接的时候，网站是不会整体跳转的，也不会出现一片空白的情况，用户看到所需内容所等待的时间也非常少，很明显的提高了用户体验。
+不知不觉废话又说了一大堆。现在要开始进入正题了。
+先来看一下这两张图片。这是”高校头条“wap 网站上的新闻展示页面，导航栏我们分了”本校“、”考研“、”就业“、”创业“几个栏目。很明显我们希望用户点击每个栏目之后，下面会展示对应栏目下的新闻列表。在没学会 ajax 之前我是怎么做的呢？
+&amp;lt;nav class=&amp;#34;table-responsive&amp;#34;&amp;gt; &amp;lt;table class=&amp;#34;table&amp;#34;&amp;gt; &amp;lt;tr&amp;gt;	&amp;lt;td&amp;gt;&amp;lt;if condition=&amp;#34;$column_id eq &amp;#39;&amp;#39;&amp;#34;&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;school_id&amp;#39;=&amp;gt;$school_id))}&amp;#34; class=&amp;#34;active&amp;#34;&amp;gt;&amp;lt;else/&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;school_id&amp;#39;=&amp;gt;$school_id))}&amp;#34;&amp;gt;&amp;lt;/if&amp;gt;本校&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt; &amp;lt;volist name=&amp;#34;columnList&amp;#34; id=&amp;#34;vo&amp;#34;&amp;gt; &amp;lt;td&amp;gt;&amp;lt;if condition=&amp;#34;$column_id eq $vo[&amp;#39;id&amp;#39;]&amp;#34;&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;column_id&amp;#39;=&amp;gt;$vo[&amp;#39;id&amp;#39;]))}&amp;#34; class=&amp;#34;active&amp;#34;&amp;gt;&amp;lt;else/&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;column_id&amp;#39;=&amp;gt;$vo[&amp;#39;id&amp;#39;]))}&amp;#34;&amp;gt;&amp;lt;/if&amp;gt;{$vo.column_name}&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt; &amp;lt;/volist&amp;gt; &amp;lt;/tr&amp;gt; &amp;lt;/table&amp;gt; &amp;lt;/nav&amp;gt; 就像上面代码看到的，我是对每个栏目设置一个&amp;lt;a&amp;gt;标签，然后点击每个栏目之后跳转到 index 方法，传递参数 school_id 或者 column_id 进行处理，然后在 index 方法中根据传递过来的参数去数据库中调用对应栏目下面的新闻，再把调用到的数据输出到前台页面显示。使用这种方法，用户每一次点击栏目时，都会跳转到 index 方法对应的模板 html，所以会在浏览器上看到一个圆圈来回转动（微信浏览器最新版是一条绿色的直线往右挺进）。如果网速慢一点的话，这样的浏览新闻的方式肯定会让用户奔溃，跳转半天看不到所需要的页面是很正常的事情。</description>
+    </item>
+    
+    <item>
+      <title>一个程序员关于订单打印的思考</title>
+      <link>https://idoubi.cc/legacy/%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E5%85%B3%E4%BA%8E%E8%AE%A2%E5%8D%95%E6%89%93%E5%8D%B0%E7%9A%84%E6%80%9D%E8%80%83/</link>
+      <pubDate>Wed, 15 Oct 2014 15:04:17 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E5%85%B3%E4%BA%8E%E8%AE%A2%E5%8D%95%E6%89%93%E5%8D%B0%E7%9A%84%E6%80%9D%E8%80%83/</guid>
+      <description>乐佳肴台式茶餐屋 10 月 10 号开业以来，生意一直很好。我们在开业前几天就入驻了淘点点、美团外卖、乐外卖等系统。做外卖订餐的，我们肯定需要把用户下的订单打印出来然后再根据订单安排配送员给用户配送，前几天我对乐佳肴入驻的三个平台进行了调试，在淘宝上买了一个 58mm 无线蓝牙打印机，但是调试后发现只有美团外卖的订单能够打印出来，淘点点的订单打印不出来。淘点点指定的打印机好像是一款叫做“佳博”的无线打印机。乐外卖则在系统后台就指明了只能使用乐外卖提供的打印机才能打印在乐外卖平台上产生的订单，还给出了乐外卖打印机在淘宝上的购买链接，价格最便宜的 550 元，最新的 650 元。看到那个价格的时候我也是醉了。
+作为一个自尊心很强的程序员，作为武汉凌波微购网络科技有限公司的首席技术官，我岂能眼睁睁的看着我们的乐佳肴花几百块钱去买三个不同的打印机分别适应我们入驻的三个平台？于是我想到了写一套统一的程序把三个平台的订单整合起来，用一个统一的打印机打印。
+我最开始的想法是用模拟登陆技术，分别登陆淘点点、美团外卖、乐外卖三个系统的商家管理后台，然后用网页抓取技术把订单抓取下来存到本地的数据库，最后再调用打印机程序统一打印。不过后来发现淘点点跟美团外卖好像只有移动端的商家管理后台，没有 pc 端的，而乐外卖的管理后台登陆进去之后是一堆乱码，于是模拟抓取订单的这个想法行不通了。
+然后我想到了三个平台接到订单的时候商家的手机都会接到订单提醒，淘点点跟美团外卖是直接在自己的 APP 中发出提示音并显示出订单详情，而乐外卖则可以设置短信通知和微信通知，商家在后台设置自己的接受信息后，只要一收到订单就会接到乐外卖发来的短信和微信，提示订单详情。然后我想到的是把这些通知类的订单详情复制粘贴并发送给一个微信号，由该微信号负责处理，并把内容插入到数据库，再从数据库中读取这些订单信息并进行打印。这样的话可能稍微麻烦一点，需要负责接收订单的商家人为的把三个平台的订单复制粘贴至同一个微信号，并统一打印。但是毕竟这种方法可以解决三个平台订单使用同一个打印机打印的问题。测试发现，淘点点跟美团外卖上面接到的订单不能复制，于是我只能处理乐外卖的订单了，毕竟写一个程序处理乐外卖系统产生的订单并用统一的打印机打印出来可以省去购买乐外卖打印机需要花费的 650 元，想想也是蛮有意义的。
+ok，废话说了一大堆，现在开始进入正题，讲解如何写一套程序打印乐外卖平台产生的订单。
+1、首先是在乐外卖后台设置接收订单的方式，我填写的是使用我的微信接收订单，所以每次用户下了订单，我的微信会马上接到订单提醒。 2、然后是把接收到的订单复制粘贴到一个微信公众号进行处理。本来想用最近申请的微信企业号进行处理的，但是因为企业号开发还没有学会，所以便临时使用了凌波微购公司的公众号进行处理。 3、处理订单的程序很简单，就是获取用户发送到微信公众号里面的内容，如果内容开头符合乐外卖订单开头的形式，就把用户发送的内容插入到数据库订单表中。如果用户发送的是”查看订单“，则跳转到查看订单的页面。 4、循环输出订单。基于 weiphp 的 MVC 模式来写数据输出程序要方便很多，简单的几行代码就把订单全部输出来了。 5、写一个刷新页面的程序，让页面每 5 秒钟刷新一次，便于获取最新的订单。 6、把这些准备工作做好之后，在查看订单的页面就能看到所有的订单信息了，页面每 5 秒钟刷新一次，在店面内负责接单的人就可以及时打印出订单了。 7、订单都显示出来了，现在就到了最关键的一步：把订单打印出来。从上图我们看到，每一条订单左上角都有 一个写着”订单“的按钮，点击那个按钮就能调出打印机预览页面。在输出订单的程序中，我们为每一个打印按钮设置一个 onclick 事件，为每一条订单设置一个唯一的 id，这样的话每次点击哪个订单的打印按钮，对应的订单就会被打印出来了。 打印订单的 js 函数 printdiv(printpage)中传递的参数是需要打印的订单 id，调用 window.print(); 能够打印出当前页面，所以在 window.print(); 前需要用 document.body.innerHTML = headstr+newstr+footstr; 设置当前页面内容。当前页面内容在打印之前设置了，打印之后不会自动恢复，所以在设置需要打印订单的当前页面内容之前我们先把原来的内容存储起来，等调用 windoe.print 打印出需要的内容之后再恢复以前的所有订单显示页面。
+var oldstr = document.body.innerHTML; document.body.innerHTML = headstr+newstr+footstr; window.print(); document.body.innerHTML = oldstr; 8、把前面的工作都做好了，现在点击打印订单按钮就能调出打印机进行打印了。我这里用的是佳博的打印机，这个打印机是需要连接电脑的，不过价格挺便宜的，才 180 左右，所以用自己的智慧，配合一个 180 元的打印机，也能打印乐外卖的订单了，避免了购买乐外卖 650 元的打印机，为乐佳肴省掉了 470 元。感觉自己萌萌哒~请忽略我那乱得一笔的桌子。 整个订单打印程序开发流程到此处就哦了，总结几点： 1、作为一个程序员，一定要经常动脑筋，把自己学到的知识运用到实际场景中，能够创造价值。 2、实现某个功能能用的方法可能会有很多种，一种不行就试另一种，不要钻牛角尖。 3、一定要努力学技术，争取尽快开发出独立的线上订餐平台，功能不能亚于美团外卖、淘点点、乐外卖。 4、程序员的信仰：为改变世界而奋斗。</description>
+    </item>
+    
+    <item>
+      <title>阿里云服务器phpmyadmin无法登陆问题及其解决办法</title>
+      <link>https://idoubi.cc/legacy/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <pubDate>Sun, 07 Sep 2014 12:38:13 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <description>比起一般的虚拟主机，阿里云服务器在访问速度和稳定性方面都有很突出的优势。我是半年前开始使用阿里云的，用的是最低的配置，55 块钱一个月，由于不懂得 Linux 服务器和 shell 编程，所以在买下阿里云服务器之后用的是阿里云官方提供的一键安装 web 服务。http://help.aliyun.com/view/13435438.html
+使用一键安装 web 教程配置好的阿里云服务器使用起来还是挺方便的，就是偶尔会出现一些莫名其妙的问题，比如数据库登录不上，无法更改网站根目录之类的，可惜的是我不懂 linux 服务器，所以出现了什么问题只能求助别人或者各种百度，这样挺不方便的。看来要找个时间好好学一学 linux 服务器。
+记录一下使用阿里云服务器以来遇到最多的数据库登录不上的问题及解决办法：
+通过 xftp 操作阿里云服务器上的文件，提交表单的时候遇到断网，表单提交失败，再去提交的时候就提示数据库连接错误，这时候去访问 phpmyadmin 就会提示 2002 错误，百度解决办法的时候看到的都是说需要更改配置文件，把&#39;127.0.0.1&amp;rsquo;改成&amp;rsquo;localhost&amp;rsquo;之类的。http://www.jb51.net/article/30175.htm
+仿照着去修改了配置文件之后，发现问题还是没有解决。于是用了阿里云的快照回滚，把文件恢复到早期的一个阶段。
+快照回滚之后，阿里云恢复到早期的一个状态，重启系统之后再去访问网址，提示页面打不开。刚开始百度了好久都没找到解决的办法，最后实在搞不定了就求助了一个懂 linux 的小伙伴，才知道原来是阿里云系统重启之后需要重新启动服务。
+简单的两行代码就把阿里云服务启动了，再去访问网站就妥了。
+有时间一定要好好学习 linux 系统和 shell 编程。
+ </description>
+    </item>
+    
+    <item>
+      <title>关于asp网站本地开发环境的配置</title>
+      <link>https://idoubi.cc/legacy/%E5%85%B3%E4%BA%8Easp%E7%BD%91%E7%AB%99%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 20 Jan 2014 22:49:29 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%85%B3%E4%BA%8Easp%E7%BD%91%E7%AB%99%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/</guid>
+      <description>采用不同的语言开发网站所需要的开发环境也会有所不同，php 网站开发环境需要 apache 作为服务器，一般用 mysql 数据库，对于 php 的开发环境配置一般人会选择集成环境包，比如 wampserver 之类的，可以省去很多力气。jsp 网站需要 tomcat 作为服务器，一般用 mysql 或者 sql server 数据库，开发环境的配置需要配置环境变量什么的，过程有点繁琐。而 asp 网站一般是用 IIS 作为服务器，windows 系统一般自带 IIS 服务，但是开发环境需要自己配置。
+下面主要讲一下 asp 开发环境的配置步骤。
+1、打开或关闭 windows 功能
+单击 开始-&amp;gt;控制面板-&amp;gt;程序和功能-&amp;gt;打开或关闭 windows 功能
+在 internet 信息服务那个选项上打勾（把下面的子目录也全部勾上） 然后点确定，过几分钟就好了。
+2、配置 IIS 管理器
+单击 开始-&amp;gt;控制面板-&amp;gt;管理工具-&amp;gt;Internet 信息服务(IIS)管理器
+打开 Internet 信息服务(IIS)管理器面板 接下来再经过四步设置就完成了 asp 开发环境的配置
+a、双击 Internet 信息服务(IIS)管理器面板中的 ASP，进行两处配置，一处是配置将错误发送到浏览器为 true，第二处是启用父路径设置为 true b、双击默认文档，添加一个 index.asp 文档。 c、双击高级设置，选择 IIS 根目录对应的物理路径。 d、单击绑定，为 IIS 网站绑定主机名和端口。（默认端口为 80，如果电脑上配置了其他服务器比如 apache、tomcat 之类的，为了防止端口冲突，可以在这里给 IIS 网站配置一个端口。我平常一般 asp 网站和 php 网站一起开发，所以在这里给 asp 网站设置端口为 81，php 那里设置为默认的 80） 经过上面四个步骤，基本上 IIS 配置就差不多了，如果你的电脑是 64 位系统，还需要进行一处很重要的配置（妈蛋今天因为忘记配置这个了，搞得我的 asp 网站半天打不开。。。）</description>
+    </item>
+    
+    <item>
+      <title>仿Qzone登录页写的未来网后台登录界面</title>
+      <link>https://idoubi.cc/legacy/%E4%BB%BFqzone%E7%99%BB%E5%BD%95%E9%A1%B5%E5%86%99%E7%9A%84%E6%9C%AA%E6%9D%A5%E7%BD%91%E5%90%8E%E5%8F%B0%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2/</link>
+      <pubDate>Sat, 18 Jan 2014 23:03:01 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E4%BB%BFqzone%E7%99%BB%E5%BD%95%E9%A1%B5%E5%86%99%E7%9A%84%E6%9C%AA%E6%9D%A5%E7%BD%91%E5%90%8E%E5%8F%B0%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2/</guid>
+      <description>一个很简单的前台程序，背景图片直接用的 Qzone 登录页背景图，自己写了个 html 页面和几十行 css，写了一个常用的 js 切换 tab 功能，demo 页面放在 sae 上，用的是 thinkphp 框架。本来想实现模拟登录 Qzone 功能，但是 Qzone 的表单设置得比较巧妙，还没搞清楚应该怎样 post 数据，关于网页抓取和模拟登录的开发一定要抓紧时间学习，这是一个很关键的技术，武大助手就是用的模拟登录教务部管理系统的功能，我要是能尽快摸索出模拟登录的方法，这必定是极好的事情。 Qzone 登录页地址：http://i.qq.com/
+HTML code：
+&amp;lt;!DOCTYPE html PUBLIC &amp;#34;-//W3C//DTD XHTML 1.0 Transitional//EN&amp;#34; &amp;#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&amp;#34;&amp;gt; &amp;lt;html xmlns=&amp;#34;http://www.w3.org/1999/xhtml&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta http-equiv=&amp;#34;Content-Type&amp;#34; content=&amp;#34;text/html;charset=utf8&amp;#34; /&amp;gt; &amp;lt;link href=&amp;#34;style.css&amp;#34; rel=&amp;#34;stylesheet&amp;#34; type=&amp;#34;text/css&amp;#34; /&amp;gt; &amp;lt;title&amp;gt;用户登录&amp;lt;/title&amp;gt; &amp;lt;script type=&amp;#34;text/JavaScript&amp;#34;&amp;gt; &amp;lt;!-- function settab_zzjs(name,num,n){ for(i=1;i&amp;lt;=n;i++){ var menu=document.getElementById(name+i); var con=document.getElementById(name+&amp;#34;_&amp;#34;+&amp;#34;zzjs&amp;#34;+i); menu.className=i==num?&amp;#34;on_zzjs&amp;#34;:&amp;#34;&amp;#34;; con.style.display=i==num?&amp;#34;block&amp;#34;:&amp;#34;none&amp;#34;; } } //--&amp;gt;  &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;logo&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;form name=&amp;#34;login_form&amp;#34; method=&amp;#34;post&amp;#34; action=&amp;#34;http://zhaopin.</description>
+    </item>
+    
+    <item>
+      <title>QQ空间魔力日志制作教程</title>
+      <link>https://idoubi.cc/posts/qq%E7%A9%BA%E9%97%B4%E9%AD%94%E5%8A%9B%E6%97%A5%E5%BF%97%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 27 Dec 2013 04:10:19 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/qq%E7%A9%BA%E9%97%B4%E9%AD%94%E5%8A%9B%E6%97%A5%E5%BF%97%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</guid>
+      <description>看着日志图片上显示着自己的 QQ 头像、QQ 昵称、QQ 号码 是不是觉得很不可思议呢？是不是很想知道这些神奇的图片是怎么做出来的？ 那么接下来我就结合自己的经验给大家讲一讲这种魔力日志制作的原理和方法。
+制作原理：
+关于魔力日志的制作原理我就不详细说了，相信学过 php 的朋友都懂，上面的截图是网上给的解释，大家可以简单了解一下。看不懂也不要紧，没 php 基础也无所谓，请重点关注接下来的制作步骤。
+制作步骤：
+1、准备一张希望让别人看到的图片，可根据自己的创意自由发挥。例如：
+做好图片之后那么接下来要做的就是怎么样把看到这张图片的人的 QQ 信息显示在这张图片上了。
+2、下载源代码
+源代码里面包含了上面的那张百度搜索的图片，命名为 qq.png，如果大家想制作其他的版本只要重新制作一张 qq.png 图片即可。
+源代码下载地址：http://url.cn/WbjBGF
+源代码目录结构： ip 文件夹：获取浏览者主机 ip，用于空间定位。 font 文件夹：字体包 do.php：关键文件，用于获取浏览者的信息，包括 QQ 昵称，QQ 头像，QQ 号，登录地址等信息。 content.php：内容文件，存放向浏览器输出的内容。 no.png：默认图片，即日志内容页里面的图片（别人点进去才会看到）。 qq.png：目标图片，即想要让别人看到的图片。
+3、申请虚拟空间 要把做好的魔力日志图片发到空间让所有人看到，必须有一个虚拟空间，只有把代码和图片上传到空间，才能做出魔力日志。申请虚拟空间的方式有很多，有条件的朋友可以自己在网上买一个 php 空间，或者在网上找一个免费的 php 空间。这里推荐的是百度开发者空间。百度开发者空间申请流程：
+http://jingyan.baidu.com/article/ceb9fb10ebf3f68cad2ba012.html 
+4、测试服务器
+按照第三步给的链接教程将代码上传到百度开发者空间之后，在浏览器输入网址http://1.idoubi.duapp.com/do.php即可看到上传代码中的 no.png 图片，注意网址不要输错，1 是你按照教程填写的版本号，我这里是 1，第三步中的教程里面写的是 0。idoubi 是我自己填的域名，每个人按照自己填的域名和版本号来输入网址。
+如果能看到这张默认图片的话，证明服务器配置正确，接下来就可以去空间写日志了。
+5、发表魔力日志
+复制地址http://1.idoubi.duapp.com/do.php，在腾讯微博粘贴并广播（网上说可以直接用这个地址，但是我试了不行），生成短地址http://url.cn/Uy8PZJ。复制短地址。
+进入自己的 QQ 空间写日志，插入图片，选择插入网络图片，输入在腾讯微博生成的短地址，添加，即可插入 no.png 这张网络图片。点击发表，魔力日志制作成功。 返回个人中心查看，即可看到根据浏览者对象生成的图片，形式为浏览者的 QQ 信息与 qq.png 图片组合（在源代码未修改情况下，qq.png 不起作用，这里的背景图是白色的）而成的一张图片。（由于浏览器缓存问题，发表日志后立刻回个人中心查看可能看到的还是 no.png 那张图片。这种情况下可以换个 QQ 进入空间看看效果。）</description>
+    </item>
+    
+    <item>
+      <title>手把手教你做网站</title>
+      <link>https://idoubi.cc/legacy/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E5%81%9A%E7%BD%91%E7%AB%99/</link>
+      <pubDate>Sat, 07 Dec 2013 02:28:13 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E5%81%9A%E7%BD%91%E7%AB%99/</guid>
+      <description>网页设计是一个大家听得比较多的概念，大家平时上网接触的网站也比较多。网上关于网页设计的教学书籍也有一大堆。要真正学会做网站，要学的知识其实还挺多。一个正规点的网站一般包括两部分，前台和后台。所谓前台就是用户打开网页最先看到的内容，包括网站的布局、颜色搭配等一目了然的视觉元素。而后台则是网站管理员用来控制网站内容的平台，包括对网站内容的增删改以及与网站用户的交互等功能。因此从事网站开发的人可以分为两种，一种叫做前端工程师，另一种叫做后台开发人员。前端工程师要求掌握的技能有photoshop平面设计、html、css、javascript（jquery）、Ajax等，要具备一定的审美能力，能够配合网页美工将做好的网页设计效果图用代码做成一个可以点击的html网页。而后台开发员要做的则是实现网站的必要功能，包括网站数据的显示，网站的后台管理功能以及一些必要的交互功能等，后台开发人员要求具备较强的逻辑思维能力和代码编写能力，会基本的网站后台开发语言，php、asp、jsp等，能够配合前端工程师完成网站的业务处理，最终做出一个成品网站。
+咱们要做一个网站，首先要对网站的功能和样式等方面有一个基本的策划，然后在ps中做出网站的效果图（可以省略），再用代码把前台和后台写好，最后将网站上传到服务器，绑定域名，这样就完成了一个完整网站的设计。要做一个满足自己需求的网站，最好还是要掌握基本的div+css布局和一种后台开发语言，这里推荐php。服务器的话可以选择自己花钱买一个，或者用国内的云计算平台，BAE，SAE都挺不错。这里推荐SAE。
+更多的关于网页设计的知识大家可以自行百度，或者找一些相关的书籍了解一下。现在开始进入正文，教大家在新浪SAE上搭建一个自己的wordpress网站。
+第一步：加入SAE新浪云计算平台。
+1、百度一下SAE 2、用新浪微博账号登陆（没有新浪微博账号的先去开通微博） 3、授权SAE 4、安全设置（一定要记住这一步设置的安全邮箱和安全密码，后面的步骤要用到） 5、身份确认（一个手机号只能绑定一个SAE账号） 6、注册成功 第二步、安装网站
+1、百度一下sae应用仓库 2、在应用仓库里找到wordpress（一个全世界流行的博客系统，也可改造成CMS系统或者是图片管理系统），感兴趣的也可以安装其他web应用 3、点击安装应用，在弹出的页面中填写你的网站域名，后缀默认是sinaapp.com，输入验证码之后点击安装到以上位置 4、在弹出的页面中点击进入初始化页面完成网站的基本配置。 5、填写网站的名称和后台登陆的用户名及密码。
+6、网站安装成功，点击登录按钮进入网站后台登录页面。 7、输入用户名和密码进入网站的后台管理页面。 7、在后台管理页面的顶部点击查看站点即可进入网站前台
+8、至此，一个属于你的网站安装完成。把网站的网址发给你的朋友他们就可以正常访问了。是不是觉得很简单？ 9、有些人可能会说，按照这教程做下来大家做成的网站都是一样的，而且看起来这么丑，这让我情何以堪呢？呵呵，不要急，朋友，请接着往下看。
+第三步、选择符合自己要求的网站主题
+1、上面说了，按照前面的两步做下来得到的只是一个默认的网站模板，也许网站的样子并不符合大家的要求，在教大家套用主题模板之前先给大家看几个用wordpress做的网站例子。 第一个给大家看的肯定是我自己的个人博客啦~http://idoubi.cc/。是放在新浪SAE上面的。用的wordpress主题是 WPDAXUE。个人还是蛮喜欢这种风格的。 第二个要给大家看的是我大前端的网站~http://ifront.sinaapp.com/。也是放着新浪SAE上面的。用的wordpress主题是PhotoBroad 。是不是觉得网站的瀑布流效果很炫呢？还是觉得我大前端的帅哥美女很多？ 第三个要给大家看的是我认识的一个技术大神的个人博客~http://www.thinkful.cn/。他是自己买的服务器，买的独立域名，所以后面没有sinaapp.com后缀。他用的wordpress主题是Hcms。大家有空可以上该技术大神的网站上去看一看，可以学到很多东西哦~ 2、给大家看的三个网站都是用wordpress二次开发而成的，只是套用了不同的wordpress主题，所以网站前台的风格就各不一样了。后台的样式和功能还是一样的。所以，要做一个好看的网站，首先要选择一个好看的主题，当然，有能力的话你可以根据自己的审美开发自己的主题。这里给大家推荐一个比较好的wordpress主题下载站~http://www.iztwp.com/。 3、主题类型大致有图片主题、CMS主题、企业主题、简洁主题四种，选择一款你喜欢的主题，下载下来先随便放一个地方，一会儿需要用。
+第四步、安装主题
+1、要是在自己买的服务器上搭建wordpress，配置主题就很简单了。直接在后台的主题栏搜索主题或者把下载的主题上传，启用主题就行了。 2、但是如果是在新浪SAE搭建的wordpress，由于SAE不让直接写入文件，所以直接在后台安装主题的方法是行不通的，这时候我们需要借助其他的工具把主题上传到SAE的wordpress中，然后才能启用该主题。点击前面几步创建好的网站，进入应用管理页面。 3、点击左侧的代码管理，进入代码管理页面。点击操作——创建svn库，创建svn仓库。仓库地址在本页面下方可查看。 4、点击操作—— 编辑代码可以进入代码编辑页面，我们这里暂时不需要进行代码编辑，以后再讲。 5、找到页面下方的代码部署说明，点击第一个请使用svn部署代码。 6、找到文档中心中间处的下载安装，点击TortoiseSVN下载链接。
+7、根据自己电脑的操作系统下载相应的TortoiseSVN。 8、安装TortoiseSVN。 9、 ok。安装好TortoiseSVN咱们就要开始安装主题了。在自己电脑上随便找个盘新建一个文件夹，点击右键——SVN Checkout，按理说TortoiseSVN安装成功后鼠标右键会有这个选项的。在弹出的checkout页面第一个输入框里填上3中创建的SVN仓库地址，第二个框中填写刚刚创建的文件夹地址。 10、在弹出的输入框中输入新浪SAE的账号和密码 11、点击ok将会把在SAE创建的wordpress代码全部下载到本地的文件夹。 12、现在看一下本地新建的文件夹里面，就会看到wordpress的代码。 13、SVN部署代码的工作已经完成了。现在可以把我们在第三步下载的主题导入网站了。找到下载好的主题，解压缩。把解压好的文件夹复制粘贴到上一步截图的wp-content 的themes文件夹下。 14、右键单击粘贴过来的主题文件夹，依次选择TortoiseSVN——Add，在接下来的两个步骤中都选择ok。 15、再次右键单击粘贴过来的主题，选择SVN Commit，在接下来的两步中都选择ok。 16、至此，wordpress主题已经上传完毕。步骤有点多，但都是些很基本的操作，草草的看一眼应该都掌握了，有什么不明白或者操作出错的地方可以留言告诉我。那么接下来我们就可以进入后台管理刚刚上传的主题了。
+第五步、管理wordpress主题。
+1、在浏览器中输入http://你自己定义的域名.sinaapp.com/wp-admin进入后台登陆页面，输入账号和密码进入后台管理页面。依次选择外观——主题可以进入主题管理页面，在可用主题中可以看到刚刚上传的主题，点击启用即可启用该主题。选择主题的自定义、小工具、菜单等选项可以对当前主题进行相应的设置。 2、主题设置好了现在我们需要给网站创建导航栏。比如俺们大前端的网站有下图所示这么几个栏目 那么我就需要在后台的文章——分类目录页面创建这么几个栏目 然后在外观——菜单页面将上面创建的栏目做成菜单。 ![](4(http://blogcdn.idoustudio.com/2014/01/psb-40.png)
+3、通过上述步骤网站栏目基本确定了，接下来关于怎么配置网站，改变网站主题的样式还有就是在网站上发布内容的问题就留给大家自己摸索了。有任何疑问可以留言咨询。
+通过上面五大步几十小步给大家完整详细的讲解了在新浪SAE上搭建wordpress的全过程，理解起来应该很容易吧？大家可以仿照着做一个属于自己的网站，wordpress的功能还是挺强大的，用它来二次开发博客系统、CMS系统、图片管理系统或者是学校、班级、企业网站都是很不错的选择。也许你安装的主题并不是完全满足你的要求，可能还需要对网站配色、网站logo等地方做适当的调整，那么这就涉及到代码改写的问题了。所以还是建议朋友们去学学php和html、css、javascript等 知识，不要求你学的多么精通，最起码的样式调整总得会吧。
+从晚上十一点多开始写这教程，不知不觉快到三点了，困得不行了。说好的明天自习一天可能要呵呵了。。。我是很愿意把我掌握的技术分享出来和大家交流的，所以也希望大家多多支持，多给我一点鼓励。。。
+觉得这教程写的不错就动动手分享给你的朋友吧~你们的支持是我最大的动力~谢谢各位~晚安~</description>
+    </item>
+    
+    <item>
+      <title>院网修复日志</title>
+      <link>https://idoubi.cc/legacy/%E9%99%A2%E7%BD%91%E4%BF%AE%E5%A4%8D%E6%97%A5%E5%BF%97/</link>
+      <pubDate>Wed, 04 Dec 2013 00:05:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E9%99%A2%E7%BD%91%E4%BF%AE%E5%A4%8D%E6%97%A5%E5%BF%97/</guid>
+      <description>2013 年 12 月 2 日
+正在上量子力学课，接到黄老师的电话说院网后台登陆不了，让我马上过去修。于是翘课去了院办，检测了很久，发现原来是 session 变量失效的问题，导致登陆参数传递不了，所以后台登不上去，试过很多次方法，修复不了这一问题，却偶然间发现了木马文件，原来是被黑了，院网代码中被植入了百家乐网站的垃圾信息。 删除了几个垃圾文件，还有三个木马始终删不掉，于是去了网络中心找蔡老师帮忙，蔡老师检测了一下 CPU，发现达到了 90%以上，有个叫 w3wp.exe 的文件占用了系统的大部分 CPU，而且手动停止之后又能自动运行。由于 CPU 占用过高，这时候的 IIS 已经跑不起来了，院网自然也访问不了。蔡老师也没找到解决的方法，叫我回院办给服务器装个杀毒软件杀杀毒，于是我就回院办了。当天下午尝试了很多办法解决 IIS 运行的问题，无果。傍晚的时候黄老师叫了樊学长去帮忙修复，樊学长说 w3wp.exe 是 IIS 运行时候的应用程序，不是病毒，但是同时很多个 w3wp.exe 一起运行占用 CPU 达 90%以上很明显不正常。每次重启之后 CPU 会降低到 20%左右，经过十几分钟之后又会自动上升到 90%以上。我们便是趁着 CPU 较低院网能正常访问的时候去修复 session 失效的问题。既然 session 不能正确传递参数，樊学长想到了用 URL 传递 id 参数的办法，来替代 session 保存登陆信息，但是这样做的不便之处是改动量比较大，每一个后台操作页面都需要写一个参数读取的代码，工作量很大。我们两一直改到晚上 10 点才回宿舍。解决的问题只是暂时性的能登陆进后台，但是不能进行文章添加修改删除的操作。IIS 占用 CPU 过高的问题还是没解决。回宿舍后头痛的要死，躺床上就睡了。2 号，翘课一天。说好的学习呵呵了。。。
+2013 年 12 月 3 日
+上午还在睡觉被黄老师一个电话叫醒，起来买了点吃的匆匆忙忙跑去院办继续修复院网，上午的工程热力学自然翘了。翘课对于我来说已经是家常便饭了。还是 CPU 占用过高和 session 不能传递参数的问题，我说卸掉 IIS，用 php 重新改写院网，黄老师坚持让我修复 IIS，一天之内恢复院网，为此与她大吵了一架。对于一个程序员而言，维护别人的代码比自己重新设计花的时间要多得多，虽然我极力要求重新设计，但还是拗不过领导，只能妥协，又尝试了很多办法解决 IIS 的问题，无果。再一次去网络中心找蔡老师，蔡老师建议换系统，回来跟黄老师汇报，黄老师要求立刻马上换系统，虽然我给十几台电脑换过系统，但只换过 win7、win8 和 XP，院网服务器用的是 windows 2003 server，我不敢贸然尝试，万一出了什么问题那个责任我负担不起。跟黄老师说我不会，得到了一个白眼。黄老师打电话给戴尔客服，被告知院网服务器过了保修期，需要续保他们才会过来修。后来黄老师又联系上了一个以前负责维护院网的学长，他现在已经毕业参加工作了，那学长很热心，通过远程控制的方式帮我们查找问题，弄了几十分钟也没找到解决办法。于是我联系上了泽韬，他是国软的技术大神，现在负责未来网服务器的维护，泽韬一整天都有课，抽不出时间。最终还是在傍晚的时候来帮忙，检测了一遍，得出的结论还是挂马的问题，说要把木马文件检测出来需要对后台文件一个一个进行检测，可能需要花一个礼拜的时间。我们想到一个权宜之计解决 session 变量传递参数的问题，就是限定登陆 id 为某一个特定的值，只有该 id 对应的用户名才能登陆后台进行相关操作，虽然黄老师还是要求把问题彻底解决，但迫于无奈还是妥协了，要求把 id 设置成她的登陆 id，其他人把新闻发给她由她来发。6 点多的时候，泽韬要回信息学部上课，我们便收工了。3 号，又翘课一天，对院网的修复心灰意冷，暗地下决心，只要这次能把院网修复，我特么就辞职不干了，到现在为止还一毛钱工资没给我，我还每天翘课来搞这堆破事，真特么自找罪受。但是院网毕竟是在我任职期间被黑的，不修好就辞职心里过意不去，还是接着修呗。。。</description>
+    </item>
+    
+  </channel>
+</rss>

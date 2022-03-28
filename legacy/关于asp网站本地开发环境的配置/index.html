@@ -1,0 +1,298 @@
+<html lang="en-US">
+
+<head>
+    
+<title>关于asp网站本地开发环境的配置 - 艾逗笔</title>
+
+<meta property="og:title" content="关于asp网站本地开发环境的配置 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="采用不同的语言开发网站所需要的开发环境也会有所不同，php 网站开发环境需要 apache 作为服务器，一般用 mysql 数据库，对于 php 的开发环境配置一般人会选择集成环境包，比如 wampserver 之类的，可以省去很多力气。jsp 网站需要 tomcat 作为服务器，一般用 mysql 或者 sql server 数据库，开发环境的配置需要配置环境变量什么的，过程有点繁琐。而 asp &amp;hellip;">
+    <meta property="og:description" content="采用不同的语言开发网站所需要的开发环境也会有所不同，php 网站开发环境需要 apache 作为服务器，一般用 mysql 数据库，对于 php 的开发环境配置一般人会选择集成环境包，比如 wampserver 之类的，可以省去很多力气。jsp 网站需要 tomcat 作为服务器，一般用 mysql 或者 sql server 数据库，开发环境的配置需要配置环境变量什么的，过程有点繁琐。而 asp &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/legacy/%E5%85%B3%E4%BA%8Easp%E7%BD%91%E7%AB%99%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/">关于asp网站本地开发环境的配置</a>
+                                        </h2>
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>采用不同的语言开发网站所需要的开发环境也会有所不同，php 网站开发环境需要 apache 作为服务器，一般用 mysql 数据库，对于 php 的开发环境配置一般人会选择集成环境包，比如 wampserver 之类的，可以省去很多力气。jsp 网站需要 tomcat 作为服务器，一般用 mysql 或者 sql server 数据库，开发环境的配置需要配置环境变量什么的，过程有点繁琐。而 asp 网站一般是用 IIS 作为服务器，windows 系统一般自带 IIS 服务，但是开发环境需要自己配置。</p>
+<p>下面主要讲一下 asp 开发环境的配置步骤。</p>
+<p>1、打开或关闭 windows 功能</p>
+<p>单击 开始-&gt;控制面板-&gt;程序和功能-&gt;打开或关闭 windows 功能</p>
+<p>在 internet 信息服务那个选项上打勾（把下面的子目录也全部勾上）
+<img src="http://blogcdn.idoustudio.com/2014/01/1.png" alt=""></p>
+<p>然后点确定，过几分钟就好了。</p>
+<p>2、配置 IIS 管理器</p>
+<p>单击 开始-&gt;控制面板-&gt;管理工具-&gt;Internet 信息服务(IIS)管理器</p>
+<p>打开 Internet 信息服务(IIS)管理器面板
+<img src="http://blogcdn.idoustudio.com/2014/01/2.png" alt=""></p>
+<p>接下来再经过四步设置就完成了 asp 开发环境的配置</p>
+<p>a、双击 Internet 信息服务(IIS)管理器面板中的 ASP，进行两处配置，一处是配置将错误发送到浏览器为 true，第二处是启用父路径设置为 true
+<img src="http://blogcdn.idoustudio.com/2014/01/3.png" alt=""></p>
+<p><img src="http://blogcdn.idoustudio.com/2014/01/4.png" alt="">
+<img src="http://blogcdn.idoustudio.com/2014/01/5.png" alt=""></p>
+<p>b、双击默认文档，添加一个 index.asp 文档。
+<img src="http://blogcdn.idoustudio.com/2014/01/7.png" alt=""></p>
+<p><img src="http://blogcdn.idoustudio.com/2014/01/6.png" alt=""></p>
+<p>c、双击高级设置，选择 IIS 根目录对应的物理路径。
+<img src="http://blogcdn.idoustudio.com/2014/01/8.png" alt=""></p>
+<p>d、单击绑定，为 IIS 网站绑定主机名和端口。（默认端口为 80，如果电脑上配置了其他服务器比如 apache、tomcat 之类的，为了防止端口冲突，可以在这里给 IIS 网站配置一个端口。我平常一般 asp 网站和 php 网站一起开发，所以在这里给 asp 网站设置端口为 81，php 那里设置为默认的 80）
+<img src="http://blogcdn.idoustudio.com/2014/01/9.png" alt=""></p>
+<p>经过上面四个步骤，基本上 IIS 配置就差不多了，如果你的电脑是 64 位系统，还需要进行一处很重要的配置（妈蛋今天因为忘记配置这个了，搞得我的 asp 网站半天打不开。。。）</p>
+<p>e、双击左侧的应用程序池，在 DefaultAppPool 上右键，选择高级设置，启用 32 位应用程序。（如果是 32 位系统可以省略这一步）
+<img src="http://blogcdn.idoustudio.com/2014/01/10.png" alt=""></p>
+<p>ok，IIS 配置完成，现在可以 asp 网站了，下面讲一下怎么在 dreamweaver 中给站点建立测试服务器和远程服务器</p>
+<p>3、dreamweaver 中几种服务器的配置</p>
+<p>a、配置本地服务器
+<img src="http://blogcdn.idoustudio.com/2014/01/12.png" alt=""></p>
+<p>b、配置远程服务器
+<img src="http://blogcdn.idoustudio.com/2014/01/11.png" alt=""></p>
+<p>c、配置 svn 服务器
+<img src="http://blogcdn.idoustudio.com/2014/01/14.png" alt=""></p>
+<p>svn 版本控制配置
+<img src="http://blogcdn.idoustudio.com/2014/01/15.png" alt=""></p>
+
+
+                                        
+                                    </div>
+
+                                    
+
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

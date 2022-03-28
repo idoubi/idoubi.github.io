@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sublime on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/sublime/</link>
+    <description>Recent content in sublime on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Mon, 08 Jul 2019 21:43:33 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/sublime/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>「VS Code」打造类sublime的高颜值编辑器</title>
+      <link>https://idoubi.cc/notes/vscode-sublime-theme/</link>
+      <pubDate>Mon, 08 Jul 2019 21:43:33 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/vscode-sublime-theme/</guid>
+      <description>用惯了 sublime 编辑器，最近因为实在忍受不了 sublime 的低性能，而决定转向vscode。然而 vscode 自带的主题并不能满足我对编辑器颜值的要求，幸好在网上找到一款类似 sublime 的皮肤，安装上之后有一种用 sublime 写代码的既视感。记录下来，分享给有同样需求的朋友。
+安装主题 MacOS 系统按Command+Shift+P弹出命令框，输入Install Extensions进入扩展安装页面，搜索Monokai ST3和vscode-icons扩展并安装之。
+点击编辑器左下角的设置图标，在Color Theme中选择Monikai ST3，在File Icon Theme中选择vscode-icons即可完整主题的设置。
+或者也可以在User Settings中设置：
+{ &amp;quot;editor.fontSize&amp;quot;: 16, &amp;quot;workbench.statusBar.visible&amp;quot;: false, &amp;quot;workbench.iconTheme&amp;quot;: &amp;quot;vscode-icons&amp;quot;, &amp;quot;workbench.colorTheme&amp;quot;: &amp;quot;Monokai ST3&amp;quot; } 更多主题 在这里还有更多好看的主题：vscode 主题下载
+参考  知乎：求 vs code 主题推荐？ 2018 年最佳 VS Code 主题 干货 | 教你打造一款颜值逆天的 VS Code  </description>
+    </item>
+    
+  </channel>
+</rss>

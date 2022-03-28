@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>iis on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/iis/</link>
+    <description>Recent content in iis on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Mon, 20 Jan 2014 22:49:29 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/iis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于asp网站本地开发环境的配置</title>
+      <link>https://idoubi.cc/legacy/%E5%85%B3%E4%BA%8Easp%E7%BD%91%E7%AB%99%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 20 Jan 2014 22:49:29 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%85%B3%E4%BA%8Easp%E7%BD%91%E7%AB%99%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E7%9A%84%E9%85%8D%E7%BD%AE/</guid>
+      <description>采用不同的语言开发网站所需要的开发环境也会有所不同，php 网站开发环境需要 apache 作为服务器，一般用 mysql 数据库，对于 php 的开发环境配置一般人会选择集成环境包，比如 wampserver 之类的，可以省去很多力气。jsp 网站需要 tomcat 作为服务器，一般用 mysql 或者 sql server 数据库，开发环境的配置需要配置环境变量什么的，过程有点繁琐。而 asp 网站一般是用 IIS 作为服务器，windows 系统一般自带 IIS 服务，但是开发环境需要自己配置。
+下面主要讲一下 asp 开发环境的配置步骤。
+1、打开或关闭 windows 功能
+单击 开始-&amp;gt;控制面板-&amp;gt;程序和功能-&amp;gt;打开或关闭 windows 功能
+在 internet 信息服务那个选项上打勾（把下面的子目录也全部勾上） 然后点确定，过几分钟就好了。
+2、配置 IIS 管理器
+单击 开始-&amp;gt;控制面板-&amp;gt;管理工具-&amp;gt;Internet 信息服务(IIS)管理器
+打开 Internet 信息服务(IIS)管理器面板 接下来再经过四步设置就完成了 asp 开发环境的配置
+a、双击 Internet 信息服务(IIS)管理器面板中的 ASP，进行两处配置，一处是配置将错误发送到浏览器为 true，第二处是启用父路径设置为 true b、双击默认文档，添加一个 index.asp 文档。 c、双击高级设置，选择 IIS 根目录对应的物理路径。 d、单击绑定，为 IIS 网站绑定主机名和端口。（默认端口为 80，如果电脑上配置了其他服务器比如 apache、tomcat 之类的，为了防止端口冲突，可以在这里给 IIS 网站配置一个端口。我平常一般 asp 网站和 php 网站一起开发，所以在这里给 asp 网站设置端口为 81，php 那里设置为默认的 80） 经过上面四个步骤，基本上 IIS 配置就差不多了，如果你的电脑是 64 位系统，还需要进行一处很重要的配置（妈蛋今天因为忘记配置这个了，搞得我的 asp 网站半天打不开。。。）</description>
+    </item>
+    
+  </channel>
+</rss>

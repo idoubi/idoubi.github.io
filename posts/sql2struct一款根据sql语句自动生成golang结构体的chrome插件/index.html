@@ -1,0 +1,362 @@
+<html lang="en-US">
+
+<head>
+    
+<title>SQL2Struct：一款根据sql语句自动生成golang结构体的chrome插件 - 艾逗笔</title>
+
+<meta property="og:title" content="SQL2Struct：一款根据sql语句自动生成golang结构体的chrome插件 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="最近在用 golang 写 api，用到 gorm 包进行数据库操作，gorm是 golang 中非常流行的一个 orm 包，使用 gorm 进行数据库操作前，一般需要先用一个 golang 结构体对数据表字段进行映射，于是我们经常需要根据数据表中的字段名和类型来手动在 go 代码中写 struct，有时候数据表字段很多的情况下，这种方式很耗费精力。于是便想到了写一个 chrome 插件，根据数据 &amp;hellip;">
+    <meta property="og:description" content="最近在用 golang 写 api，用到 gorm 包进行数据库操作，gorm是 golang 中非常流行的一个 orm 包，使用 gorm 进行数据库操作前，一般需要先用一个 golang 结构体对数据表字段进行映射，于是我们经常需要根据数据表中的字段名和类型来手动在 go 代码中写 struct，有时候数据表字段很多的情况下，这种方式很耗费精力。于是便想到了写一个 chrome 插件，根据数据 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/sql2struct%E4%B8%80%E6%AC%BE%E6%A0%B9%E6%8D%AEsql%E8%AF%AD%E5%8F%A5%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90golang%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84chrome%E6%8F%92%E4%BB%B6/">SQL2Struct：一款根据sql语句自动生成golang结构体的chrome插件</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2017/11/06</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="前言">前言</h2>
+<p>最近在用 golang 写 api，用到 gorm 包进行数据库操作，<a href="https://github.com/jinzhu/gorm">gorm</a>是 golang 中非常流行的一个 orm 包，使用 gorm 进行数据库操作前，一般需要先用一个 golang 结构体对数据表字段进行映射，于是我们经常需要根据数据表中的字段名和类型来手动在 go 代码中写 struct，有时候数据表字段很多的情况下，这种方式很耗费精力。于是便想到了写一个 chrome 插件，根据数据表的 DDL 语句来自动生成 golang 结构体，可以配置 go 结构体字段类型与 mysql 数据表字段类型的一个映射关系。</p>
+<h2 id="sql2struct">SQL2Struct</h2>
+<blockquote>
+<p>SQL2Struct 是一款对 golang 开发者友好的 chrome 插件，根据在 mysql 中创建数据表的 sql 语句，自动生成 golang 中的 struct，在 golang 开发者使用诸如 gorm 之类的框架时，可以很好的把 mysql 中的数据表与 orm 的结构体关联起来。</p>
+</blockquote>
+<p>github 地址：<a href="https://github.com/mikemintang/sql2struct">https://github.com/mikemintang/sql2struct</a></p>
+<h2 id="使用说明">使用说明</h2>
+<ol>
+<li>下载源码</li>
+</ol>
+<pre tabindex="0"><code class="language-git" data-lang="git">git clone https://github.com/mikemintang/sql2struct.git
+</code></pre><ol start="2">
+<li>安装扩展</li>
+</ol>
+<p>打开扩展中心，选择上一步拉取到的插件源码，本地安装插件。</p>
+<p><img src="http://blogcdn.idoustudio.com/sql2struct-1.png" alt=""></p>
+<ol start="3">
+<li>在 mysql 中获取生成数据表的 sql 语句</li>
+</ol>
+<p><code>show create table users\G;</code></p>
+<p><img src="http://blogcdn.idoustudio.com/Sql.png" alt=""></p>
+<ol start="4">
+<li>
+<p>进入插件主页面，把上一步得到的 sql 语句粘贴至左侧的输入框</p>
+</li>
+<li>
+<p>复制右侧生成的 struct，粘贴至 golang 代码中即可</p>
+</li>
+</ol>
+<p><img src="http://blogcdn.idoustudio.com/plugin" alt=""></p>
+<h2 id="配置说明">配置说明</h2>
+<p>目前只有三个配置项</p>
+<ul>
+<li>gorm：开启此配置项，则生成 struct 的时候，每个字段都会包含类似<code>gorm:column:&quot;id&quot;</code>这样的信息。</li>
+<li>json：开启此配置项，则生成 struct 的时候，每个字段都会包含类似<code>json:&quot;id&quot;</code>这样的信息。</li>
+<li>typeMap：此配置项定义 mysql 数据表字段类型与 go 字段类型的映射关系，在数据解析的时候会安装配置的映射关系进行结构体生成。</li>
+</ul>
+<p><img src="http://blogcdn.idoustudio.com/options" alt=""></p>
+<h2 id="todolist">Todolist</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 支持更多的 mysql 类型与 go 类型的映射</li>
+<li><input disabled="" type="checkbox"> 支持自定义要进行转换的字段配置</li>
+<li><input disabled="" type="checkbox"> 正则表达式优化</li>
+<li><input disabled="" type="checkbox"> 数据表名称复数形式与 struct 名称单数形式转换</li>
+<li><input disabled="" type="checkbox"> 增加主键、索引转换支持</li>
+</ul>
+<h2 id="contribution">Contribution</h2>
+<p>欢迎 fork 代码、提 issue 或者是 pull request</p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e6%ba%90%e9%a1%b9%e7%9b%ae" title="View all posts in PHP8">开源项目</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/" title="View all posts tagged match"></a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/"
+                                                    rel="prev">goimports工具安装与使用</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">protobuf快速上手指南</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,405 @@
+<html lang="en-US">
+
+<head>
+    
+<title>「Hexo」设置代码语法高亮 - 艾逗笔</title>
+
+<meta property="og:title" content="「Hexo」设置代码语法高亮 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="在使用某个hexo主题的时候，我们有时候会觉得文章详情中的代码高亮显示的样式并不是很好看，通过下面的方式我们可以选择一套自己喜爱的代码高亮样式，让我们的文章阅读起来更有视觉触动。
+">
+    <meta property="og:description" content="在使用某个hexo主题的时候，我们有时候会觉得文章详情中的代码高亮显示的样式并不是很好看，通过下面的方式我们可以选择一套自己喜爱的代码高亮样式，让我们的文章阅读起来更有视觉触动。
+">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/hexo-highlight/">「Hexo」设置代码语法高亮</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2019/04/27</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <blockquote>
+<p>在使用某个hexo主题的时候，我们有时候会觉得文章详情中的代码高亮显示的样式并不是很好看，通过下面的方式我们可以选择一套自己喜爱的代码高亮样式，让我们的文章阅读起来更有视觉触动。</p>
+</blockquote>
+<h2 id="配置markdown渲染引擎">配置markdown渲染引擎</h2>
+<ul>
+<li>使用新的渲染引擎</li>
+</ul>
+<pre tabindex="0"><code>npm un hexo-renderer-marked --save
+npm i hexo-renderer-markdown-it --save
+</code></pre><ul>
+<li>在_config.yml中配置渲染参数</li>
+</ul>
+<pre tabindex="0"><code>markdown: 'commonmark'
+</code></pre><ul>
+<li>重新预览</li>
+</ul>
+<pre tabindex="0"><code>hexo clean
+hexo s --draft
+</code></pre><h2 id="配置代码高亮">配置代码高亮</h2>
+<ul>
+<li>设置code-prettify</li>
+</ul>
+<pre tabindex="0"><code># 下载源码
+git clone https://github.com/google/code-prettify.git
+
+# 拷贝样式
+cp code-prettify/src/prettify.css hexo/themes/hyde/source/css/
+cp code-prettify/src/prettify.js hexo/themes/hyde/source/js/
+
+</code></pre><ul>
+<li>设置皮肤</li>
+</ul>
+<pre tabindex="0"><code># 下载源码
+git clone https://github.com/jmblog/color-themes-for-google-code-prettify.git
+
+# 拷贝样式
+cd color-themes-for-google-code-prettify/dist/themes
+cp tomorrow-night.min.css hexo/themes/hyde/source/css/
+</code></pre><ul>
+<li>禁用默认的高亮设置</li>
+</ul>
+<pre tabindex="0"><code># 修改_config.yml
+highlight:
+  enable: false
+  line_number: false
+  auto_detect: false
+  tab_replace: false
+</code></pre><ul>
+<li>在主题模板文件中设置高亮</li>
+</ul>
+<pre tabindex="0"><code># head标签里引入css
+&lt;%- css('css/prettify.css', 'css/tomorrow-night.min') %&gt;
+
+# 文档底部引入js
+&lt;script src=&quot;https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;%- js('js/prettify.js') %&gt;
+
+# 高亮设置
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(window).on('load', function(){ 
+  $('pre').addClass('prettyprint linenums');
+  prettyPrint();
+});
+&lt;/script&gt;
+</code></pre><ul>
+<li>刷新预览</li>
+</ul>
+<pre tabindex="0"><code>hexo clean
+hexo s --draft
+</code></pre><h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://masikkk.com/article/hexo-12-google-code-prettify/">Hexo博客(12)使用google-code-prettify代码高亮</a></li>
+<li><a href="https://www.jianshu.com/p/588ab3d22eb8">hexo-renderer-markdown-it 插件 详解</a></li>
+<li><a href="https://github.com/google/code-prettify">google-code-prettify</a></li>
+<li><a href="https://jmblog.github.io/color-themes-for-google-code-prettify/">google-code-prettify-themes</a></li>
+</ul>
+
+
+                                        
+                                        
+                                        
+                                        <div class="rp4wp-related-posts">
+                                            <h3>相关文章</h3>
+                                            <ul>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/hexo-theme-studio/">开源一款hexo工作室主题</a>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e7%b3%bb%e5%88%97%e5%88%86%e4%ba%ab" title="View all posts in PHP8">系列分享</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/hexo" title="View all posts tagged match">hexo</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/wechatdev-local-debug/"
+                                                    rel="prev">「微信开发」本地调试指南</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/notes/sublime-go-dev/">「Sublime」配置Go开发环境</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

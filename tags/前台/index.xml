@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前台 on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/%E5%89%8D%E5%8F%B0/</link>
+    <description>Recent content in 前台 on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sat, 18 Jan 2014 23:03:01 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/%E5%89%8D%E5%8F%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>仿Qzone登录页写的未来网后台登录界面</title>
+      <link>https://idoubi.cc/legacy/%E4%BB%BFqzone%E7%99%BB%E5%BD%95%E9%A1%B5%E5%86%99%E7%9A%84%E6%9C%AA%E6%9D%A5%E7%BD%91%E5%90%8E%E5%8F%B0%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2/</link>
+      <pubDate>Sat, 18 Jan 2014 23:03:01 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E4%BB%BFqzone%E7%99%BB%E5%BD%95%E9%A1%B5%E5%86%99%E7%9A%84%E6%9C%AA%E6%9D%A5%E7%BD%91%E5%90%8E%E5%8F%B0%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2/</guid>
+      <description>一个很简单的前台程序，背景图片直接用的 Qzone 登录页背景图，自己写了个 html 页面和几十行 css，写了一个常用的 js 切换 tab 功能，demo 页面放在 sae 上，用的是 thinkphp 框架。本来想实现模拟登录 Qzone 功能，但是 Qzone 的表单设置得比较巧妙，还没搞清楚应该怎样 post 数据，关于网页抓取和模拟登录的开发一定要抓紧时间学习，这是一个很关键的技术，武大助手就是用的模拟登录教务部管理系统的功能，我要是能尽快摸索出模拟登录的方法，这必定是极好的事情。 Qzone 登录页地址：http://i.qq.com/
+HTML code：
+&amp;lt;!DOCTYPE html PUBLIC &amp;#34;-//W3C//DTD XHTML 1.0 Transitional//EN&amp;#34; &amp;#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&amp;#34;&amp;gt; &amp;lt;html xmlns=&amp;#34;http://www.w3.org/1999/xhtml&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta http-equiv=&amp;#34;Content-Type&amp;#34; content=&amp;#34;text/html;charset=utf8&amp;#34; /&amp;gt; &amp;lt;link href=&amp;#34;style.css&amp;#34; rel=&amp;#34;stylesheet&amp;#34; type=&amp;#34;text/css&amp;#34; /&amp;gt; &amp;lt;title&amp;gt;用户登录&amp;lt;/title&amp;gt; &amp;lt;script type=&amp;#34;text/JavaScript&amp;#34;&amp;gt; &amp;lt;!-- function settab_zzjs(name,num,n){ for(i=1;i&amp;lt;=n;i++){ var menu=document.getElementById(name+i); var con=document.getElementById(name+&amp;#34;_&amp;#34;+&amp;#34;zzjs&amp;#34;+i); menu.className=i==num?&amp;#34;on_zzjs&amp;#34;:&amp;#34;&amp;#34;; con.style.display=i==num?&amp;#34;block&amp;#34;:&amp;#34;none&amp;#34;; } } //--&amp;gt;  &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;logo&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;form name=&amp;#34;login_form&amp;#34; method=&amp;#34;post&amp;#34; action=&amp;#34;http://zhaopin.</description>
+    </item>
+    
+  </channel>
+</rss>

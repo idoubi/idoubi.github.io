@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on 艾逗笔</title>
+    <link>https://idoubi.cc/notes/</link>
+    <description>Recent content in Notes on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Tue, 24 Aug 2021 13:51:46 +0800</lastBuildDate><atom:link href="https://idoubi.cc/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>「rust」快速上手指南</title>
+      <link>https://idoubi.cc/notes/rust-quickstart/</link>
+      <pubDate>Tue, 24 Aug 2021 13:51:46 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/notes/rust-quickstart/</guid>
+      <description>安装  安装 rustup 命令行工具  # 下载脚本 curl --proto &amp;#39;=https&amp;#39; --tlsv1.2 https://sh.rustup.rs -sSf | sh # 修改环境变量 source $HOME/.cargo/env # 查看版本 rustup --version rustc --version 使用  单文件输出 Hello World  vi hello.rs
+fn main() { println!(&amp;#34;hello rust&amp;#34;) } rustc hello.rs -o hello ./hello 包管理  使用 cargo  # 查看版本 cargo --version # 新建一个包 cargo new demo cd demo # 编译 cargo build # 运行 cargo run # 检测 cargo check # 发布 cargo build --release </description>
+    </item>
+    
+    <item>
+      <title>「nginx」配置静态网站访问</title>
+      <link>https://idoubi.cc/notes/nginx-config/</link>
+      <pubDate>Sun, 22 Aug 2021 21:57:24 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/notes/nginx-config/</guid>
+      <description> Nginx 配置静态网站访问  支持 HTTP 和 HTTPS。
+server { listen 443 ssl; server_name idoubi.cc; ssl_certificate /etc/nginx/certs/idoubi.cc.crt; ssl_certificate_key /etc/nginx/certs/idoubi.cc.key; ssl_session_timeout 5m; ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4; ssl_protocols TLSv1 TLSv1.1 TLSv1.2; ssl_prefer_server_ciphers on; location / { root /data/code/idoublog/public; index index.html index.htm; } error_log /etc/nginx/logs/idoubi.cc.error; } server { listen 80; server_name idoubi.cc; return 301 https://$host$request_uri; } </description>
+    </item>
+    
+    <item>
+      <title>在 Linux 系统通过源码安装 Protobuf</title>
+      <link>https://idoubi.cc/notes/install-protobuf-in-linux/</link>
+      <pubDate>Fri, 04 Jun 2021 11:35:59 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/notes/install-protobuf-in-linux/</guid>
+      <description>打开源码下载页  https://github.com/protocolbuffers/protobuf/releases
+下载源码  wget https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.17.2.tar.gz tar -zxvf v3.17.2.tar.gz 编译安装  cd protobuf-3.17.2 ./autogen.sh ./configure make &amp;amp;&amp;amp; make install 查看版本  安装完成，通过 protoc --version 查看版本，可能会报错：protoc: error while loading shared libraries: libprotobuf.so.28: cannot open shared object file: No such file or directory
+解决办法：修改环境变量
+export LD_LIBRARY_PATH=/usr/local/lib</description>
+    </item>
+    
+    <item>
+      <title>在 Linux 系统通过源码安装 Python3</title>
+      <link>https://idoubi.cc/notes/install-python-in-linux/</link>
+      <pubDate>Fri, 28 May 2021 10:29:34 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/install-python-in-linux/</guid>
+      <description> 打开 python 源码下载页  https://www.python.org/ftp/python/
+下载源码  wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz 解压缩  tar -zxvf Python-3.9.5.tgz 安装  cd Python-3.9.5 ./configure --prefix=/usr/local/python3 make &amp;amp;&amp;amp; make install 设置环境变量  export PATH=$PATH:/usr/local/python3/bin 备份原来版本  python --version pip --version which python which pip mv /usr/bin/python /usr/bin/python2.7.5 mv /usr/bin/pip /usr/bin/pip2.7.5 使用新版本  ln -s /usr/local/python3/bin/python3 /usr/bin/python ln -s /usr/local/python3/bin/pip3 /usr/bin/pip 查看新版本  python --version pip --version </description>
+    </item>
+    
+    <item>
+      <title>在 C&#43;&#43; 中使用第三方库</title>
+      <link>https://idoubi.cc/notes/use-3rd-lib-in-cpp/</link>
+      <pubDate>Wed, 26 May 2021 10:53:12 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/notes/use-3rd-lib-in-cpp/</guid>
+      <description>创建项目  mkdir demo cd demo 创建 cmake 工程  vi CMakeLists.txt
+cmake_minimum_required(VERSION 2.8) project(demo) 引入第三方库  mkdir 3rd git clone https://github.com/fmtlib/fmt.git 3rd/fmt 链接第三方库  vi CMakeLists.txt
+cmake_minimum_required(VERSION 2.8) project(demo) add_executable(demo main.cpp) add_subdirectory(3rd/fmt) target_link_libraries(demo fmt) 编写业务逻辑  vi main.cpp
+#include &amp;lt;fmt/core.h&amp;gt; int main() { fmt::print(&amp;#34;Hello, world!\n&amp;#34;); } 项目编译  cmake . make 项目运行  ./demo 可以看到控制台输出：
+Hello, world!</description>
+    </item>
+    
+    <item>
+      <title>在 Linux 系统通过源码安装 Go</title>
+      <link>https://idoubi.cc/notes/install-go-in-linux/</link>
+      <pubDate>Tue, 25 May 2021 11:19:43 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/notes/install-go-in-linux/</guid>
+      <description>安装旧版本的 Go  Go 语言是自举的，要安装新版的 Go 语言，需要依赖系统已有的 Go 语言环境。
+在 Centos 中，我们可以通过 yum 来安装 Go 。
+yum install -y go 安装完之后查看 Go 版本
+go version 可以看到已安装的 Go 版本为： go version go1.15.5 linux/amd64
+通过源码安装/更新最新版本的 Go  打开 Github 上的 go 发布页
+https://github.com/golang/go/releases
+复制发布包链接，在 Centos 下载源码文件
+wget https://github.com/golang/go/archive/refs/tags/go1.16.4.zip 解压缩，并安装
+unzip go1.16.4.zip mv go1.16.4 /usr/local/go1.16.4 export GOROOT=/usr/local/go1.16.4 cd $GOROOT/src ./all.bash 修改环境变量  export GOROOT=&amp;#34;/usr/local/go1.16.4&amp;#34;export GOPATH=&amp;#34;/data/code/go&amp;#34;export PATH=$PATH:$GOROOT/bin:$GOPATH/bin替换默认的 Go 版本  which go mv /usr/bin/go /usr/bin/go1.</description>
+    </item>
+    
+    <item>
+      <title>在「VS Code」搭建「C&#43;&#43;」开发环境</title>
+      <link>https://idoubi.cc/notes/cpp-in-vscode/</link>
+      <pubDate>Sat, 25 Jul 2020 12:29:30 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/notes/cpp-in-vscode/</guid>
+      <description>大家都知道「VS Code」是一个“真香”编辑器，用来做「C++」开发也是一样的香！
+开始写 C++ 程序 第一次接触 C++，我们先不折腾编辑器的事情，随便用个能写代码的软件，写一个能输出“Hello World”的可执行程序再说。
+在 Linux 机器上用 vi hello.cpp，先写几行代码：
+#include &amp;lt;iostream&amp;gt;using namespace std; int main() { cout &amp;lt;&amp;lt; &amp;#34;Hello World&amp;#34;; return 0; } 安装 C++ 环境依赖
+yum install gcc gcc-c++ 确保 gcc、g++ 用的同一个版本
+/usr/bin/gcc -v /usr/bin/g++ -v 编译 C++ 程序
+g++ hello.cpp -o hello 运行编译后的程序
+./hello 如果看到如下输出，证明我们的 C++ 编码环境是 OK 的
+$ ./hello Hello World# VS Code 编译/运行 C++ 代码 下面我们开始对 VS Code 进行一系列配置，用来做日常的 C++ 开发工作。</description>
+    </item>
+    
+    <item>
+      <title>「VS Code」打造类sublime的高颜值编辑器</title>
+      <link>https://idoubi.cc/notes/vscode-sublime-theme/</link>
+      <pubDate>Mon, 08 Jul 2019 21:43:33 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/vscode-sublime-theme/</guid>
+      <description>用惯了 sublime 编辑器，最近因为实在忍受不了 sublime 的低性能，而决定转向vscode。然而 vscode 自带的主题并不能满足我对编辑器颜值的要求，幸好在网上找到一款类似 sublime 的皮肤，安装上之后有一种用 sublime 写代码的既视感。记录下来，分享给有同样需求的朋友。
+安装主题 MacOS 系统按Command+Shift+P弹出命令框，输入Install Extensions进入扩展安装页面，搜索Monokai ST3和vscode-icons扩展并安装之。
+点击编辑器左下角的设置图标，在Color Theme中选择Monikai ST3，在File Icon Theme中选择vscode-icons即可完整主题的设置。
+或者也可以在User Settings中设置：
+{ &amp;quot;editor.fontSize&amp;quot;: 16, &amp;quot;workbench.statusBar.visible&amp;quot;: false, &amp;quot;workbench.iconTheme&amp;quot;: &amp;quot;vscode-icons&amp;quot;, &amp;quot;workbench.colorTheme&amp;quot;: &amp;quot;Monokai ST3&amp;quot; } 更多主题 在这里还有更多好看的主题：vscode 主题下载
+参考  知乎：求 vs code 主题推荐？ 2018 年最佳 VS Code 主题 干货 | 教你打造一款颜值逆天的 VS Code  </description>
+    </item>
+    
+    <item>
+      <title>「Sublime」配置Go开发环境</title>
+      <link>https://idoubi.cc/notes/sublime-go-dev/</link>
+      <pubDate>Sat, 27 Apr 2019 17:01:52 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/sublime-go-dev/</guid>
+      <description>安装GoSublime插件 GoSublime是在Sublimeb编辑器中开发Go语言必备的插件之一，提供Go源码编译、格式化、包自动导入等功能。之前可以通过Sublime的软件仓库直接安装，现在的版本已经搜不到这个插件了，我们需要通过源码进行安装。
+ 复制插件源码到Sublime包扩展目录  # 进入sublime插件目录 cd &amp;#39;/Users/mikemin/Library/Application Support/Sublime Text 3/Packages&amp;#39; # 下载GoSublime git clone https://github.com/DisposaBoy/GoSublime.git  安装Margo依赖  # 安装margo go get github.com/slene/margo # 配置margo cd GoSublime/src mkdir margo cp margo.sh/extension-example/extension-example.go margo/margo.go  GoSublime插件配置  { &amp;quot;env&amp;quot;: { &amp;quot;GOPATH&amp;quot;: &amp;quot;/data/go&amp;quot;, &amp;quot;GOROOT&amp;quot;: &amp;quot;/usr/local/opt/go/libexec&amp;quot; }, &amp;quot;fmt_enabled&amp;quot;: true, &amp;quot;fmt_cmd&amp;quot;: [ &amp;quot;goimports&amp;quot; ] }  在GoSublime插件中配置包自动导入前，请先确保安装了goimports工具。
+ goimports工具安装与使用
+ ctrl/command + s 保存文件时，编辑器会自动格式化代码并进行包的导入和删除。 ctrl/command + b 可调出控制台，对go代码进行编译、测试或直接运行。  </description>
+    </item>
+    
+    <item>
+      <title>「docker」基本使用</title>
+      <link>https://idoubi.cc/notes/docker-usage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/docker-usage/</guid>
+      <description>在 Centos 安装 docker  卸载原来的版本  yum remove docker \  docker-client \  docker-client-latest \  docker-common \  docker-latest \  docker-latest-logrotate \  docker-logrotate \  docker-engine  安装工具集  yum install -y yum-utils \  device-mapper-persistent-data \  lvm2  设置源地址  yum-config-manager \  --add-repo \  https://download.docker.com/linux/centos/docker-ce.repo  安装 docker 社区版  yum install docker-ce docker-ce-cli containerd.io  查看版本  docker version
+ 启动 docker  systemctl start docker</description>
+    </item>
+    
+    <item>
+      <title>「gvm」Go 多版本管理工具</title>
+      <link>https://idoubi.cc/notes/gvm-usage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/gvm-usage/</guid>
+      <description>项目地址：gvm
+安装依赖 yum install -y bison 安装 gvm bash &amp;lt; &amp;lt;(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer) source /root/.gvm/scripts/gvm 基本使用  安装默认的 go 版本  yum install -y go
+ 查看所有可用版本 go  gvm listall
+ 安装指定版本 go  gvm install go1.17
+ 查看已安装版本 go  gvm list
+ 切换指定版本 go  gvm use go1.17
+ 修改环境变量  export GOPATH=/data/code/go export GOBIN=$GOPATH/bin export PATH=$PATH:$GOBIN </description>
+    </item>
+    
+    <item>
+      <title>「helm」基本使用</title>
+      <link>https://idoubi.cc/notes/helm-usage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/helm-usage/</guid>
+      <description> 安装 helm  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 chmod 700 get_helm.sh ./get_helm.sh  查看版本  helm version
+ 使用本地仓库  # 添加仓库 helm repo add bitnami https://charts.bitnami.com/bitnami # 更新仓库 helm repo update # 查看所有本地仓库 helm repo list # 在仓库中搜索 helm search repo nginx </description>
+    </item>
+    
+    <item>
+      <title>「hugo」使用教程</title>
+      <link>https://idoubi.cc/notes/hugo-usage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/hugo-usage/</guid>
+      <description>安装 # 下载二进制 wget https://github.com/gohugoio/hugo/releases/download/v0.87.0/hugo_0.87.0_Linux-64bit.tar.gz # 解压缩 tar -zxvf hugo_0.87.0_Linux-64bit.tar.gz # 配置全局命令行 mv hugo /usr/local/bin/hugo # 查看版本 hugo version </description>
+    </item>
+    
+    <item>
+      <title>「k3d」基本使用</title>
+      <link>https://idoubi.cc/notes/k3d-usage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/k3d-usage/</guid>
+      <description>确保机器上 docker 已安装
+  安装 k3d  wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+ 查看 k3d 版本  k3d version
+ 安装 kubectl  curl -LO &amp;#34;https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256&amp;#34; sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl  查看 kubectl 版本  kubectl version --client
+ 创建集群  k3d cluster create xztcls --api-port 6530 -p &amp;quot;8080:80@loadbalancer&amp;quot; --agents 2</description>
+    </item>
+    
+    <item>
+      <title>「nvm」nodejs 多版本管理工具</title>
+      <link>https://idoubi.cc/notes/nvm-usage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/nvm-usage/</guid>
+      <description>项目地址：nvm
+安装 nvm curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash export NVM_DIR=&amp;#34;$([ -z &amp;#34;${XDG_CONFIG_HOME-}&amp;#34; ] &amp;amp;&amp;amp; printf %s &amp;#34;${HOME}/.nvm&amp;#34; || printf %s &amp;#34;${XDG_CONFIG_HOME}/nvm&amp;#34;)&amp;#34; [ -s &amp;#34;$NVM_DIR/nvm.sh&amp;#34; ] &amp;amp;&amp;amp; \. &amp;#34;$NVM_DIR/nvm.sh&amp;#34; 基本使用  查看所有可用的 nodejs 版本  nvm ls-remote
+ 安装最新版本 nodejs  nvm install node
+ 安装指定版本 nodejs  nvm install v15.14.0
+ 查看已安装的 nodejs 版本  nvm list
+ 使用指定版本的 nodejs 版本  nvm use v16.7.0
+ 设置 npm 全局包安装路径  # 自定义全局安装目录 npm config set prefix /data/code/node/npm_global npm config set cache /data/code/node/npm_cache # 查看全局安装目录 npm root -g # 设置环境变量 export NODE_PATH=&amp;#34;/data/code/node/npm_global/lib/node_modules&amp;#34; export NODE_BIN=&amp;#34;/data/code/node/npm_global/bin&amp;#34; export PATH=$PATH:$NODE_BIN </description>
+    </item>
+    
+    <item>
+      <title>「oh-my-zsh」使用说明</title>
+      <link>https://idoubi.cc/notes/oh-my-zsh-usage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/oh-my-zsh-usage/</guid>
+      <description>安装  # 安装 zsh yum install -y zsh # 安装 oh-my-zsh sh -c &amp;#34;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;#34;  添加自定义配置  vi ~/.zsh_profile
+alias profile=&amp;quot;vi ~/.zsh_profile&amp;quot; alias profiled=&amp;quot;source ~/.zshrc&amp;quot; source /root/.gvm/scripts/gvm gvm use go1.17 export GOPATH=/data/code/go export GOBIN=$GOPATH/bin export PATH=$PATH:$GOBIN  修改配置  vi ~/.zshrc
+修改主题：ZSH_THEME=&amp;quot;ys&amp;quot;
+在末行添加 source ~/.zsh_profile
+ 快捷键  编辑自定义配置：profile 生效自定义配置：profiled</description>
+    </item>
+    
+  </channel>
+</rss>

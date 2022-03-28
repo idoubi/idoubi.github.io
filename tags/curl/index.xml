@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>curl on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/curl/</link>
+    <description>Recent content in curl on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Thu, 14 Sep 2017 21:31:55 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/curl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>golang版本的curl请求库</title>
+      <link>https://idoubi.cc/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/</link>
+      <pubDate>Thu, 14 Sep 2017 21:31:55 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/</guid>
+      <description>Github地址 https://github.com/mikemintang/go-curl
+安装 go get github.com/mikemintang/go-curl 使用 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/mikemintang/go-curl&amp;#34; ) func main() { url := &amp;#34;http://php.dev/api.php&amp;#34; headers := map[string]string{ &amp;#34;User-Agent&amp;#34;: &amp;#34;Sublime&amp;#34;, &amp;#34;Authorization&amp;#34;: &amp;#34;Bearer access_token&amp;#34;, &amp;#34;Content-Type&amp;#34;: &amp;#34;application/json&amp;#34;, } cookies := map[string]string{ &amp;#34;userId&amp;#34;: &amp;#34;12&amp;#34;, &amp;#34;loginTime&amp;#34;: &amp;#34;15045682199&amp;#34;, } queries := map[string]string{ &amp;#34;page&amp;#34;: &amp;#34;2&amp;#34;, &amp;#34;act&amp;#34;: &amp;#34;update&amp;#34;, } postData := map[string]interface{}{ &amp;#34;name&amp;#34;: &amp;#34;mike&amp;#34;, &amp;#34;age&amp;#34;: 24, &amp;#34;interests&amp;#34;: []string{&amp;#34;basketball&amp;#34;, &amp;#34;reading&amp;#34;, &amp;#34;coding&amp;#34;}, &amp;#34;isAdmin&amp;#34;: true, } // 链式操作  req := curl.NewRequest() resp, err := req.</description>
+    </item>
+    
+    <item>
+      <title>在php中使用curl多线程下载图片</title>
+      <link>https://idoubi.cc/legacy/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/</link>
+      <pubDate>Fri, 30 Dec 2016 10:25:39 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/</guid>
+      <description>遇到一个需求：要下载这个网站http://www.laredoute.com/上面的商品图片到本地。 分析了一下，这个网站是一个国外的站点，受 cdn 节点的影响，在国内打开的速度比较慢。另一方面，要下载的商品图片较大，单张图片的大小有超过 200kb 的。 现在的需求是，要在短时间内批量下载该网站上面的商品图片到本地，鉴于这两点考虑，如果使用 php 来做的话，单纯的用 file_get_contents 可能行不通，于是想到了用 php 的 curl 库来处理。
+ 虽然用 curl 来下载图片比起用 file_get_contents 来处理效率更高，稳定性更好，但是如果使用 curl 单线程来处理的话，效率并不会得到非常明显的提升。所幸的是，curl 库提供了 curl_multi 功能，让我们可以使用 curl 多线程来处理业务逻辑，可以显著的提升效率。下面拿下载上述站点上面的 8 张图片为例，分别使用 curl 单线程和 curl 多线程来进行图片下载，并对两者的效率做一个比较。
+single.php：curl 单线程下载图片 &amp;lt;?php /** * 单线程下载远程图片 * @author 艾逗笔&amp;lt;765532665@qq.com&amp;gt; */ set_time_limit(300); // 设置程序执行超时时间为5分钟  // 要下载的图片数组 $pics = array( &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_90_CO_1_2850804.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_2_2850799.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/57/02/02/57020206_1_CO_1_057020206-9be173d2-6bc3-44ba-b9cb-111010ed0051.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_1_2850800.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/42/350042687_1_CO_1_7639577.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/34/350034174_1_CO_1_7669890.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/42/350042718_1_CO_1_7009919.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/39/350039748_1_CO_3_6958274.jpg&amp;#39; ); $beginTime = time(); // 开始下载图片的时间 $lastTime = $beginTime; // 上一次下载图片的时间 $count = 0; // 计数器 echo &amp;#39;begin download at &amp;#39; .</description>
+    </item>
+    
+  </channel>
+</rss>

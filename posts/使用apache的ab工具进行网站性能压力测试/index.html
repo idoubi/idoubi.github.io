@@ -1,0 +1,388 @@
+<html lang="en-US">
+
+<head>
+    
+<title>使用Apache的ab工具进行网站性能压力测试 - 艾逗笔</title>
+
+<meta property="og:title" content="使用Apache的ab工具进行网站性能压力测试 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="年前给中百仓促超市做了微信摇一摇抽奖的功能开发，顾客凭借在中百购物的发票联可以在微信中参与抽奖。由于中百仓储超市微信公众号的关注量较大，客户担心太多用户同时参与抽奖的话会导致服务器崩溃而不能给用户提供正常的服务，因此要求我们对中百仓促超市微信公众号接入的网站性能进行压力测试。下面总结一下使用 Apache 的 ab 工具进行压力测试的过程。
+装了 wampserver 的情况下可以直接使用 ab  &amp;hellip;">
+    <meta property="og:description" content="年前给中百仓促超市做了微信摇一摇抽奖的功能开发，顾客凭借在中百购物的发票联可以在微信中参与抽奖。由于中百仓储超市微信公众号的关注量较大，客户担心太多用户同时参与抽奖的话会导致服务器崩溃而不能给用户提供正常的服务，因此要求我们对中百仓促超市微信公众号接入的网站性能进行压力测试。下面总结一下使用 Apache 的 ab 工具进行压力测试的过程。
+装了 wampserver 的情况下可以直接使用 ab  &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/%E4%BD%BF%E7%94%A8apache%E7%9A%84ab%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/">使用Apache的ab工具进行网站性能压力测试</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2016/02/15</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>年前给中百仓促超市做了微信摇一摇抽奖的功能开发，顾客凭借在中百购物的发票联可以在微信中参与抽奖。由于中百仓储超市微信公众号的关注量较大，客户担心太多用户同时参与抽奖的话会导致服务器崩溃而不能给用户提供正常的服务，因此要求我们对中百仓促超市微信公众号接入的网站性能进行压力测试。下面总结一下使用 Apache 的 ab 工具进行压力测试的过程。</p>
+<p>装了 wampserver 的情况下可以直接使用 ab 工具，win+R 后输入 cmd 弹出 dos 命令窗口，进入 wamp 的安装目录并且启动 ab 工具。</p>
+<p><img src="http://blogcdn.idoustudio.com/2016/02/1.png" alt=""></p>
+<h2 id="1000-请求200-并发下的压力测试结果">1000 请求，200 并发下的压力测试结果：</h2>
+<p><img src="http://blogcdn.idoustudio.com/2016/02/2.png" alt=""></p>
+<h2 id="1000-请求300-并发下的压力测试结果">1000 请求，300 并发下的压力测试结果：</h2>
+<p><img src="http://blogcdn.idoustudio.com/2016/02/3.png" alt=""></p>
+<h2 id="1000-请求100-并发下的压力测试结果">1000 请求，100 并发下的压力测试结果：</h2>
+<p><img src="http://blogcdn.idoustudio.com/2016/02/4.png" alt=""></p>
+<p>由上面的测试结果分析可知，这台服务器的最佳并发量应该控制在 100 以下。</p>
+<p>参考资料：</p>
+<p>如何使用 Apache 的 ab 工具进行网站性能测试：</p>
+<p><a href="http://jingyan.baidu.com/article/e3c78d647a57833c4c85f502.html">http://jingyan.baidu.com/article/e3c78d647a57833c4c85f502.html</a></p>
+<p>ab 压力测试 命令详解与结果分析：</p>
+<p><a href="http://lihuipeng007.blog.163.com/blog/static/121084388201082542924962/">http://lihuipeng007.blog.163.com/blog/static/121084388201082542924962/</a></p>
+<p>压力测试所用工具下载：</p>
+<p>wampserver：<a href="https://www.baidu.com/s?ie=UTF-8&amp;wd=wampserver">https://www.baidu.com/s?ie=UTF-8&amp;wd=wampserver</a></p>
+<p>测试程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span> {
+
+	<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">yao</span>($invoice, $mobile) {
+		$key <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;a63d590******190af93fe5387045795&#39;</span>;
+		$corpid <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1**1&#39;</span>;
+		$action <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;check&#39;</span>;
+		$tel <span style="color:#f92672">=</span> $mobile;
+		$reciptnum <span style="color:#f92672">=</span> $invoice;
+		$tmpArr <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>($key, $corpid, $action, $tel, $reciptnum);
+		<span style="color:#a6e22e">sort</span>($tmpArr);
+		$tmpStr <span style="color:#f92672">=</span> <span style="color:#a6e22e">implode</span>($tmpArr);
+		$sign <span style="color:#f92672">=</span> <span style="color:#a6e22e">sha1</span>($tmpStr);
+
+		$url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://1************3:8001/lottery/ws/api/win?corpid=1001&amp;amp;action=check&amp;amp;tel=&#39;</span><span style="color:#f92672">.</span>$tel<span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&amp;amp;reciptnum=&#39;</span><span style="color:#f92672">.</span>$reciptnum<span style="color:#f92672">.</span><span style="color:#e6db74">&#39;&amp;amp;sign=&#39;</span> <span style="color:#f92672">.</span> $sign;
+		$content <span style="color:#f92672">=</span> $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">http_get</span>($url);
+		$result <span style="color:#f92672">=</span> <span style="color:#a6e22e">json_decode</span>($content, <span style="color:#66d9ef">true</span>);
+
+		<span style="color:#66d9ef">return</span> $result;
+	}
+
+	<span style="color:#e6db74">/**
+</span><span style="color:#e6db74">	 * GET 请求
+</span><span style="color:#e6db74">	 * @param string $url
+</span><span style="color:#e6db74">	 */</span>
+	<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">http_get</span>($url){
+	    $oCurl <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_init</span>();
+	    <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">stripos</span>($url,<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">https</span><span style="color:#f92672">://&amp;</span><span style="color:#a6e22e">quot</span>;)<span style="color:#f92672">!==</span><span style="color:#66d9ef">FALSE</span>){
+	        <span style="color:#a6e22e">curl_setopt</span>($oCurl, <span style="color:#a6e22e">CURLOPT_SSL_VERIFYPEER</span>, <span style="color:#66d9ef">FALSE</span>);
+	        <span style="color:#a6e22e">curl_setopt</span>($oCurl, <span style="color:#a6e22e">CURLOPT_SSL_VERIFYHOST</span>, <span style="color:#66d9ef">FALSE</span>);
+	        <span style="color:#a6e22e">curl_setopt</span>($oCurl, <span style="color:#a6e22e">CURLOPT_SSLVERSION</span>, <span style="color:#ae81ff">1</span>); <span style="color:#75715e">//CURL_SSLVERSION_TLSv1
+</span><span style="color:#75715e"></span>	    }
+	    <span style="color:#a6e22e">curl_setopt</span>($oCurl, <span style="color:#a6e22e">CURLOPT_URL</span>, $url);
+	    <span style="color:#a6e22e">curl_setopt</span>($oCurl, <span style="color:#a6e22e">CURLOPT_RETURNTRANSFER</span>, <span style="color:#ae81ff">1</span> );
+	    $sContent <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_exec</span>($oCurl);
+	    $aStatus <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_getinfo</span>($oCurl);
+	    <span style="color:#a6e22e">curl_close</span>($oCurl);
+	    <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">intval</span>($aStatus[<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">http_code</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;])<span style="color:#f92672">==</span><span style="color:#ae81ff">200</span>){
+	        <span style="color:#66d9ef">return</span> $sContent;
+	    }<span style="color:#66d9ef">else</span>{
+	        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+	    }
+	}
+
+}
+
+$test <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Test</span>();
+$result <span style="color:#f92672">=</span> $test<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">yao</span>(<span style="color:#e6db74">&#39;1004-0408-1610451&#39;</span>, <span style="color:#e6db74">&#39;1341111111111&#39;</span>);
+<span style="color:#a6e22e">var_dump</span>($result);
+
+</code></pre></div>
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/%e5%8e%8b%e5%8a%9b%e6%b5%8b%e8%af%95" title="View all posts tagged match">压力测试</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/Apache" title="View all posts tagged match">Apache</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/%E7%9C%81%E5%B8%82%E5%8C%BA%E4%B8%89%E7%BA%A7%E8%81%94%E5%8A%A8js%E5%AE%9E%E7%8E%B0/"
+                                                    rel="prev">省市区三级联动js实现</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/">git常用命令整理</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

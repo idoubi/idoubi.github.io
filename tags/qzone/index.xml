@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Qzone on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/qzone/</link>
+    <description>Recent content in Qzone on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Fri, 27 Dec 2013 04:10:19 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/qzone/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>QQ空间魔力日志制作教程</title>
+      <link>https://idoubi.cc/posts/qq%E7%A9%BA%E9%97%B4%E9%AD%94%E5%8A%9B%E6%97%A5%E5%BF%97%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 27 Dec 2013 04:10:19 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/qq%E7%A9%BA%E9%97%B4%E9%AD%94%E5%8A%9B%E6%97%A5%E5%BF%97%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</guid>
+      <description>看着日志图片上显示着自己的 QQ 头像、QQ 昵称、QQ 号码 是不是觉得很不可思议呢？是不是很想知道这些神奇的图片是怎么做出来的？ 那么接下来我就结合自己的经验给大家讲一讲这种魔力日志制作的原理和方法。
+制作原理：
+关于魔力日志的制作原理我就不详细说了，相信学过 php 的朋友都懂，上面的截图是网上给的解释，大家可以简单了解一下。看不懂也不要紧，没 php 基础也无所谓，请重点关注接下来的制作步骤。
+制作步骤：
+1、准备一张希望让别人看到的图片，可根据自己的创意自由发挥。例如：
+做好图片之后那么接下来要做的就是怎么样把看到这张图片的人的 QQ 信息显示在这张图片上了。
+2、下载源代码
+源代码里面包含了上面的那张百度搜索的图片，命名为 qq.png，如果大家想制作其他的版本只要重新制作一张 qq.png 图片即可。
+源代码下载地址：http://url.cn/WbjBGF
+源代码目录结构： ip 文件夹：获取浏览者主机 ip，用于空间定位。 font 文件夹：字体包 do.php：关键文件，用于获取浏览者的信息，包括 QQ 昵称，QQ 头像，QQ 号，登录地址等信息。 content.php：内容文件，存放向浏览器输出的内容。 no.png：默认图片，即日志内容页里面的图片（别人点进去才会看到）。 qq.png：目标图片，即想要让别人看到的图片。
+3、申请虚拟空间 要把做好的魔力日志图片发到空间让所有人看到，必须有一个虚拟空间，只有把代码和图片上传到空间，才能做出魔力日志。申请虚拟空间的方式有很多，有条件的朋友可以自己在网上买一个 php 空间，或者在网上找一个免费的 php 空间。这里推荐的是百度开发者空间。百度开发者空间申请流程：
+http://jingyan.baidu.com/article/ceb9fb10ebf3f68cad2ba012.html 
+4、测试服务器
+按照第三步给的链接教程将代码上传到百度开发者空间之后，在浏览器输入网址http://1.idoubi.duapp.com/do.php即可看到上传代码中的 no.png 图片，注意网址不要输错，1 是你按照教程填写的版本号，我这里是 1，第三步中的教程里面写的是 0。idoubi 是我自己填的域名，每个人按照自己填的域名和版本号来输入网址。
+如果能看到这张默认图片的话，证明服务器配置正确，接下来就可以去空间写日志了。
+5、发表魔力日志
+复制地址http://1.idoubi.duapp.com/do.php，在腾讯微博粘贴并广播（网上说可以直接用这个地址，但是我试了不行），生成短地址http://url.cn/Uy8PZJ。复制短地址。
+进入自己的 QQ 空间写日志，插入图片，选择插入网络图片，输入在腾讯微博生成的短地址，添加，即可插入 no.png 这张网络图片。点击发表，魔力日志制作成功。 返回个人中心查看，即可看到根据浏览者对象生成的图片，形式为浏览者的 QQ 信息与 qq.png 图片组合（在源代码未修改情况下，qq.png 不起作用，这里的背景图是白色的）而成的一张图片。（由于浏览器缓存问题，发表日志后立刻回个人中心查看可能看到的还是 no.png 那张图片。这种情况下可以换个 QQ 进入空间看看效果。）</description>
+    </item>
+    
+  </channel>
+</rss>

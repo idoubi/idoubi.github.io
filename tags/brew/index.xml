@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>brew on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/brew/</link>
+    <description>Recent content in brew on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sat, 04 Jan 2020 16:50:37 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/brew/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用「Go」语言开发命令行工具</title>
+      <link>https://idoubi.cc/posts/create-a-cli-tool-in-macos/</link>
+      <pubDate>Sat, 04 Jan 2020 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/create-a-cli-tool-in-macos/</guid>
+      <description>使用 MacOS 做开发的朋友都知道，我们一般会使用 Homebrew 做软件包管理，经常会用到 brew install [soft] 来安装各种各样的命令行软件。今天通过一个百科查找的命令行工具（tellme）示例，我们来学习一下如何使用 Go 语言开发自己的命令行软件。
+我们需要用到 cobra 这个 Go 模块来做命令行工具开发，这个开源库其实是对 Go 官方库 flag 的一个封装，可以简化获取参数的操作。
+创建命令行项目  开启 Go Module  export GO111MODULE=on  安装 cobra 工具  go get -u github.com/spf13/cobra/cobra  创建命令行项目  # 创建项目目录 mkdir -p /data/idoubi/tellme &amp;amp;&amp;amp; cd /data/idoubi/tellme # 定义模块 go mod init github.com/idoubi/tellme # 初始化命令行项目 cobra init --pkg-name github.com/idoubi/tellme  检测运行  go run main.go -h 执行完上述操作后，如果控制台输出了帮助信息，证明我们的命令行项目创建成功了。
+新建子命令  新建子命令  cobra add baike  编写业务逻辑  在生成的子命令文件 /data/idoubi/tellme/cmd/baike.</description>
+    </item>
+    
+  </channel>
+</rss>

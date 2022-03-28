@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>艾逗笔</title>
+    <link>https://idoubi.cc/archives/</link>
+    <description>Recent content on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Sat, 19 Oct 2019 11:44:14 +0900</lastBuildDate><atom:link href="https://idoubi.cc/archives/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

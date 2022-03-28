@@ -1,0 +1,347 @@
+<html lang="en-US">
+
+<head>
+    
+<title>一个程序员关于订单打印的思考 - 艾逗笔</title>
+
+<meta property="og:title" content="一个程序员关于订单打印的思考 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="乐佳肴台式茶餐屋 10 月 10 号开业以来，生意一直很好。我们在开业前几天就入驻了淘点点、美团外卖、乐外卖等系统。做外卖订餐的，我们肯定需要把用户下的订单打印出来然后再根据订单安排配送员给用户配送，前几天我对乐佳肴入驻的三个平台进行了调试，在淘宝上买了一个 58mm 无线蓝牙打印机，但是调试后发现只有美团外卖的订单能够打印出来，淘点点的订单打印不出来。淘点点指定的打印机好像是一款叫做“佳博”的无 &amp;hellip;">
+    <meta property="og:description" content="乐佳肴台式茶餐屋 10 月 10 号开业以来，生意一直很好。我们在开业前几天就入驻了淘点点、美团外卖、乐外卖等系统。做外卖订餐的，我们肯定需要把用户下的订单打印出来然后再根据订单安排配送员给用户配送，前几天我对乐佳肴入驻的三个平台进行了调试，在淘宝上买了一个 58mm 无线蓝牙打印机，但是调试后发现只有美团外卖的订单能够打印出来，淘点点的订单打印不出来。淘点点指定的打印机好像是一款叫做“佳博”的无 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E5%85%B3%E4%BA%8E%E8%AE%A2%E5%8D%95%E6%89%93%E5%8D%B0%E7%9A%84%E6%80%9D%E8%80%83/">一个程序员关于订单打印的思考</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2014/10/15</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>乐佳肴台式茶餐屋 10 月 10 号开业以来，生意一直很好。我们在开业前几天就入驻了淘点点、美团外卖、乐外卖等系统。做外卖订餐的，我们肯定需要把用户下的订单打印出来然后再根据订单安排配送员给用户配送，前几天我对乐佳肴入驻的三个平台进行了调试，在淘宝上买了一个 58mm 无线蓝牙打印机，但是调试后发现只有美团外卖的订单能够打印出来，淘点点的订单打印不出来。淘点点指定的打印机好像是一款叫做“佳博”的无线打印机。乐外卖则在系统后台就指明了只能使用乐外卖提供的打印机才能打印在乐外卖平台上产生的订单，还给出了乐外卖打印机在淘宝上的购买链接，价格最便宜的 550 元，最新的 650 元。看到那个价格的时候我也是醉了。</p>
+<p>作为一个自尊心很强的程序员，作为武汉凌波微购网络科技有限公司的首席技术官，我岂能眼睁睁的看着我们的乐佳肴花几百块钱去买三个不同的打印机分别适应我们入驻的三个平台？于是我想到了写一套统一的程序把三个平台的订单整合起来，用一个统一的打印机打印。</p>
+<p>我最开始的想法是用模拟登陆技术，分别登陆淘点点、美团外卖、乐外卖三个系统的商家管理后台，然后用网页抓取技术把订单抓取下来存到本地的数据库，最后再调用打印机程序统一打印。不过后来发现淘点点跟美团外卖好像只有移动端的商家管理后台，没有 pc 端的，而乐外卖的管理后台登陆进去之后是一堆乱码，于是模拟抓取订单的这个想法行不通了。</p>
+<p>然后我想到了三个平台接到订单的时候商家的手机都会接到订单提醒，淘点点跟美团外卖是直接在自己的 APP 中发出提示音并显示出订单详情，而乐外卖则可以设置短信通知和微信通知，商家在后台设置自己的接受信息后，只要一收到订单就会接到乐外卖发来的短信和微信，提示订单详情。然后我想到的是把这些通知类的订单详情复制粘贴并发送给一个微信号，由该微信号负责处理，并把内容插入到数据库，再从数据库中读取这些订单信息并进行打印。这样的话可能稍微麻烦一点，需要负责接收订单的商家人为的把三个平台的订单复制粘贴至同一个微信号，并统一打印。但是毕竟这种方法可以解决三个平台订单使用同一个打印机打印的问题。测试发现，淘点点跟美团外卖上面接到的订单不能复制，于是我只能处理乐外卖的订单了，毕竟写一个程序处理乐外卖系统产生的订单并用统一的打印机打印出来可以省去购买乐外卖打印机需要花费的 650 元，想想也是蛮有意义的。</p>
+<p>ok，废话说了一大堆，现在开始进入正题，讲解如何写一套程序打印乐外卖平台产生的订单。</p>
+<p>1、首先是在乐外卖后台设置接收订单的方式，我填写的是使用我的微信接收订单，所以每次用户下了订单，我的微信会马上接到订单提醒。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E5%9B%BE%E7%89%8720141015140629.png" alt=""></p>
+<p>2、然后是把接收到的订单复制粘贴到一个微信公众号进行处理。本来想用最近申请的微信企业号进行处理的，但是因为企业号开发还没有学会，所以便临时使用了凌波微购公司的公众号进行处理。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E5%9B%BE%E7%89%8720141015141029.png" alt=""></p>
+<p>3、处理订单的程序很简单，就是获取用户发送到微信公众号里面的内容，如果内容开头符合乐外卖订单开头的形式，就把用户发送的内容插入到数据库订单表中。如果用户发送的是”查看订单“，则跳转到查看订单的页面。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015141739.jpg" alt=""></p>
+<p>4、循环输出订单。基于 weiphp 的 MVC 模式来写数据输出程序要方便很多，简单的几行代码就把订单全部输出来了。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015142425.jpg" alt="">
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015142450.jpg" alt=""></p>
+<p>5、写一个刷新页面的程序，让页面每 5 秒钟刷新一次，便于获取最新的订单。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015142653.jpg" alt=""></p>
+<p>6、把这些准备工作做好之后，在查看订单的页面就能看到所有的订单信息了，页面每 5 秒钟刷新一次，在店面内负责接单的人就可以及时打印出订单了。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015142838.jpg" alt=""></p>
+<p>7、订单都显示出来了，现在就到了最关键的一步：把订单打印出来。从上图我们看到，每一条订单左上角都有 一个写着”订单“的按钮，点击那个按钮就能调出打印机预览页面。在输出订单的程序中，我们为每一个打印按钮设置一个 onclick 事件，为每一条订单设置一个唯一的 id，这样的话每次点击哪个订单的打印按钮，对应的订单就会被打印出来了。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015143345.jpg" alt="">
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015143711.jpg" alt=""></p>
+<p>打印订单的 js 函数 printdiv(printpage)中传递的参数是需要打印的订单 id，调用 window.print(); 能够打印出当前页面，所以在 window.print(); 前需要用 document.body.innerHTML = headstr+newstr+footstr; 设置当前页面内容。当前页面内容在打印之前设置了，打印之后不会自动恢复，所以在设置需要打印订单的当前页面内容之前我们先把原来的内容存储起来，等调用 windoe.print 打印出需要的内容之后再恢复以前的所有订单显示页面。</p>
+<pre><code>var oldstr = document.body.innerHTML;
+document.body.innerHTML = headstr+newstr+footstr;
+window.print();
+document.body.innerHTML = oldstr;
+</code></pre><p>8、把前面的工作都做好了，现在点击打印订单按钮就能调出打印机进行打印了。我这里用的是佳博的打印机，这个打印机是需要连接电脑的，不过价格挺便宜的，才 180 左右，所以用自己的智慧，配合一个 180 元的打印机，也能打印乐外卖的订单了，避免了购买乐外卖 650 元的打印机，为乐佳肴省掉了 470 元。感觉自己萌萌哒~请忽略我那乱得一笔的桌子。
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E6%88%AA%E5%9B%BE20141015144453.jpg" alt="">
+<img src="http://blogcdn.idoustudio.com/2014/10/QQ%E5%9B%BE%E7%89%8720141015145442.jpg" alt=""></p>
+<p>整个订单打印程序开发流程到此处就哦了，总结几点：
+1、作为一个程序员，一定要经常动脑筋，把自己学到的知识运用到实际场景中，能够创造价值。
+2、实现某个功能能用的方法可能会有很多种，一种不行就试另一种，不要钻牛角尖。
+3、一定要努力学技术，争取尽快开发出独立的线上订餐平台，功能不能亚于美团外卖、淘点点、乐外卖。
+4、程序员的信仰：为改变世界而奋斗。</p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/%e8%ae%a2%e5%8d%95%e6%89%93%e5%8d%b0" title="View all posts tagged match">订单打印</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+                                                    rel="prev">阿里云服务器phpmyadmin无法登陆问题及其解决办法</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/ajax%E5%9C%A8%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF%E7%B1%BB%E4%BA%A7%E5%93%81%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">ajax在新闻资讯类产品中的应用</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

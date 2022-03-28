@@ -1,0 +1,592 @@
+<html lang="en-US">
+
+<head>
+    
+<title>使用「Go」语言开发命令行工具 - 艾逗笔</title>
+
+<meta property="og:title" content="使用「Go」语言开发命令行工具 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="使用 MacOS 做开发的朋友都知道，我们一般会使用 Homebrew 做软件包管理，经常会用到 brew install [soft] 来安装各种各样的命令行软件。今天通过一个百科查找的命令行工具（tellme）示例，我们来学习一下如何使用 Go 语言开发自己的命令行软件。
+我们需要用到 cobra 这个 Go 模块来做命令行工具开发，这个开源库其实是对 Go 官方库 flag 的一个封装，可以 &amp;hellip;">
+    <meta property="og:description" content="使用 MacOS 做开发的朋友都知道，我们一般会使用 Homebrew 做软件包管理，经常会用到 brew install [soft] 来安装各种各样的命令行软件。今天通过一个百科查找的命令行工具（tellme）示例，我们来学习一下如何使用 Go 语言开发自己的命令行软件。
+我们需要用到 cobra 这个 Go 模块来做命令行工具开发，这个开源库其实是对 Go 官方库 flag 的一个封装，可以 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/create-a-cli-tool-in-macos/">使用「Go」语言开发命令行工具</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2020/01/04</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>使用 MacOS 做开发的朋友都知道，我们一般会使用 Homebrew 做软件包管理，经常会用到 <code>brew install [soft]</code> 来安装各种各样的命令行软件。今天通过一个百科查找的命令行工具（<code>tellme</code>）示例，我们来学习一下如何使用 Go 语言开发自己的命令行软件。</p>
+<p>我们需要用到 <a href="https://github.com/spf13/cobra">cobra</a> 这个 Go 模块来做命令行工具开发，这个开源库其实是对 Go 官方库 <a href="https://golang.org/pkg/flag/">flag</a> 的一个封装，可以简化获取参数的操作。</p>
+<h2 id="创建命令行项目">创建命令行项目</h2>
+<ul>
+<li>开启 Go Module</li>
+</ul>
+<pre tabindex="0"><code>export GO111MODULE=on
+</code></pre><ul>
+<li>安装 cobra 工具</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">go get -u github.com/spf13/cobra/cobra
+</code></pre></div><ul>
+<li>创建命令行项目</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 创建项目目录</span>
+mkdir -p /data/idoubi/tellme <span style="color:#f92672">&amp;&amp;</span> cd /data/idoubi/tellme
+
+<span style="color:#75715e"># 定义模块</span>
+go mod init github.com/idoubi/tellme
+
+<span style="color:#75715e"># 初始化命令行项目</span>
+cobra init --pkg-name github.com/idoubi/tellme
+</code></pre></div><ul>
+<li>检测运行</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">go run main.go -h
+</code></pre></div><p>执行完上述操作后，如果控制台输出了帮助信息，证明我们的命令行项目创建成功了。</p>
+<h2 id="新建子命令">新建子命令</h2>
+<ul>
+<li>新建子命令</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cobra add baike
+</code></pre></div><ul>
+<li>编写业务逻辑</li>
+</ul>
+<p>在生成的子命令文件 <code>/data/idoubi/tellme/cmd/baike.go</code> 中编写子命令需要实现的业务逻辑。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">cmd</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+	<span style="color:#e6db74">&#34;os/exec&#34;</span>
+	<span style="color:#e6db74">&#34;runtime&#34;</span>
+
+	<span style="color:#e6db74">&#34;github.com/spf13/cobra&#34;</span>
+)
+
+<span style="color:#66d9ef">var</span> (
+	<span style="color:#a6e22e">platform</span> <span style="color:#66d9ef">string</span>
+)
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">openCmds</span> = <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{
+	<span style="color:#e6db74">&#34;windows&#34;</span>: <span style="color:#e6db74">&#34;cmd /c start&#34;</span>,
+	<span style="color:#e6db74">&#34;darwin&#34;</span>:  <span style="color:#e6db74">&#34;open&#34;</span>,
+	<span style="color:#e6db74">&#34;linux&#34;</span>:   <span style="color:#e6db74">&#34;xdg-open&#34;</span>,
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">baikeCmd</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>{
+	<span style="color:#a6e22e">Use</span>:     <span style="color:#e6db74">&#34;baike&#34;</span>,
+	<span style="color:#a6e22e">Aliases</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;bk&#34;</span>, <span style="color:#e6db74">&#34;wk&#34;</span>, <span style="color:#e6db74">&#34;wiki&#34;</span>},
+	<span style="color:#a6e22e">Short</span>:   <span style="color:#e6db74">&#34;find things in baike site&#34;</span>,
+	<span style="color:#a6e22e">Args</span>:    <span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">ExactArgs</span>(<span style="color:#ae81ff">1</span>),
+	<span style="color:#a6e22e">Run</span>: <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">cmd</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">cobra</span>.<span style="color:#a6e22e">Command</span>, <span style="color:#a6e22e">args</span> []<span style="color:#66d9ef">string</span>) {
+		<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">findInBaike</span>(<span style="color:#a6e22e">args</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">platform</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+			<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
+		}
+	},
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+	<span style="color:#a6e22e">rootCmd</span>.<span style="color:#a6e22e">AddCommand</span>(<span style="color:#a6e22e">baikeCmd</span>)
+	<span style="color:#a6e22e">baikeCmd</span>.<span style="color:#a6e22e">Flags</span>().<span style="color:#a6e22e">StringVarP</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">platform</span>, <span style="color:#e6db74">&#34;platform&#34;</span>, <span style="color:#e6db74">&#34;p&#34;</span>, <span style="color:#e6db74">&#34;baidu&#34;</span>, <span style="color:#e6db74">&#34;platform to find things&#34;</span>)
+}
+
+<span style="color:#75715e">// 百科查找
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">findInBaike</span>(<span style="color:#a6e22e">keyword</span>, <span style="color:#a6e22e">platform</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">link</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#75715e">// 百度百科搜索
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;baidu&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;bd&#34;</span> {
+		<span style="color:#a6e22e">link</span> = <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;https://baike.baidu.com/item/%s&#34;</span>, <span style="color:#a6e22e">keyword</span>)
+	}
+	<span style="color:#75715e">// 互动百科搜索
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;hudong&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;baike&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;hd&#34;</span> {
+		<span style="color:#a6e22e">link</span> = <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;http://www.baike.com/wiki/%s&#34;</span>, <span style="color:#a6e22e">keyword</span>)
+	}
+	<span style="color:#75715e">// 维基百科搜索
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;wikipedia&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;wiki&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">platform</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;wp&#34;</span> {
+		<span style="color:#a6e22e">link</span> = <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;https://zh.wikipedia.org/wiki/%s&#34;</span>, <span style="color:#a6e22e">keyword</span>)
+	}
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">link</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;invalid platform&#34;</span>)
+	}
+	<span style="color:#a6e22e">goos</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">GOOS</span>
+	<span style="color:#a6e22e">opencmd</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;open&#34;</span>
+	<span style="color:#a6e22e">opencmd</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">openCmds</span>[<span style="color:#a6e22e">goos</span>]
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;can not open link in %s&#34;</span>, <span style="color:#a6e22e">goos</span>)
+	}
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">Command</span>(<span style="color:#a6e22e">opencmd</span>, <span style="color:#a6e22e">link</span>).<span style="color:#a6e22e">Start</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+	}
+
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><h2 id="命令测试">命令测试</h2>
+<ul>
+<li>项目中运行</li>
+</ul>
+<p>在命令行项目目录下，通过 <code>go run</code> 可以直接运行，查看输出结果。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 在百度百科查看信息</span>
+go run main.go baike 周杰伦
+
+<span style="color:#75715e"># 在维基百科查看信息</span>
+go run main.go bk -p wp 周杰伦
+</code></pre></div><p>上述的 <code>baike</code> 是我们创建的子命令，<code>bk</code> 是子命令别名，<code>-p</code> 是子命令标识，用于指定百科平台。<code>周杰伦</code> 是接收的参数。</p>
+<ul>
+<li>编译运行</li>
+</ul>
+<p>在命令行项目目录下，通过 <code>go build</code> 可以将项目编译成一个二进制文件，通过 <code>./tellme</code> 可以直接运行二进制文件查看输出。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 编译</span>
+go build -o tellme
+
+<span style="color:#75715e"># 运行</span>
+./tellme -h
+</code></pre></div><ul>
+<li>交叉编译</li>
+</ul>
+<p>除了在 MacOS 中使用外，我们还希望能在 linux 和 windows 系统中使用我们的命令行工具。这种情况下我们需要用到交叉编译。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 下载交叉编译工具</span>
+go get -u github.com/mitchellh/gox
+
+<span style="color:#75715e"># 编译成指定平台的可执行文件</span>
+gox -osarch <span style="color:#e6db74">&#34;windows/amd64 linux/amd64 darwin/amd64&#34;</span>
+</code></pre></div><ul>
+<li>全局执行</li>
+</ul>
+<p>编译完成后，我们可以创建一个软连接，让命令行工具可以在任何路径下全局执行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 创建软连接</span>
+ln -s /data/idoubi/tellme/tellme_darwin_amd64 /usr/local/bin/tm
+
+<span style="color:#75715e"># 全局执行</span>
+tm -h
+</code></pre></div><h2 id="上传到-github">上传到 Github</h2>
+<p>经过上述的几个步骤，我们已经完成了一个简单的命令行工具的编写与测试工作，接下来需要把软件发布出去让所有人使用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 推送代码到github</span>
+cd /data/idoubi/tellme
+go init
+git add .
+git commit -m <span style="color:#e6db74">&#34;a cli tool used in macos&#34;</span>
+git push origin master
+
+<span style="color:#75715e"># 发布一个版本</span>
+git tag -a v0.1.0 -m <span style="color:#e6db74">&#34;first version&#34;</span>
+git push origin --tags
+</code></pre></div><p>上传到 Github 完成后，我们可以在项目的 release 页面看到这个项目的版本信息和源码下载文件 <a href="https://github.com/idoubi/tellme/releases/tag/v0.1.0">https://github.com/idoubi/tellme/releases/tag/v0.1.0</a>，我们可以编辑发布信息，上传交叉编译后得到的各个平台的二进制文件，方便不同平台的用户在这里直接下载二进制文件来使用我们的软件。</p>
+<h2 id="创建-homebrew-软件">创建 Homebrew 软件</h2>
+<p>对于 MacOS 用户，一般都是使用 Homebrew 来安装和管理各种软件，我们希望把自己开发的命令行软件发布到 Homebrew，让用户可以方便的使用 <code>brew install tellme</code> 来安装。</p>
+<ul>
+<li>创建 Homebrew 软件</li>
+</ul>
+<p>我们可以在 Github 上复制软件源码包下载地址，在 MacOS 通过 <code>brew create [source]</code> 创建 Homebrew 软件包。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">brew create https://github.com/idoubi/tellme/archive/v0.1.0.tar.gz
+</code></pre></div><p>执行上述命令完成后，会在 <code>/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/</code> 目录生成一个 <code>tellme.rb</code> 文件，即我们的 Homebrew 软件定义文件，在此文件中定义了我们的软件在 MacOS 中要怎么安装。</p>
+<ul>
+<li>编辑软件定义文件</li>
+</ul>
+<p>因为我们这个命令行软件是用 Go 语言编写的，在 Homebrew 软件定义文件中，我们可以指定软件的安装依赖于 <code>go:build</code>，并且定义好 <code>install</code> 方式。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tellme</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Formula</span>
+  desc <span style="color:#e6db74">&#34;a cli tool to get information.&#34;</span>
+  homepage <span style="color:#e6db74">&#34;https://github.com/idoubi/tellme&#34;</span>
+  url <span style="color:#e6db74">&#34;https://github.com/idoubi/tellme/archive/v0.1.0.tar.gz&#34;</span>
+  sha256 <span style="color:#e6db74">&#34;b0c14c0e9f02e065917262a7c0d16e205097cc4d10c01e03ad93b4cd737cf81d&#34;</span>
+
+  depends_on <span style="color:#e6db74">&#34;go&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">:build</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">install</span>
+    system <span style="color:#e6db74">&#34;go&#34;</span>, <span style="color:#e6db74">&#34;build&#34;</span>, <span style="color:#e6db74">&#34;-o&#34;</span>, bin<span style="color:#f92672">/</span><span style="color:#e6db74">&#34;tellme&#34;</span>
+  <span style="color:#66d9ef">end</span>
+
+  test <span style="color:#66d9ef">do</span>
+    system <span style="color:#e6db74">&#34;false&#34;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><ul>
+<li>通过可执行文件创建 Homebrew 软件</li>
+</ul>
+<p>上面看到的是通过 Go 源码编译的方式定义 Homebrew 软件的安装方式，我们还可以通过下载可执行二进制的方式定义 Homebrew 软件包的安装，比如通过交叉编译生成可执行文件。</p>
+<p>基于可执行文件创建 Homebrew 软件包：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">brew create https://github.com/idoubi/tellme/releases/download/v0.1.0/tellme_darwin_amd64.tar.gz
+</code></pre></div><p>编辑 Homebrew 软件包的定义文件 <code>tellme.rb</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tellme</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">Formula</span>
+  desc <span style="color:#e6db74">&#34;a cli tool to get information&#34;</span>
+  homepage <span style="color:#e6db74">&#34;&#34;</span>
+  url <span style="color:#e6db74">&#34;https://github.com/idoubi/tellme/releases/download/v0.1.0/tellme_darwin_amd64.tar.gz&#34;</span>
+  sha256 <span style="color:#e6db74">&#34;164787b02050faef0d5776ca86d27d15b26fe28493f95ba2e705ba2e30026c94&#34;</span>
+
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">install</span>
+    bin<span style="color:#f92672">.</span>install <span style="color:#e6db74">&#34;tellme_darwin_amd64&#34;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;tellme&#34;</span>
+  <span style="color:#66d9ef">end</span>
+
+  test <span style="color:#66d9ef">do</span>
+    system <span style="color:#e6db74">&#34;false&#34;</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><ul>
+<li>安装 Homebrew 软件</li>
+</ul>
+<p>创建完 Homebrew 软件后，我们通过 <code>brew install tellme</code> 就可以基于本地生成的<code>/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/tellme.rb</code> 文件来安装我们的命令行软件了。</p>
+<p>如果安装报错了，可以通过 <code>brew edit tellme</code> 继续编辑 Homebrew 软件定义文件。</p>
+<h2 id="发布-homebrew-软件">发布 Homebrew 软件</h2>
+<p>经过上面的步骤，我们创建了一个在 MacOS 通过 Homebrew 安装的软件，接下来我们需要把这个软件发布出去，让用户能够通过简单的 <code>brew</code> 命令直接安装使用。</p>
+<ul>
+<li>发布到 Github 仓库</li>
+</ul>
+<pre tabindex="0"><code># 创建软件仓库
+mkdir -p /data/idoubi/homebrew-tools &amp;&amp; cd /data/idoubi/homebrew-tools
+
+# 复制软件定义文件到仓库目录
+cp /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/tellme.rb /data/idoubi/homebrew-tools/
+
+# 推送到 Github 仓库
+git init
+git remote add origin https://github.com/idoubi/homebrew-tools.git
+git add .
+git commit -m &quot;a homebrew soft named tellme&quot;
+git push origin master
+</code></pre><ul>
+<li>安装软件</li>
+</ul>
+<p>软件定义文件推送到 Github 仓库后，可以删除本地的 <code>/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula/tellme.rb</code> 文件。</p>
+<p>任何人可以通过下面两行命令在自己的 MacOS 系统中使用我们开发的命令行软件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 连接软件仓库</span>
+brew tap idoubi/tools
+<span style="color:#75715e"># 从软件仓库安装软件</span>
+brew install tellme
+</code></pre></div><h2 id="总结">总结</h2>
+<p>前面的内容简单介绍了如何使用 Go 语言来创建一个在 MacOS 使用的命令行软件，需要开发者熟悉 MacOS 中 Homebrew 软件包管理工具的使用以及 Go 语言。后面我们可以展开更多的想象，在我们的命令行工具中添加查天气、搜歌词、翻译、时间类型转换等各种特性功能。</p>
+<ul>
+<li>源码</li>
+</ul>
+<p>命令行软件源码：<a href="https://github.com/idoubi/tellme">tellme</a></p>
+<p>Homebrew 仓库：<a href="https://github.com/idoubi/homebrew-tools">homebrew-tools</a></p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://brew.sh/">Homebrew 官网</a></li>
+<li><a href="https://golang.org/pkg/flag/">Go 官方库 flag</a></li>
+<li><a href="https://github.com/spf13/cobra">Go 命令行软件创建工具 cobra</a></li>
+<li><a href="https://mogeko.me/2019/046/">使用 Homebrew 维护自己的软件仓库</a></li>
+<li><a href="https://liam.page/2016/07/30/release-your-own-app-in-Homebrew/">在 Homebrew 上发布自己的 App</a></li>
+</ul>
+
+
+                                        
+                                        
+                                        
+                                        <div class="rp4wp-related-posts">
+                                            <h3>相关文章</h3>
+                                            <ul>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">goimports工具安装与使用</a>
+                                                    </div>
+                                                </li>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/">golang版本的curl请求库</a>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/go" title="View all posts tagged match">go</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/brew" title="View all posts tagged match">brew</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/notes/vscode-sublime-theme/"
+                                                    rel="prev">「VS Code」打造类sublime的高颜值编辑器</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/goz/">「goz」开源库，在Go中快速发起HTTP请求</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

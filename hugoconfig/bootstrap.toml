@@ -1,0 +1,174 @@
+baseURL = "https://idoubi.cc"
+title = "艾逗笔的个人站"
+theme = "hugo-theme-bootstrap"
+copyright = "Copyright © 2013-{year} 艾逗笔. All Rights Reserved."
+
+# Multilingual mode
+defaultContentLanguage = "cn"
+defaultContentLanguageInSubdir = false
+
+# Pagination
+paginate = 9
+# paginatePath = "page"
+
+# Disqus
+# disqusShortname = "yourdiscussshortname"
+
+# Google analytics
+# googleAnalytics = "UA-123-45"
+
+enableRobotsTXT = true
+
+enableEmoji = true
+
+# hasCJKLanguage = true # Turn on it if your content contains Chinese/Japanese/Korean Languages.
+
+[blackfriday]
+  hrefTargetBlank = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+
+[[menu.main]]
+  name = "Dropdown"
+  identifier = "dropdown"
+  pre = '<i class="fas fa-fw fa-chevron-circle-down"></i>'
+[[menu.main]]
+  id = "github"
+  parent = "dropdown"
+  name = "Github"
+  url = "https://github.com/idoubi"
+  pre = '<i class="fab fa-fw fa-github"></i>'
+
+[author]
+name = "艾逗笔"
+avatar = "https://blogcdn.idoustudio.com/idoubi.png" # Avatar image. Default to "images/profile.webp".
+bio = "全栈开发"
+company = "Tencent"
+location = "ShenZhen"
+# about = "https://domain.tld" # The external about page. The internal about page will be used if not set.
+
+[highlight]
+  anchorLineNos = true
+  codeFences = true
+  guessSyntax = false
+  hl_Lines = ""
+  lineAnchors = ""
+  lineNoStart = 1
+  lineNos = false
+  lineNumbersInTable = true
+  noClasses = true
+  style = "monokai"
+  tabWidth = 2
+
+[social]
+email = "me@idoubi.cc"
+github = "idoubi"
+weibo = "2611593311"
+zhihu = "idoubi"
+
+[params]
+# mainSections = ["post", "posts"] # Default to ["posts"].
+
+# titleSeparator = "|" # Title separator. Default to "-".
+
+description = "An extreme fast, responsive and feature-rich blog theme for Hugo"
+keywords = "Hugo, Bootstrap, Blog Theme"
+# images = ["site-feature-image.jpg"]
+
+logo = "https://blogcdn.idoustudio.com/idoubi.png" # Logo image. Default to "images/logo.webp".
+brand = "艾逗笔"
+# menusPosition = "left" # Menus position: right(default), left or center.
+
+palette = "blue" # Default palette. Optional.
+# palettes = ["blue", "blue gray", "brown"] # Available palettes. Default to ALL.
+# palettes = [] # Disable palette switcher.
+
+# color = "dark" # light, dark or dynamic. Default to dynamic.
+
+# fullWidth = true # Full width.
+# fixedHeader = false # Turn on/off fixed header.
+
+# dateFormat = "Jan 2, 2006"
+
+# Google Adsense
+googleAdsense = ""
+
+# math = true # Enable math globally.
+# toc = false # Disable TOC globally.
+# breadcrumb = false # Disable breadcrumb
+
+# poweredBy = false # Whether to show powered by.
+
+# featuredPostCount = 10 # The number of featured posts shown in sidebar. Turn off by setting it to false.
+# recentPostCount = 10 # The number of recent posts shown in sidebar. Turn off by setting it to false.
+# relatedPostCount = 10 # The number of related posts. Turn off by setting it to false.
+# categoryCount = 10 # The number of categories shown in sidebar. Turn off by setting it to false.
+# tagCount = 10 # The number of tags shown in sidebar. Turn off by setting it to false.
+# seriesCount = 10 # The number of series shown in sidebar. Turn off by setting it to false.
+
+# Custom CSS and JS
+customCSS = []
+customJS = []
+
+# tocWordCount = 280 # TOC is displayed only if the post's word count exceeds this value.
+
+[archive]
+  paginate = 8 # Archive pagination. Default to 100.
+  # dateFormat = "01-02" # Archive date format. Default to "Jan 2".
+
+[analytics]
+  # baidu = "" # Baidu Analytics
+
+# Site verification
+[siteVerification]
+  google = ""
+  bing = ""
+  baidu = ""
+  baiduUnion = "" # Baidu Union
+  so = ""
+  sogou = ""
+  shenma = ""
+
+[creativeCommons]
+  # by = true # Credit must be given to you, the creator.
+  # nc = true # Only noncommercial use of your work is permitted.
+  # nd = true # No derivatives or adaptations of your work are permitted.
+  # sa = true # Adaptations must be shared under the same terms.
+
+[utterances]
+  repo = "razonyang/hugo-theme-bootstrap"
+  #issueTerm = "pathname" # pathname, url, title, og:title
+  #label = "comment"
+  theme = "github-dark" # github-light, github-dark, preferred-color-scheme, github-dark-orange, icy-dark, dark-blue, photon-dark.
+
+[search]
+  paginate = 5 # Pagination. Default to 10.
+  # resultContentWordCount = 240 # The maximum word count of result content for displaying.
+  # Fuse.js options. See https://fusejs.io/api/options.html.
+  [search.fuse]
+    # ignoreLocation = true
+    # location = 0
+    # isCaseSensitive = false
+    # minMatchCharLength = 1
+    threshold = 0.1
+    # distance = 100
+    # useExtendedSearch = true
+
+#[reward]
+  #alipay = "images/reward/alipay.png"
+  #wechat = "images/reward/wechat.png"
+
+[share]
+  addThis = "ra-60bcc43f59f2d04f" # AddThis pubid.
+
+[fontSize] # Comment or remove this settings to disable font size switcher.
+  # extraSmall = ".8rem"
+  # small = ".9rem"
+  # large = "1.1rem"
+  # extraLarge = "1.2rem"

@@ -1,0 +1,369 @@
+<html lang="en-US">
+
+<head>
+    
+<title>快速创建微信小程序 - 艾逗笔</title>
+
+<meta property="og:title" content="快速创建微信小程序 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="做过微信小程序开发的朋友应该知道，微信提供了几种创建小程序的方式：
+[&amp;hellip;] 对比一下这几种方式，我们发现：
+如果要在微信官网申请小程序，需要填很多资料，并且需要为新注册的小程序绑定一个身份证、手机号、微信，很容易受到个人可创建小程序数量的限制。
+如果复用公众号资质创建小程序，需要先有一个已通过微信认证的服务号，申请公众号认证的审核费用单次 300 元，每个公众号最多只能创建五个小程 &amp;hellip;">
+    <meta property="og:description" content="做过微信小程序开发的朋友应该知道，微信提供了几种创建小程序的方式：
+[&amp;hellip;] 对比一下这几种方式，我们发现：
+如果要在微信官网申请小程序，需要填很多资料，并且需要为新注册的小程序绑定一个身份证、手机号、微信，很容易受到个人可创建小程序数量的限制。
+如果复用公众号资质创建小程序，需要先有一个已通过微信认证的服务号，申请公众号认证的审核费用单次 300 元，每个公众号最多只能创建五个小程 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/create-wxapp-quickly/">快速创建微信小程序</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2020/10/19</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="前言">前言</h2>
+<p>做过微信小程序开发的朋友应该知道，微信提供了几种创建小程序的方式：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>个人类型</th>
+<th>机构类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>微信官网注册</td>
+<td>填写个人身份证、手机号等信息，扫码绑定个人微信</td>
+<td>填写机构代码、法人手机号等信息，上传营业执照，需要法人微信扫码验证</td>
+</tr>
+<tr>
+<td>公众号后台注册</td>
+<td>不支持</td>
+<td>复用已认证的微信服务号资质创建小程序，最多创建五个</td>
+</tr>
+<tr>
+<td>第三方平台注册</td>
+<td>不支持</td>
+<td>利用微信第三方平台资质，快速创建小程序</td>
+</tr>
+</tbody>
+</table>
+<p>对比一下这几种方式，我们发现：</p>
+<p>如果要在微信官网申请小程序，需要填很多资料，并且需要为新注册的小程序绑定一个身份证、手机号、微信，很容易受到个人可创建小程序数量的限制。</p>
+<p>如果复用公众号资质创建小程序，需要先有一个已通过微信认证的服务号，申请公众号认证的审核费用单次 300 元，每个公众号最多只能创建五个小程序。</p>
+<p>如果用第三方平台创建小程序，需要有企业资质，在填写完企业的基本信息后发起创建小程序申请，企业法人的微信会收到创建小程序的通知，根据指引完成法人身份认证之后即可完成小程序的创建，绑定一个新的邮箱即可登录小程序管理后台。使用这种方式，目前来看没有小程序数量和创建人身份的限制。<a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/Fast_Registration_Interface_document.html">第三方平台快速创建小程序官方文档</a></p>
+<p>在了解完这些规则之后，我们应该想到，如果有企业资质，创建小程序最好的办法就是利用第三方平台，基本上能够满足一个企业日常的小程序数量需求。</p>
+<h2 id="快速创建小程序功能体验">快速创建小程序功能体验</h2>
+<p>微信扫码进入小程序“极速申请”</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/qrcode.jpg" alt="qrcode"></p>
+<p>微信授权完成登录</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/login.png?imageView2/1/w/300/h/400" alt="login"></p>
+<p>点击“新建申请”进入企业资料填写页</p>
+<p>填写完企业资料，点击“申请注册小程序”</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/register1.png?imageView2/1/w/300/h/500" alt="register"></p>
+<p>法人微信收到创建小程序的通知</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/notify1.png?imageView2/1/w/300/h/350" alt="notify"></p>
+<p>完成法人身份验证</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/verify.png?imageView2/1/w/300/h/420" alt="verify"></p>
+<p>完成小程序创建申请</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/finished.png?imageView2/1/w/300/h/350" alt="finished"></p>
+<p>收到小程序创建成功通知</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/oknotify.png?imageView2/1/w/300/h/600" alt="oknotify"></p>
+<p>为新创建的小程序设置登录邮箱</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/setemail.png?imageView2/1/w/300/h/500" alt="setemail"></p>
+<p>至此，已经完成了一个小程序的创建，非常的快速方便。</p>
+<p>再次进入”极速申请“小程序，可以选择已有的企业快速创建小程序
+<img src="https://blogcdn.idoustudio.com/wxareg/company.png?imageView2/1/w/300/h/300" alt="setemail"></p>
+<p>可以查看创建小程序的申请记录</p>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/record.png?imageView2/1/w/300/h/300" alt="setemail"></p>
+<h2 id="问题解答">问题解答</h2>
+<p>Q：使用第三方平台创建的小程序，还需要申请微信认证吗？</p>
+<p>A：使用第三方平台创建的小程序，默认是已认证的小程序，具备企业认证小程序的完整功能，你只需要在验证完法人身份后给小程序设置登录邮箱，后续操作与其他方式申请的小程序一致。</p>
+<p>Q：别人用我的企业信息申请创建小程序怎么办？</p>
+<p>A：首先别人要知道你的企业信息，其次别人要知道你的手机号和微信号，就算别人知道了全部信息，提交创建小程序申请后，只有你的微信会收到创建小程序的通知，你可以选择不处理，24 小时后申请会自动失效。别人没办法用你的信息创建不属于你的小程序。</p>
+<p>Q：我可以在“极速申请”小程序申请创建多少个小程序？</p>
+<p>A：目前暂时没有限制，你可以添加任意多个属于你的企业，通过企业资质创建任意多个小程序。但是有个原则，小程序申请只能一个一个创建，必须要法人在微信端提交认证后，才能完成小程序的创建，在此期间，继续提交申请会提示失败。</p>
+<p>Q：我有自己的第三方平台，可以实现类似的功能吗？</p>
+<p>A：目前使用的第三方平台方是”任想程序“，如果你需要用自己的微信第三方平台来创建小程序，请联系微信：idoubicc，咨询定制开发。</p>
+<h2 id="功能体验">功能体验</h2>
+<p><img src="https://blogcdn.idoustudio.com/wxareg/qrcode.jpg" alt="qrcode"></p>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/notes/cpp-in-vscode/"
+                                                    rel="prev">在「VS Code」搭建「C&#43;&#43;」开发环境</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/my-new-hugo-theme-like-laruence/">我写了一款跟PHP鸟哥一样的博客皮肤</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

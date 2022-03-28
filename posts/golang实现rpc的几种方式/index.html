@@ -1,0 +1,690 @@
+<html lang="en-US">
+
+<head>
+    
+<title>golang实现RPC的几种方式 - 艾逗笔</title>
+
+<meta property="og:title" content="golang实现RPC的几种方式 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="远程过程调用（Remote Procedure Call，缩写为 RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。 如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作远程调用或远程方法调用。维基百科：远程过程调用
+用通俗易懂的语言描述就是：RPC允许跨机器、跨语言调用计算机程序方法。打个比方，我用go语言写了个获 &amp;hellip;">
+    <meta property="og:description" content="远程过程调用（Remote Procedure Call，缩写为 RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。 如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作远程调用或远程方法调用。维基百科：远程过程调用
+用通俗易懂的语言描述就是：RPC允许跨机器、跨语言调用计算机程序方法。打个比方，我用go语言写了个获 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/golang%E5%AE%9E%E7%8E%B0rpc%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">golang实现RPC的几种方式</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2017/12/03</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <h2 id="什么是rpc">什么是RPC</h2>
+<p>远程过程调用（Remote Procedure Call，缩写为 RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。 如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作远程调用或远程方法调用。<a href="https://zh.wikipedia.org/wiki/%E9%81%A0%E7%A8%8B%E9%81%8E%E7%A8%8B%E8%AA%BF%E7%94%A8">维基百科：远程过程调用</a></p>
+<p>用通俗易懂的语言描述就是：RPC允许跨机器、跨语言调用计算机程序方法。打个比方，我用go语言写了个获取用户信息的方法getUserInfo，并把go程序部署在阿里云服务器上面，现在我有一个部署在腾讯云上面的php项目，需要调用golang的getUserInfo方法获取用户信息，php跨机器调用go方法的过程就是RPC调用。</p>
+<h2 id="golang中如何实现rpc">golang中如何实现RPC</h2>
+<p>在golang中实现RPC非常简单，有封装好的官方库和一些第三方库提供支持。Go RPC可以利用tcp或http来传递数据，可以对要传递的数据使用多种类型的编解码方式。golang官方的<code>net/rpc</code>库使用<code>encoding/gob</code>进行编解码，支持<code>tcp</code>或<code>http</code>数据传输方式，由于其他语言不支持<code>gob</code>编解码方式，所以使用<code>net/rpc</code>库实现的RPC方法没办法进行跨语言调用。</p>
+<p>golang官方还提供了<code>net/rpc/jsonrpc</code>库实现RPC方法，JSON RPC采用JSON进行数据编解码，因而支持跨语言调用。但目前的jsonrpc库是基于tcp协议实现的，暂时不支持使用http进行数据传输。</p>
+<p>除了golang官方提供的rpc库，还有许多第三方库为在golang中实现RPC提供支持，大部分第三方rpc库的实现都是使用<code>protobuf</code>进行数据编解码，根据<code>protobuf</code>声明文件自动生成rpc方法定义与服务注册代码，在golang中可以很方便的进行rpc服务调用。</p>
+<h3 id="netrpc库">net/rpc库</h3>
+<p>下面的例子演示一下如何使用golang官方的<code>net/rpc</code>库实现RPC方法，使用<code>http</code>作为RPC的载体，通过<code>net/http</code>包监听客户端连接请求。</p>
+<p>$GOPATH/src/test/rpc/rpc_server.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;errors&#34;</span>
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;log&#34;</span>
+    <span style="color:#e6db74">&#34;net&#34;</span>
+    <span style="color:#e6db74">&#34;net/http&#34;</span>
+    <span style="color:#e6db74">&#34;net/rpc&#34;</span>
+    <span style="color:#e6db74">&#34;os&#34;</span>
+)
+
+<span style="color:#75715e">// 算数运算结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Arith</span> <span style="color:#66d9ef">struct</span> {
+}
+
+<span style="color:#75715e">// 算数运算请求结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithRequest</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">int</span>
+    <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#75715e">// 算数运算响应结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithResponse</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Pro</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 乘积
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Quo</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 商
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Rem</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 余数
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// 乘法运算方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Arith</span>) <span style="color:#a6e22e">Multiply</span>(<span style="color:#a6e22e">req</span> <span style="color:#a6e22e">ArithRequest</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ArithResponse</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Pro</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#75715e">// 除法运算方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Arith</span>) <span style="color:#a6e22e">Divide</span>(<span style="color:#a6e22e">req</span> <span style="color:#a6e22e">ArithRequest</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ArithResponse</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;divide by zero&#34;</span>)
+    }
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Quo</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span> <span style="color:#f92672">/</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Rem</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span> <span style="color:#f92672">%</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">rpc</span>.<span style="color:#a6e22e">Register</span>(new(<span style="color:#a6e22e">Arith</span>)) <span style="color:#75715e">// 注册rpc服务
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">rpc</span>.<span style="color:#a6e22e">HandleHTTP</span>()         <span style="color:#75715e">// 采用http协议作为rpc载体
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">lis</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:8095&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;fatal error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#e6db74">&#34;%s&#34;</span>, <span style="color:#e6db74">&#34;start connection&#34;</span>)
+
+    <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Serve</span>(<span style="color:#a6e22e">lis</span>, <span style="color:#66d9ef">nil</span>)
+}
+</code></pre></div><p>上述服务端程序运行后，将会监听本地的8095端口，我们可以实现一个客户端程序，连接服务端并实现RPC方法调用。</p>
+<p>$GOPATH/src/test/rpc/rpc_client.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;log&#34;</span>
+    <span style="color:#e6db74">&#34;net/rpc&#34;</span>
+)
+
+<span style="color:#75715e">// 算数运算请求结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithRequest</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">int</span>
+    <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#75715e">// 算数运算响应结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithResponse</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Pro</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 乘积
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Quo</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 商
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Rem</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 余数
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rpc</span>.<span style="color:#a6e22e">DialHTTP</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:8095&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;dailing error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#a6e22e">req</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ArithRequest</span>{<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">2</span>}
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">res</span> <span style="color:#a6e22e">ArithResponse</span>
+
+    <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Call</span>(<span style="color:#e6db74">&#34;Arith.Multiply&#34;</span>, <span style="color:#a6e22e">req</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">res</span>) <span style="color:#75715e">// 乘法运算
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;arith error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d * %d = %d\n&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Pro</span>)
+
+    <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Call</span>(<span style="color:#e6db74">&#34;Arith.Divide&#34;</span>, <span style="color:#a6e22e">req</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">res</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;arith error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d / %d, quo is %d, rem is %d\n&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Quo</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Rem</span>)
+}
+</code></pre></div><h3 id="netrpcjsonrpc库">net/rpc/jsonrpc库</h3>
+<p>上面的例子我们演示了使用<code>net/rpc</code>实现RPC的过程，但是没办法在其他语言中调用上面例子实现的RPC方法。所以接下来的例子我们演示一下使用<code>net/rpc/jsonrpc</code>库实现RPC方法，此方式实现的RPC方法支持跨语言调用。</p>
+<p>$GOPATH/src/test/rpc/jsonrpc_server.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;errors&#34;</span>
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;log&#34;</span>
+    <span style="color:#e6db74">&#34;net&#34;</span>
+    <span style="color:#e6db74">&#34;net/rpc&#34;</span>
+    <span style="color:#e6db74">&#34;net/rpc/jsonrpc&#34;</span>
+    <span style="color:#e6db74">&#34;os&#34;</span>
+)
+
+<span style="color:#75715e">// 算数运算结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Arith</span> <span style="color:#66d9ef">struct</span> {
+}
+
+<span style="color:#75715e">// 算数运算请求结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithRequest</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">int</span>
+    <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#75715e">// 算数运算响应结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithResponse</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Pro</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 乘积
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Quo</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 商
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Rem</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 余数
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// 乘法运算方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Arith</span>) <span style="color:#a6e22e">Multiply</span>(<span style="color:#a6e22e">req</span> <span style="color:#a6e22e">ArithRequest</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ArithResponse</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Pro</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#75715e">// 除法运算方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Arith</span>) <span style="color:#a6e22e">Divide</span>(<span style="color:#a6e22e">req</span> <span style="color:#a6e22e">ArithRequest</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ArithResponse</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;divide by zero&#34;</span>)
+    }
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Quo</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span> <span style="color:#f92672">/</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Rem</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span> <span style="color:#f92672">%</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">rpc</span>.<span style="color:#a6e22e">Register</span>(new(<span style="color:#a6e22e">Arith</span>)) <span style="color:#75715e">// 注册rpc服务
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">lis</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:8096&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;fatal error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#e6db74">&#34;%s&#34;</span>, <span style="color:#e6db74">&#34;start connection&#34;</span>)
+
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lis</span>.<span style="color:#a6e22e">Accept</span>() <span style="color:#75715e">// 接收客户端连接请求
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#66d9ef">continue</span>
+        }
+
+        <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">conn</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Conn</span>) { <span style="color:#75715e">// 并发处理客户端请求
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#e6db74">&#34;%s&#34;</span>, <span style="color:#e6db74">&#34;new client in coming\n&#34;</span>)
+            <span style="color:#a6e22e">jsonrpc</span>.<span style="color:#a6e22e">ServeConn</span>(<span style="color:#a6e22e">conn</span>)
+        }(<span style="color:#a6e22e">conn</span>)
+    }
+}
+</code></pre></div><p>上述服务端程序启动后，将会监听本地的8096端口，并处理客户端的tcp连接请求。我们可以用golang实现一个客户端程序连接上述服务端并进行RPC调用。</p>
+<p>$GOPATH/src/test/rpc/jsonrpc_client.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;log&#34;</span>
+    <span style="color:#e6db74">&#34;net/rpc/jsonrpc&#34;</span>
+)
+
+<span style="color:#75715e">// 算数运算请求结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithRequest</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">int</span>
+    <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#75715e">// 算数运算响应结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ArithResponse</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">Pro</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 乘积
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Quo</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 商
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Rem</span> <span style="color:#66d9ef">int</span> <span style="color:#75715e">// 余数
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jsonrpc</span>.<span style="color:#a6e22e">Dial</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:8096&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;dailing error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#a6e22e">req</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ArithRequest</span>{<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">2</span>}
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">res</span> <span style="color:#a6e22e">ArithResponse</span>
+
+    <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Call</span>(<span style="color:#e6db74">&#34;Arith.Multiply&#34;</span>, <span style="color:#a6e22e">req</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">res</span>) <span style="color:#75715e">// 乘法运算
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;arith error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d * %d = %d\n&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Pro</span>)
+
+    <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Call</span>(<span style="color:#e6db74">&#34;Arith.Divide&#34;</span>, <span style="color:#a6e22e">req</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">res</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;arith error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d / %d, quo is %d, rem is %d\n&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Quo</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Rem</span>)
+}
+</code></pre></div><h3 id="protorpc库">protorpc库</h3>
+<p>为了实现跨语言调用，在golang中实现RPC方法的时候我们应该选择一种跨语言的数据编解码方式，比如JSON，上述的<code>jsonrpc</code>可以满足此要求，但是也存在一些缺点，比如不支持http传输，数据编解码性能不高等。于是呢，一些第三方rpc库都选择采用<code>protobuf</code>进行数据编解码，并提供一些服务注册代码自动生成功能。下面的例子我们使用<code>protobuf</code>来定义RPC方法及其请求响应参数，并使用第三方的<code>protorpc</code>库来生成RPC服务注册代码。</p>
+<p>首先，需要安装<code>protobuf</code>及<code>protoc</code>可执行命令，可以参考此篇文章：<a href="http://idoubi.cc/2017/12/02/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">protobuf快速上手指南</a></p>
+<p>然后，我们编写一个proto文件，定义要实现的RPC方法及其相关参数。</p>
+<p>$GOPATH/src/test/rpc/pb/arith.proto</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-protobuf" data-lang="protobuf">syntax <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;proto3&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#f92672">package</span> pb;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// 算术运算请求结构
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">ArithRequest</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">int32</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">int32</span> b <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// 算术运算响应结构
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">ArithResponse</span> {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">int32</span> pro <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;  <span style="color:#75715e">// 乘积
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int32</span> quo <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;  <span style="color:#75715e">// 商
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int32</span> rem <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;  <span style="color:#75715e">// 余数
+</span><span style="color:#75715e"></span>}<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// rpc方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">service</span> ArithService {<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">rpc</span> multiply (ArithRequest) <span style="color:#66d9ef">returns</span> (ArithResponse);    <span style="color:#75715e">// 乘法运算方法
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">rpc</span> divide (ArithRequest) <span style="color:#66d9ef">returns</span> (ArithResponse);      <span style="color:#75715e">// 除法运算方法
+</span><span style="color:#75715e"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>接下来我们需要根据上述定义的<code>arith.proto</code>文件生成RPC服务代码。
+要先安装<code>protorpc</code>库：<code>go get github.com/chai2010/protorpc</code>
+然后使用<code>protoc</code>工具生成代码：<code>protoc --go_out=plugin=protorpc=. arith.proto</code>
+执行<code>protoc</code>命令后，在与<code>arith.proto</code>文件同级的目录下生成了一个<code>arith.pb.go</code>文件，里面包含了RPC方法定义和服务注册的代码。</p>
+<p>基于生成的<code>arith.pb.go</code>代码我们来实现一个rpc服务端</p>
+<p>$GOPATH/src/test/rpc/protorpc_server.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;errors&#34;</span>
+    <span style="color:#e6db74">&#34;test/rpc/pb&#34;</span>
+)
+
+<span style="color:#75715e">// 算术运算结构体
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Arith</span> <span style="color:#66d9ef">struct</span> {
+}
+
+<span style="color:#75715e">// 乘法运算方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Arith</span>) <span style="color:#a6e22e">Multiply</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">ArithRequest</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">ArithResponse</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Pro</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetA</span>() <span style="color:#f92672">*</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetB</span>()
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#75715e">// 除法运算方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Arith</span>) <span style="color:#a6e22e">Divide</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">ArithRequest</span>, <span style="color:#a6e22e">res</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">ArithResponse</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetB</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;divide by zero&#34;</span>)
+    }
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Quo</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetA</span>() <span style="color:#f92672">/</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetB</span>()
+    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Rem</span> = <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetA</span>() <span style="color:#f92672">%</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetB</span>()
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">ListenAndServeArithService</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:8097&#34;</span>, new(<span style="color:#a6e22e">Arith</span>))
+}
+</code></pre></div><p>运行上述程序，将会监听本地的8097端口并接收客户端的tcp连接。</p>
+<p>基于<code>ariti.pb.go</code>再来实现一个客户端程序。</p>
+<p>$GOPATH/src/test/protorpc_client.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;log&#34;</span>
+    <span style="color:#e6db74">&#34;test/rpc/pb&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">DialArithService</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;127.0.0.1:8097&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;dailing error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Close</span>()
+
+    <span style="color:#a6e22e">req</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">pb</span>.<span style="color:#a6e22e">ArithRequest</span>{<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">2</span>}
+
+    <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Multiply</span>(<span style="color:#a6e22e">req</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;arith error: &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d * %d = %d\n&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetA</span>(), <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">GetB</span>(), <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">GetPro</span>())
+
+    <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">conn</span>.<span style="color:#a6e22e">Divide</span>(<span style="color:#a6e22e">req</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#e6db74">&#34;arith error &#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d / %d, quo is %d, rem is %d\n&#34;</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">A</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">B</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Quo</span>, <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">Rem</span>)
+}
+</code></pre></div><h2 id="如何跨语言调用golang的rpc方法">如何跨语言调用golang的RPC方法</h2>
+<p>上面的三个例子，我们分别使用<code>net/rpc</code>、<code>net/rpc/jsonrpc</code>、<code>protorpc</code>实现了golang中的RPC服务端，并给出了对应的golang客户端RPC调用示例，因为JSON和protobuf是支持多语言的，所以使用<code>jsonrpc</code>和<code>protorpc</code>实现的RPC方法我们是可以在其他语言中进行调用的。下面给出一个php客户端程序，通过socket连接调用jsonrpc实现的服务端RPC方法。</p>
+<p>$PHPROOT/jsonrpc.php</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JsonRPC</span> {
+
+    <span style="color:#66d9ef">private</span> $conn;
+
+    <span style="color:#66d9ef">function</span> __construct($host, $port) {
+        $this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">conn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fsockopen</span>($host, $port, $errno, $errstr, <span style="color:#ae81ff">3</span>);
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">conn</span>) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+    }
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Call</span>($method, $params) {
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>$this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">conn</span>) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+        $err <span style="color:#f92672">=</span> <span style="color:#a6e22e">fwrite</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">json_encode</span>(<span style="color:#66d9ef">array</span>(
+                <span style="color:#e6db74">&#39;method&#39;</span> <span style="color:#f92672">=&gt;</span> $method,
+                <span style="color:#e6db74">&#39;params&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">array</span>($params),
+                <span style="color:#e6db74">&#39;id&#39;</span>     <span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0</span>,
+            ))<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">if</span> ($err <span style="color:#f92672">===</span> <span style="color:#66d9ef">false</span>) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+        <span style="color:#a6e22e">stream_set_timeout</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">conn</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3000</span>);
+        $line <span style="color:#f92672">=</span> <span style="color:#a6e22e">fgets</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">conn</span>);
+        <span style="color:#66d9ef">if</span> ($line <span style="color:#f92672">===</span> <span style="color:#66d9ef">false</span>) {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">NULL</span>;
+        }
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">json_decode</span>($line,<span style="color:#66d9ef">true</span>);
+    }
+}
+
+$client <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">JsonRPC</span>(<span style="color:#e6db74">&#34;127.0.0.1&#34;</span>, <span style="color:#ae81ff">8096</span>);
+$args <span style="color:#f92672">=</span> <span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#ae81ff">9</span>, <span style="color:#e6db74">&#39;B&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#ae81ff">2</span>);
+$r <span style="color:#f92672">=</span> $client<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">Call</span>(<span style="color:#e6db74">&#34;Arith.Multiply&#34;</span>, $args);
+<span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d * %d = %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $args[<span style="color:#e6db74">&#39;A&#39;</span>], $args[<span style="color:#e6db74">&#39;B&#39;</span>], $r[<span style="color:#e6db74">&#39;result&#39;</span>][<span style="color:#e6db74">&#39;Pro&#39;</span>]);
+$r <span style="color:#f92672">=</span> $client<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">Call</span>(<span style="color:#e6db74">&#34;Arith.Divide&#34;</span>, <span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#ae81ff">9</span>, <span style="color:#e6db74">&#39;B&#39;</span><span style="color:#f92672">=&gt;</span><span style="color:#ae81ff">2</span>));
+<span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d / %d, Quo is %d, Rem is %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, $args[<span style="color:#e6db74">&#39;A&#39;</span>], $args[<span style="color:#e6db74">&#39;B&#39;</span>], $r[<span style="color:#e6db74">&#39;result&#39;</span>][<span style="color:#e6db74">&#39;Quo&#39;</span>], $r[<span style="color:#e6db74">&#39;result&#39;</span>][<span style="color:#e6db74">&#39;Rem&#39;</span>]);
+</code></pre></div><h2 id="其他rpc库">其他RPC库</h2>
+<p>除了上面提到的三种在golang实现RPC的方式外，还有一些其他的rpc库提供了类似的功能，比较出名的有google开源的grpc，但是grpc的初次安装比较麻烦，这里就不做进一步介绍了，有兴趣的可以自己了解。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="http://colobu.com/2016/09/18/go-net-rpc-guide/">Go官方库RPC开发指南</a></li>
+<li><a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/08.4.md">go web开发教程-RPC</a></li>
+<li><a href="https://smallnest.gitbooks.io/go-rpc-programming-guide/content/">Go RPC 开发指南</a></li>
+</ul>
+
+
+                                        
+                                        
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/golang" title="View all posts tagged match">golang</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/RPC" title="View all posts tagged match">RPC</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/"
+                                                    rel="prev">protobuf快速上手指南</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/seaslog%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">SeasLog快速上手指南</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

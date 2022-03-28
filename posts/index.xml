@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 艾逗笔</title>
+    <link>https://idoubi.cc/posts/</link>
+    <description>Recent content in Posts on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Thu, 10 Feb 2022 18:23:59 +0800</lastBuildDate><atom:link href="https://idoubi.cc/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>新的一年，给电脑换个操作系统</title>
+      <link>https://idoubi.cc/posts/install-new-operating-system/</link>
+      <pubDate>Thu, 10 Feb 2022 18:23:59 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/install-new-operating-system/</guid>
+      <description>新的一年工作开始了，是不是应该搞点新的事情？先从给电脑换一个新的操作系统开始吧~
+ 制作启动盘  首先，需要准备一个 U盘，容量最好大于 8G  可以在京东购买这一款：闪迪(SanDisk)128GB USB3.0 U盘
+拿到手之后的 U盘长这样： 下载启动盘制作工具  推荐使用启动盘制作软件：Ventoy
+进入下载页，根据自己的操作系统，选择一个版本下载并解压。
+制作启动盘  插入 U盘，双击打开 Ventory2Disk，点击安装开始制作启动盘：
+下载操作系统  下载操作系统 iso文件  在操作系统官网，或者其他资源下载站，选择操作系统的 iso文件下载，一般都是几个 G大小，需要一点时间。
+推荐三个我最近在用的操作系统：
+  windows11
+  ubuntu
+  deepin
+  把操作系统 iso文件移到 U盘  放置的目录可以任意指定，比如新建一个 iso文件夹，用来放所有操作系统的 iso文件：
+安装操作系统  开机 U盘启动  保持 U盘插在电脑上，重启电脑，就会进入 U盘启动页，并把你的 U盘里面放置的操作系统都展示出来：
+如果你的电脑重启后没有默认进入 U盘启动页，请自行搜索“开机设置 U盘启动”。
+如果你在制作启动盘的时候没有设置主题，你看到的 U盘启动页可能会跟此处显示的不一样。设置 U盘启动页面可以参考：ventory 主题设置
+安装操作系统  在 U盘启动页选择其中一个操作系统，进入操作系统安装流程，比如选择的是 win11，则会进入 win11的安装流程：</description>
+    </item>
+    
+    <item>
+      <title>开发一款转换sql查询结果的vscode插件</title>
+      <link>https://idoubi.cc/posts/vscode-extension-sqlresult/</link>
+      <pubDate>Fri, 19 Mar 2021 16:23:08 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/vscode-extension-sqlresult/</guid>
+      <description>背景 做开发的同事应该很多人有过类似的经历：运营同事找过来，让我们帮忙导一份用户下单的数据。
+我们一般的操作流程是：登录跳板机，连上数据库，输入查询 sql，复制 sql 查询结果，发给运营同事。
+sql 查询结果一般长这样： 我们把查询结果保存到一个 txt 文件，发给运营同事，以为万事大吉了。
+结果运营同事回这么一句： 运营同事用 windows 系统的记事本打开这个 txt 文件，看到的格式是乱的，他们希望我们给到的是一个 csv 或者 excel 表格文件。
+作为一个开发，我们可能会想，这种小事情，写个插件来搞定吧。
+所以进入到了今天的主题：
+开发一个 vscode 插件，将 sql 查询结果转换成表格形式，并保存为 csv 文件。
+vscode 插件开发 vscode 插件开发的详细步骤我就不写了，贴一篇我看过的教程，有兴趣的同学可以移步 这里 去看。
+ 安装命令行  npm i -g yo generator-code
+ 创建插件  在终端执行 yo code，根据提示一步一步输入插件信息之后，我创建了一个目录名为 sqlresult 的插件。
+vscode 打开插件目录，可以看到自动生成的插件文件结构长这样： 其中 package.json 是插件信息文件，src/extension.ts 是插件的主逻辑。
+ 定义插件子命令  修改 package.json ，定义一个保存文件内容到 csv 的命令： 在 src/extension.ts 文件里面注册命令，编写命令的运行逻辑：  插件调试  在编辑器按 F5，打开一个新的编辑器窗口调试插件功能。</description>
+    </item>
+    
+    <item>
+      <title>我写了一款企业微信机器人SDK</title>
+      <link>https://idoubi.cc/posts/go-sdk-for-wework-robot/</link>
+      <pubDate>Wed, 02 Dec 2020 10:51:34 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/go-sdk-for-wework-robot/</guid>
+      <description>创建机器人 在企业微信选择一个群聊，右键点击添加机器人，即可创建一个具备基本消息推送能力的机器人。
+下载SDK go get -u github.com/cutesdk/webot 机器人推送消息 使用机器人推送消息非常简单，只需要在创建完机器人之后，拿到机器人的 Webhook地址，使用 SDK 创建一个 Bot 对象，通过链式调用完成消息推送。
+基本使用 package main import ( &amp;#34;github.com/cutesdk/webot&amp;#34; ) func main() { bot := &amp;amp;webot.Bot{ WebhookURL: &amp;#34;https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=b8f1e424-d48d-46cc-a2c7-d360c8e98b3d&amp;#34;, } bot.Text(&amp;#34;你好，我是机器人&amp;#34;).Send() } 运行上面的代码，添加了机器人的群就会收到消息：
+发送 markdown 类型消息 mdmsg := `*这是一条Markdown消息* &amp;gt; 这是引用文本 - 这是列表1 - 这是列表2	` bot.Markdown(mdmsg).Send() 运行上面的代码，机器人会发送 markdown 消息：
+发送带操作按钮的 markdown 消息 mdmsg := `这是一条带操作按钮的 Markdown 消息 &amp;gt; 请确认你要提交吗？` callbackID := &amp;#34;testwebot&amp;#34; actions := []webot.MsgAction{} actions = append(actions, webot.MsgAction{ Text: &amp;#34;确认&amp;#34;, Name: &amp;#34;acts&amp;#34;, Value: &amp;#34;confirm&amp;#34;, ReplaceText: &amp;#34;已确认&amp;#34;, Type: &amp;#34;button&amp;#34;, TextColor: &amp;#34;2EAB49&amp;#34;, BorderColor: &amp;#34;2EAB49&amp;#34;, }) actions = append(actions, webot.</description>
+    </item>
+    
+    <item>
+      <title>我写了一款跟PHP鸟哥一样的博客皮肤</title>
+      <link>https://idoubi.cc/posts/my-new-hugo-theme-like-laruence/</link>
+      <pubDate>Sun, 22 Nov 2020 12:23:45 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/my-new-hugo-theme-like-laruence/</guid>
+      <description>我从2013年开始搭建自己的博客网站，最初用的 WordPress，买了一台云主机，下了一个 CMS 风格的皮肤，当初的网站长这样：
+后来我学习了 Markdown 语法，接触了一些静态网站生成工具，就折腾着把原来的网站迁移到了 Hexo。自己动手写了一个皮肤，整成了这个样子：
+后来慢慢的发现，使用 Hexo ，每次构建发布的时候太慢了，有时候换个皮肤，会遇到一大堆 js 报错，自己开发皮肤的时候也不太好调试。
+然后接触到了 Hugo，Go 语言实现的静态站点生成器，号称“世界上最快的静态网站生成框架”，无论是内容生成速度还是开发效率都非常的高。
+果断从 Hexo 换到了 Hugo。几乎没有什么迁移成本，把 markdown 文章拷贝一下，就直接跑起来了。
+网站生成工具换了之后，接下来最重要的事情，就是要整一个好看的皮肤。 我上一个使用的皮肤长这样：
+每隔一段时间，我都会觉得在用的博客皮肤不好看，然后就总想着换一个皮肤，在网上找一圈没有喜欢的就会自己写。
+前阵子看到了 PHP鸟哥 的个人网站：
+当时就被吸引了，我就喜欢这种简洁大气黑白配的风格。于是便有了把鸟哥的博客皮肤copy下来的想法。
+还好 Hugo 的主题开发工作比较简单，官网文档很详细，差不多花了两个小时就把基本的页面写完了，又花了一个礼拜的时间做了一些优化。
+最终写完了这个 Hugo 皮肤：hugo-theme-period。
+为什么要叫 period，因为我发现鸟哥的网站用的 WordPress 的主题名字也叫 period，我做的是 wordpress-theme-copy-to-hugo 的工作，所以主题名称保持一致吧。
+现在这款皮肤已经在我的个人网站：idoubi.cc 用上了，预览效果是这样：
+我在这款主题支持了几个右侧的挂件，分别是
+ [widget.about] 作者简介 [widget.projects] 开源项目展示 [widget.qrcode] 公众号二维码 [widget.categories] 文章分类展示 [widget.tags] 文章标签展示 [widget.links] 友情链接  如果你下载了我的这个主题，你可以根据自己的需求，配置对应的挂件。
+这款皮肤已经在 Github 开源，地址在：https://github.com/idoubi/hugo-theme-period
+我也把这款皮肤提交到了 Hugo 的官方主题仓库，等审核通过后就能在 Hugo官方主题商店 看到。
+欢迎大家下载使用，给个Star。
+More 还是要强烈推荐一波 Hugo，这真的是我用过的最好的一个开发工具。除了写静态网站，你还可以用它来写项目文档、API等，扩展性很强，文档非常友好。</description>
+    </item>
+    
+    <item>
+      <title>快速创建微信小程序</title>
+      <link>https://idoubi.cc/posts/create-wxapp-quickly/</link>
+      <pubDate>Mon, 19 Oct 2020 14:27:56 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/create-wxapp-quickly/</guid>
+      <description>前言 做过微信小程序开发的朋友应该知道，微信提供了几种创建小程序的方式：
+    个人类型 机构类型     微信官网注册 填写个人身份证、手机号等信息，扫码绑定个人微信 填写机构代码、法人手机号等信息，上传营业执照，需要法人微信扫码验证   公众号后台注册 不支持 复用已认证的微信服务号资质创建小程序，最多创建五个   第三方平台注册 不支持 利用微信第三方平台资质，快速创建小程序    对比一下这几种方式，我们发现：
+如果要在微信官网申请小程序，需要填很多资料，并且需要为新注册的小程序绑定一个身份证、手机号、微信，很容易受到个人可创建小程序数量的限制。
+如果复用公众号资质创建小程序，需要先有一个已通过微信认证的服务号，申请公众号认证的审核费用单次 300 元，每个公众号最多只能创建五个小程序。
+如果用第三方平台创建小程序，需要有企业资质，在填写完企业的基本信息后发起创建小程序申请，企业法人的微信会收到创建小程序的通知，根据指引完成法人身份认证之后即可完成小程序的创建，绑定一个新的邮箱即可登录小程序管理后台。使用这种方式，目前来看没有小程序数量和创建人身份的限制。第三方平台快速创建小程序官方文档
+在了解完这些规则之后，我们应该想到，如果有企业资质，创建小程序最好的办法就是利用第三方平台，基本上能够满足一个企业日常的小程序数量需求。
+快速创建小程序功能体验 微信扫码进入小程序“极速申请”
+微信授权完成登录
+点击“新建申请”进入企业资料填写页
+填写完企业资料，点击“申请注册小程序”
+法人微信收到创建小程序的通知
+完成法人身份验证
+完成小程序创建申请
+收到小程序创建成功通知
+为新创建的小程序设置登录邮箱
+至此，已经完成了一个小程序的创建，非常的快速方便。
+再次进入”极速申请“小程序，可以选择已有的企业快速创建小程序 可以查看创建小程序的申请记录
+问题解答 Q：使用第三方平台创建的小程序，还需要申请微信认证吗？
+A：使用第三方平台创建的小程序，默认是已认证的小程序，具备企业认证小程序的完整功能，你只需要在验证完法人身份后给小程序设置登录邮箱，后续操作与其他方式申请的小程序一致。
+Q：别人用我的企业信息申请创建小程序怎么办？
+A：首先别人要知道你的企业信息，其次别人要知道你的手机号和微信号，就算别人知道了全部信息，提交创建小程序申请后，只有你的微信会收到创建小程序的通知，你可以选择不处理，24 小时后申请会自动失效。别人没办法用你的信息创建不属于你的小程序。
+Q：我可以在“极速申请”小程序申请创建多少个小程序？
+A：目前暂时没有限制，你可以添加任意多个属于你的企业，通过企业资质创建任意多个小程序。但是有个原则，小程序申请只能一个一个创建，必须要法人在微信端提交认证后，才能完成小程序的创建，在此期间，继续提交申请会提示失败。
+Q：我有自己的第三方平台，可以实现类似的功能吗？
+A：目前使用的第三方平台方是”任想程序“，如果你需要用自己的微信第三方平台来创建小程序，请联系微信：idoubicc，咨询定制开发。
+功能体验 </description>
+    </item>
+    
+    <item>
+      <title>使用「Air」实现热加载，助力「Go」项目开发调试</title>
+      <link>https://idoubi.cc/posts/go-dev-with-air/</link>
+      <pubDate>Sat, 25 Jul 2020 12:04:25 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/go-dev-with-air/</guid>
+      <description>Go 是一种静态编译型语言，写完源代码后，需要编译成二进制可执行文件，才能运行程序看到相应的效果。我们在开发 Go 程序的过程中经常需要调试，如果没有热加载功能，这将是非常痛苦的一件事。
+Air 是 Go 生态中一个可以实现热加载的库，在开发 Go 项目的时候引入 Air，可以很大程度上提升开发调试的效率。
+安装Air go get -u github.com/cosmtrek/air 安装完成后，我们执行air -h可以看到Air的基本用法：
+$ air -h Usage of air: -c string config path -d debug mode -v show version 热加载配置 在要开发的 Go 项目目录下新建一个 .air.conf，写入基本的配置信息。
+# Config file for [Air](https://github.com/cosmtrek/air) in TOML format # Working directory # . or absolute path, please note that the directories following must be under root. root = &amp;#34;.&amp;#34; tmp_dir = &amp;#34;tmp&amp;#34; [build] # Just plain old shell command.</description>
+    </item>
+    
+    <item>
+      <title>基于「Hugo」搭建个人博客网站</title>
+      <link>https://idoubi.cc/posts/build-site-with-hugo/</link>
+      <pubDate>Sun, 19 Apr 2020 22:11:23 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/build-site-with-hugo/</guid>
+      <description>前言 搭建个人网站，以前我们一般会选择 WordPress，因为其使用范围广（据说全世界 80%的网站都是用它搭建的）、主题丰富、上手简单。
+近年来，markdown 内容格式渐渐流行，我们更愿意使用 markdown 格式来写文章，写完后用静态网站生成工具把文章内容转换成 html 格式，再发布到个人网站。生成静态网站的工具中，比较优秀的有 Jekyll、Hexo、Hugo 几个。
+简单比较一下动态网站框架 WordPress 与静态网站生成框架 Hexo、Hugo 的区别：
+   项目 开发语言 优势 不便之处     WordPress php 1. 有可视化后台可以编写文章；2. 使用范围广；3. 主题、插件丰富。 1. 依赖过多导致加载较慢；2. 需要服务器部署，依赖数据库；3. 数据需要定时备份。   Hexo nodejs 1. 静态生成，SEO 友好；2. npm 生态有丰富的插件可用于扩展功能。 1. 本地编译生成静态文件速度较慢；2. 调试麻烦，经常遇到 js 报错。   Hugo go 1. 编译速度最快;2. 开发主题非常方便。 1. 目前主题数量较少。    综合来看，我还是比较推荐使用 Hugo 来搭建个人网站。
+安装 Hugo MacOS 系统下，可以使用 brew 来进行安装。</description>
+    </item>
+    
+    <item>
+      <title>在个人博客实现「小课」系统</title>
+      <link>https://idoubi.cc/posts/course-in-blog/</link>
+      <pubDate>Wed, 15 Apr 2020 22:58:04 +0800</pubDate>
+      
+      <guid>https://idoubi.cc/posts/course-in-blog/</guid>
+      <description>程序员这个行业，是一个终身学习的行业，经常会有新技术出现。我是一个很爱学习的人，喜欢尝鲜。每次想去学习一项新技术的时候，总是苦于找不到合适的入门教程。于是有了想自己写个小课系统的想法：希望能通过写一系列的文章，组织成一门小课，帮助想学习某项技术的同学快速入门。
+有了这个想法之后，我开始准备搭建小课平台，一开始想的是做一个前后端分离的网站，后端用 Go 写 API，前端用 vue 写页面。
+使用 vue + ElementUI 搭建出来的第一个版本长这样：
+写完第一个版本之后，仔细想了一下，如果要写好这个小课系统的话，我还得做好几件事：
+ 写 API ，前后端进行数据交互 写 Markdown 编辑器，在线录入课程 做服务端渲染，做 SEO 优化  一想到这里，头开始有点大，第一个对外发布的小课系统，我希望能尽可能简洁，不管是写作，还是展示，都不要太复杂。而且最重要的一点，我希望能有更多人看到我的小课系统，也就是说 SEO 一定要好。
+考虑到这些因素，我决定用静态博客生成系统 Hugo ，基于我的个人博客来完成小课系统的开发。
+使用 Hugo 来开发，有这么几个好处：
+ 不需要写 Markdown 编辑器，基于本地的 md 文件即可生成文章 不需要使用数据库，课程数据都是 md 文件，维护成本低 不需要做 SSR 也能有很好的 SEO  但是也有几个不好的地方：
+ 纯静态网站，没有数据交互，要做付费订阅等功能不太好实现 每次写完文章，需要编译生成静态页面，再提交发布，比较麻烦  管他三七二十一，先撸一个版本出来再说。于是我就这么干了：
+使用 Hugo 搭建了个人博客，采用了 notepadium 这个开源主题。在 Hugo 的 content 里面创建了一个 courses 的 section，并为这一类型的 section 新增了一个首页模板和阅读模板。
+最终写成的效果：
+写完发布上线，我把我之前写的两门小课都放上来了
+ 「VS Code」快速上手指南 分分钟上手「WeiPHP」插件开发  总结一下，我觉得 Hugo 是一个非常优秀的静态网站生成工具，功能非常强大，而且编译速度非常快，甩同类型的 Hexo 几条街。</description>
+    </item>
+    
+    <item>
+      <title>「goz」开源库，在Go中快速发起HTTP请求</title>
+      <link>https://idoubi.cc/posts/goz/</link>
+      <pubDate>Sat, 15 Feb 2020 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/goz/</guid>
+      <description>goz 是一个用于在 Go 代码中快速发起 HTTP 请求的开源库， 部分实现参考了 PHP 流行请求库： guzzle
+ 安装 go get -u github.com/idoubi/goz 文档 API 文档地址: https://godoc.org/github.com/idoubi/goz
+基本使用 package main import ( &amp;#34;github.com/idoubi/goz&amp;#34; ) func main() { cli := goz.NewClient() resp, err := cli.Get(&amp;#34;http://127.0.0.1:8091/get&amp;#34;) if err != nil { log.Fatalln(err) } fmt.Printf(&amp;#34;%T&amp;#34;, resp) // Output: *goz.Response } 查询参数  map 形式  cli := goz.NewClient() resp, err := cli.Get(&amp;#34;http://127.0.0.1:8091/get-with-query&amp;#34;, goz.Options{ Query: map[string]interface{}{ &amp;#34;key1&amp;#34;: &amp;#34;value1&amp;#34;, &amp;#34;key2&amp;#34;: []string{&amp;#34;value21&amp;#34;, &amp;#34;value22&amp;#34;}, &amp;#34;key3&amp;#34;: &amp;#34;333&amp;#34;, }, }) if err !</description>
+    </item>
+    
+    <item>
+      <title>使用「Go」语言开发命令行工具</title>
+      <link>https://idoubi.cc/posts/create-a-cli-tool-in-macos/</link>
+      <pubDate>Sat, 04 Jan 2020 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/create-a-cli-tool-in-macos/</guid>
+      <description>使用 MacOS 做开发的朋友都知道，我们一般会使用 Homebrew 做软件包管理，经常会用到 brew install [soft] 来安装各种各样的命令行软件。今天通过一个百科查找的命令行工具（tellme）示例，我们来学习一下如何使用 Go 语言开发自己的命令行软件。
+我们需要用到 cobra 这个 Go 模块来做命令行工具开发，这个开源库其实是对 Go 官方库 flag 的一个封装，可以简化获取参数的操作。
+创建命令行项目  开启 Go Module  export GO111MODULE=on  安装 cobra 工具  go get -u github.com/spf13/cobra/cobra  创建命令行项目  # 创建项目目录 mkdir -p /data/idoubi/tellme &amp;amp;&amp;amp; cd /data/idoubi/tellme # 定义模块 go mod init github.com/idoubi/tellme # 初始化命令行项目 cobra init --pkg-name github.com/idoubi/tellme  检测运行  go run main.go -h 执行完上述操作后，如果控制台输出了帮助信息，证明我们的命令行项目创建成功了。
+新建子命令  新建子命令  cobra add baike  编写业务逻辑  在生成的子命令文件 /data/idoubi/tellme/cmd/baike.</description>
+    </item>
+    
+    <item>
+      <title>「Mac」在iterm2中使用rzsz命令进行文件传输</title>
+      <link>https://idoubi.cc/posts/mac-use-rzsz-in-iterm2/</link>
+      <pubDate>Wed, 29 May 2019 09:24:19 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/mac-use-rzsz-in-iterm2/</guid>
+      <description>在 Mac 系统中，我们常用的终端工具是 iterm2，有时候需要通过 ssh 连接上服务器，并在服务器上面通过 rz、sz 命令上传文件或下载文件到本地。要实现此场景下的需求，我们需要在服务器和本地分别配置 lrzsz 命令行工具。
+服务器上安装 lrzsz 两种安装方式二选一
+ yum 安装  yum install lrzsz  源码编译安装  cd wget http://www.ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz tar zxvf lrzsz-0.12.20.tar.gz &amp;amp;&amp;amp; cd lrzsz-0.12.20 ./configure &amp;amp;&amp;amp; make &amp;amp;&amp;amp; make install 创建软连接
+ln -s /usr/local/bin/lrz rz ln -s /usr/local/bin/lsz sz Mac 系统安装 lrzsz brew install lrzsz iterm2 传输配置 cd /usr/local/bin wget https://raw.githubusercontent.com/aikuyun/iterm2-zmodem/master/iterm2-send-zmodem.sh wget https://raw.githubusercontent.com/aikuyun/iterm2-zmodem/master/iterm2-recv-zmodem.sh chmod +x /usr/local/bin/iterm2-send-zmodem.sh /usr/local/bin/iterm2-recv-zmodem.sh 点击iTerm2/Preferences/Profiles/default/Advanced/Edit
+添加配置
+   Regular Expression Action Parameters Instant     rz waiting to receive.</description>
+    </item>
+    
+    <item>
+      <title>「Hexo」设置代码语法高亮</title>
+      <link>https://idoubi.cc/posts/hexo-highlight/</link>
+      <pubDate>Sat, 27 Apr 2019 17:01:16 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/hexo-highlight/</guid>
+      <description>在使用某个hexo主题的时候，我们有时候会觉得文章详情中的代码高亮显示的样式并不是很好看，通过下面的方式我们可以选择一套自己喜爱的代码高亮样式，让我们的文章阅读起来更有视觉触动。
+ 配置markdown渲染引擎  使用新的渲染引擎  npm un hexo-renderer-marked --save npm i hexo-renderer-markdown-it --save  在_config.yml中配置渲染参数  markdown: &#39;commonmark&#39;  重新预览  hexo clean hexo s --draft 配置代码高亮  设置code-prettify  # 下载源码 git clone https://github.com/google/code-prettify.git # 拷贝样式 cp code-prettify/src/prettify.css hexo/themes/hyde/source/css/ cp code-prettify/src/prettify.js hexo/themes/hyde/source/js/  设置皮肤  # 下载源码 git clone https://github.com/jmblog/color-themes-for-google-code-prettify.git # 拷贝样式 cd color-themes-for-google-code-prettify/dist/themes cp tomorrow-night.min.css hexo/themes/hyde/source/css/  禁用默认的高亮设置  # 修改_config.yml highlight: enable: false line_number: false auto_detect: false tab_replace: false  在主题模板文件中设置高亮  # head标签里引入css &amp;lt;%- css(&#39;css/prettify.</description>
+    </item>
+    
+    <item>
+      <title>「微信开发」本地调试指南</title>
+      <link>https://idoubi.cc/posts/wechatdev-local-debug/</link>
+      <pubDate>Thu, 18 Apr 2019 22:20:10 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/wechatdev-local-debug/</guid>
+      <description>前言 在微信公众号的开发模式下，接口配置的URL必须是一个外网地址，这就要求我们在开发调试的时候，必须登录服务器去打一些断点信息，经常一言不合就出现“该公众号提供的服务出现故障，请稍后再试”这种错误提示。
+我们希望能有一种解决方案，可以把一个外网地址映射到本地的开发环境，能够实时捕捉到微信公众号发送过来的调试信息，便于我们快速定位问题，完成功能开发。
+网上有很多解决方案，比如使用花生壳、ngrok等产品提供的内网穿透技术，实现外网域名到本地开发环境的映射，详情可自行Google。
+本文介绍一种对开发者友好，相对简洁的本地开发调试方式。
+微信本地开发调试  准备工作   一个外网域名 一台有公网ip的服务器   把外网域名解析到服务器  例如：wx.idoubi.cc 119.29.201.62
+ 修改服务器sshd配置  # 打开配置文件 vi /etc/ssh/sshd_config # 修改配置参数 GatewayPorts yes # 重启sshd服务 service sshd restart  本地连接服务器  # 打开终端，通过ssh隧道连接服务器 ssh -NTf -R 8089:127.0.0.1:8080 root@119.29.201.62  在服务器查看本地连接的端口是否已监听  telnet localhost 8089  在服务器nginx设置域名转发  server { listen 80; server_name wx.idoubi.cc; location / { proxy_pass http://127.0.0.1:8089; proxy_set_header host $http_host; } }  在本地配置开发路径  server { listen 8080; server_name 127.</description>
+    </item>
+    
+    <item>
+      <title>小程序源码反编译实战笔记</title>
+      <link>https://idoubi.cc/posts/get-wxapkg/</link>
+      <pubDate>Thu, 31 May 2018 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/get-wxapkg/</guid>
+      <description>最近在做微信小程序开发，看到一些做的比较有意思的小程序，想看一看他们的源码，于是研究了一下小程序源码反编译相关的技术。结合本次经历，总结如下。
+手机root 要拿到小程序在手机上的源码包，需要有一台越狱的iphone或者一台拥有root权限的android机，正好我手里有一台闲置的小米4，就拿来用了，试过很多种方式给小米4root，差点搞成板砖机，一直在recorvy模式启动不了，最后尝试了小米官网的刷机方法，把系统刷成了开发版，完美root。
+小米4刷机教程：https://www.miui.com/shuaji-305.html
+手机刷机成功后，开启root权限，并打开USB调试模式
+小米4开发版开启root权限：http://www.miui.com/thread-9625466-1-1.html
+MIUI9开启USB调试：https://jingyan.baidu.com/article/49711c6196e728fa441b7c37.html
+电脑操作 以MacOS操作系统为例，通过USB连接操作Android手机
+ 安装adb工具  在MacOS系统上可以通过brew安装adb工具
+brew cask install android-platform-tools  手机连电脑  通过USB数据线将手机连接到电脑，并在手机端开启USB调试，通过下面的命令测试是否连接成功
+adb devices 连接成功的情况下
+ 查看小程序源码  进入adb shell模式
+adb shell 切换到root权限
+su 进入小程序源码目录
+先进入MicroMsg文件夹，通过ls命令查看文件夹，找到63c92a20722afef36b525ecb04706c15这样的文件夹（不同的微信登录用户，这个文件夹的名称不同），然后再进入appbrand/pkg目录
+cd /data/data/com.tencent.mm/MicroMsg ls cd 63c92a20722afef36b525ecb04706c15/appbrand/pkg 查看小程序源码
+可以先执行rm -rf ./*删除掉当前目录下所有缓存的小程序源码包，然后通过手机端点击进入需要获取源码的小程序，再执行ls -l即可看到最新操作的小程序源码包
+rm -rf ./* ls -l 将小程序源码拷贝到手机SD卡
+cp _1038319936_4.wxapkg /sdcard 新开一个终端窗口，将源码拷贝到电脑
+adb pull sdcard/_1038319936_4.wxapkg /data/weapp/a.wxapkg  操作过程截图   反编译源码  下载nodejs版本的反编译工具并安装相关npm包
+git clone https://github.com/qwerty472123/wxappUnpacker.git cd wxappUnpacker npm install esprima -g npm install css-tree -g npm install cssbeautify -g npm install vm2 -g npm install uglify-es -g 反编译小程序源码</description>
+    </item>
+    
+    <item>
+      <title>开源一款hexo工作室主题</title>
+      <link>https://idoubi.cc/posts/hexo-theme-studio/</link>
+      <pubDate>Tue, 15 May 2018 10:47:44 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/hexo-theme-studio/</guid>
+      <description>项目地址 Github: https://github.com/mikemintang/hexo-theme-studio
+项目截图 使用教程  安装 hexo  官网教程：https://hexo.io/zh-cn/docs/
+安装 hexo-theme-studio 主题  git clone https://github.com/mikemintang/hexo-theme-studio.git themes/studio
+安装主题所需依赖  npm install hexo-server hexo-browsersync hexo-renderer-jade hexo-renderer-stylus --save-dev
+使用主题  修改 hexo 项目根目录下的_config.yml，设置theme: studio
+预览主题  hexo s</description>
+    </item>
+    
+    <item>
+      <title>douchat 4.0 新版发布，助力小程序后台开发</title>
+      <link>https://idoubi.cc/posts/douchat4-release/</link>
+      <pubDate>Tue, 08 May 2018 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/douchat4-release/</guid>
+      <description>douchat是什么 douchat（中文名：豆信）是一款专为微信开发而创造的php开源框架，具有简洁、高效、优雅等特点。
+新版本功能 douchat V4.0.0版本主要新增了小程序开发支持，具体包括：
+ 插件新增Api控制器，可快速实现供小程序调用的接口 封装了小程序登录态管理逻辑，可以更快捷的实现小程序端用户登录逻辑 框架后台新增了小程序账号管理、小程序用户管理等功能 新增Wxapps目录，并添加了一个自带的Demo小程序模板  主要功能介绍 多账户管理 豆信后台支持创建多个用户，每个登录用户可以创建多个公众号和小程序账号。 多应用管理 豆信支持通过插件的形式来扩展系统的功能，每一个插件可以用于公众号h5页面访问，也可以为小程序应用提供接口。 开发友好 豆信封装了诸多对开发者友好的业务逻辑，让开发者能够更快速的实现自己的应用功能。
+ 视图工具  豆信封装的视图工具可以让开发者通过简单的几行代码快速实现管理后台对数据的增删改查操作。
+ 公众号功能封装  豆信封装了常用的公众号开发逻辑，比如微信支付、发送模板消息、企业付款等。使用豆信封装的逻辑进行开发，可以大大简化开发者的工作量。  小程序开发支持  豆信对小程序的登录态管理、用户信息更新等逻辑做了封装。  应用商城  相关资源  产品官网：http://douchat.net 代码仓库：https://github.com/mikemintang/douchat.git  </description>
+    </item>
+    
+    <item>
+      <title>SeasLog快速上手指南</title>
+      <link>https://idoubi.cc/posts/seaslog%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Sun, 10 Dec 2017 13:08:22 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/seaslog%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</guid>
+      <description>什么是 SeasLog log 日志，通常是系统或软件、应用的运行记录。通过 log 的分析，可以方便用户了解系统或软件、应用的运行情况；如果你的应用 log 足够丰富，也可以分析以往用户的操作行为、类型喜好、地域分布或其他更多信息；如果一个应用的 log 同时也分了多个级别，那么可以很轻易地分析得到该应用的健康状况，及时发现问题并快速定位、解决问题，补救损失。
+SeasLog是一个 C 语言编写的 PHP 扩展，提供一组规范标准的功能函数，在 PHP 项目中方便、规范、高效地写日志，以及快速地读取和查询日志。SeasLog 具备以下几个特点：
+ 高性能  SeasLog 使用 C 语言编写，并带有缓冲池的功能。每次写入的日志，是先写入到内存当中，当达到一定的数量时，才写入到文件当中。
+ 配置简单  SeasLog 的配置十分简单，甚至不需要配置就可以直接使用。
+ 功能完善，使用简单  支持日志级别 支持日志分模块存放 支持日志统计，分析
+如何安装 SeasLog   SeasLog 源码下载地址：https://pecl.php.net/package/SeasLog
+  SeasLog 源码安装过程（Linux）
+  # 下载源码 wget https://pecl.php.net/get/SeasLog-1.6.9.tgz # 解压缩源码 tar -zxvf SeasLog-1.6.9.tgz # phpize工具生源码编译文件 cd SeasLog-1.6.9 phpize # 源码编译安装 ./configure make make install # 修改php.ini文件添加扩展 vi /path/to/php.</description>
+    </item>
+    
+    <item>
+      <title>golang实现RPC的几种方式</title>
+      <link>https://idoubi.cc/posts/golang%E5%AE%9E%E7%8E%B0rpc%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Sun, 03 Dec 2017 11:45:26 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/golang%E5%AE%9E%E7%8E%B0rpc%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</guid>
+      <description>什么是RPC 远程过程调用（Remote Procedure Call，缩写为 RPC）是一个计算机通信协议。 该协议允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。 如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作远程调用或远程方法调用。维基百科：远程过程调用
+用通俗易懂的语言描述就是：RPC允许跨机器、跨语言调用计算机程序方法。打个比方，我用go语言写了个获取用户信息的方法getUserInfo，并把go程序部署在阿里云服务器上面，现在我有一个部署在腾讯云上面的php项目，需要调用golang的getUserInfo方法获取用户信息，php跨机器调用go方法的过程就是RPC调用。
+golang中如何实现RPC 在golang中实现RPC非常简单，有封装好的官方库和一些第三方库提供支持。Go RPC可以利用tcp或http来传递数据，可以对要传递的数据使用多种类型的编解码方式。golang官方的net/rpc库使用encoding/gob进行编解码，支持tcp或http数据传输方式，由于其他语言不支持gob编解码方式，所以使用net/rpc库实现的RPC方法没办法进行跨语言调用。
+golang官方还提供了net/rpc/jsonrpc库实现RPC方法，JSON RPC采用JSON进行数据编解码，因而支持跨语言调用。但目前的jsonrpc库是基于tcp协议实现的，暂时不支持使用http进行数据传输。
+除了golang官方提供的rpc库，还有许多第三方库为在golang中实现RPC提供支持，大部分第三方rpc库的实现都是使用protobuf进行数据编解码，根据protobuf声明文件自动生成rpc方法定义与服务注册代码，在golang中可以很方便的进行rpc服务调用。
+net/rpc库 下面的例子演示一下如何使用golang官方的net/rpc库实现RPC方法，使用http作为RPC的载体，通过net/http包监听客户端连接请求。
+$GOPATH/src/test/rpc/rpc_server.go
+package main import ( &amp;#34;errors&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;net&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;net/rpc&amp;#34; &amp;#34;os&amp;#34; ) // 算数运算结构体 type Arith struct { } // 算数运算请求结构体 type ArithRequest struct { A int B int } // 算数运算响应结构体 type ArithResponse struct { Pro int // 乘积  Quo int // 商  Rem int // 余数 } // 乘法运算方法 func (this *Arith) Multiply(req ArithRequest, res *ArithResponse) error { res.</description>
+    </item>
+    
+    <item>
+      <title>protobuf快速上手指南</title>
+      <link>https://idoubi.cc/posts/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Sat, 02 Dec 2017 14:08:15 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/protobuf%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</guid>
+      <description>什么是 protobuf Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准。
+Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。
+如何安装 protobuf  在 github 获取 protobuf 源码，windows 系统可以直接下载 exe 文件：https://github.com/google/protobuf/releases   macos 和 linux 环境使用源码进行安装的步骤  # 获取源码包 wget https://github.com/google/protobuf/archive/v3.5.0.tar.gz # 解压缩并进入源码目录 tar -zxvf v3.5.0.tar.gz cd protobuf-3.5.0 # 生成configure文件 ./autogen.sh # 编译安装 ./configure make make check make install  在执行./autogen.sh过程中可能会因缺乏 automake 依赖库而报错：autoreconf: failed to run aclocal: No such file or directory，要解决此错误，在 linux 系统可以通过sudo yum install automake或者sudo apt-get install automake安装 automake，在 macos 系统可以通过brew install automake安装 automake。</description>
+    </item>
+    
+    <item>
+      <title>SQL2Struct：一款根据sql语句自动生成golang结构体的chrome插件</title>
+      <link>https://idoubi.cc/posts/sql2struct%E4%B8%80%E6%AC%BE%E6%A0%B9%E6%8D%AEsql%E8%AF%AD%E5%8F%A5%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90golang%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84chrome%E6%8F%92%E4%BB%B6/</link>
+      <pubDate>Mon, 06 Nov 2017 10:47:44 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/sql2struct%E4%B8%80%E6%AC%BE%E6%A0%B9%E6%8D%AEsql%E8%AF%AD%E5%8F%A5%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90golang%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84chrome%E6%8F%92%E4%BB%B6/</guid>
+      <description>前言 最近在用 golang 写 api，用到 gorm 包进行数据库操作，gorm是 golang 中非常流行的一个 orm 包，使用 gorm 进行数据库操作前，一般需要先用一个 golang 结构体对数据表字段进行映射，于是我们经常需要根据数据表中的字段名和类型来手动在 go 代码中写 struct，有时候数据表字段很多的情况下，这种方式很耗费精力。于是便想到了写一个 chrome 插件，根据数据表的 DDL 语句来自动生成 golang 结构体，可以配置 go 结构体字段类型与 mysql 数据表字段类型的一个映射关系。
+SQL2Struct  SQL2Struct 是一款对 golang 开发者友好的 chrome 插件，根据在 mysql 中创建数据表的 sql 语句，自动生成 golang 中的 struct，在 golang 开发者使用诸如 gorm 之类的框架时，可以很好的把 mysql 中的数据表与 orm 的结构体关联起来。
+ github 地址：https://github.com/mikemintang/sql2struct
+使用说明  下载源码  git clone https://github.com/mikemintang/sql2struct.git 安装扩展  打开扩展中心，选择上一步拉取到的插件源码，本地安装插件。
+在 mysql 中获取生成数据表的 sql 语句  show create table users\G;</description>
+    </item>
+    
+    <item>
+      <title>goimports工具安装与使用</title>
+      <link>https://idoubi.cc/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 06 Nov 2017 10:40:16 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/goimports%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</guid>
+      <description>goimports是干嘛的 go是一门强类型的编译型语言，有着很严格的类型约束与语法规范，在golang代码中，如果使用到的包没有被引入或者是引入了的包没有被使用，都会编译不通过。所以我们在写go代码的时候，用到包的时候需要首先import一下，不用的时候，要把import包的语句删除或者是注释，但是总是这样手动去操作并不是很方便，比如我们在开发的时候需要用fmt包打印一些调试信息，为了让打印出来的数组或结构体格式好看一点，我们有时候需要使用encoding/json包来进行格式化。在调试完成后，我们必须要手动把引入的包删除掉，然后再进行编译。
+针对上面提到的日常开发中经常面对的手动管理包的问题，goimports出现了。goimports可以自动对代码中的依赖包进行管理，如果有用到，就会自动import，也会对没有用到的包进行自动删除。
+安装goimports 因为被墙的原因，直接通过go get可能不能正确拉取到goimports包，我们这里使用github源码编译的方式进行安装。
+ 拉取github上面的tools包源码  git clone https://github.com/golang/tools.git /d/go/src/golang.org/x/tools 进入goimports命令包目录  cd /d/go/src/golang.org/x/tools/cmd/goimports 编译源码  go build 编译完成后，在windows下会生成goimports.exe可执行文件，在mac跟linux下的goroot配置的bin目录下会生成goimports可执行文件。如果设置了环境变量，在任意位置可执行goimports命令。
+在sublime配置goimports 在sublime安装GoSublime插件，在插件用户配置文件中写入：
+{ &amp;#34;fmt_cmd&amp;#34;: [&amp;#34;goimports&amp;#34;] } 配置完成后在sublime编写go代码时，每次ctrl+s保存文件或者ctrl+b编译文件时，goimports会自动执行并对go代码进行包依赖的检查，对于用到却未引入的包会进行自动引入，对于引入却未使用的包会进行自动删除。
+在gogland中使用goimports gogland原生支持goimports，不需要进行额外的配置，保存或编译go代码时会自动进行包的依赖检查。</description>
+    </item>
+    
+    <item>
+      <title>golang版本的curl请求库</title>
+      <link>https://idoubi.cc/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/</link>
+      <pubDate>Thu, 14 Sep 2017 21:31:55 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/golang%E7%89%88%E6%9C%AC%E7%9A%84curl%E8%AF%B7%E6%B1%82%E5%BA%93/</guid>
+      <description>Github地址 https://github.com/mikemintang/go-curl
+安装 go get github.com/mikemintang/go-curl 使用 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;github.com/mikemintang/go-curl&amp;#34; ) func main() { url := &amp;#34;http://php.dev/api.php&amp;#34; headers := map[string]string{ &amp;#34;User-Agent&amp;#34;: &amp;#34;Sublime&amp;#34;, &amp;#34;Authorization&amp;#34;: &amp;#34;Bearer access_token&amp;#34;, &amp;#34;Content-Type&amp;#34;: &amp;#34;application/json&amp;#34;, } cookies := map[string]string{ &amp;#34;userId&amp;#34;: &amp;#34;12&amp;#34;, &amp;#34;loginTime&amp;#34;: &amp;#34;15045682199&amp;#34;, } queries := map[string]string{ &amp;#34;page&amp;#34;: &amp;#34;2&amp;#34;, &amp;#34;act&amp;#34;: &amp;#34;update&amp;#34;, } postData := map[string]interface{}{ &amp;#34;name&amp;#34;: &amp;#34;mike&amp;#34;, &amp;#34;age&amp;#34;: 24, &amp;#34;interests&amp;#34;: []string{&amp;#34;basketball&amp;#34;, &amp;#34;reading&amp;#34;, &amp;#34;coding&amp;#34;}, &amp;#34;isAdmin&amp;#34;: true, } // 链式操作  req := curl.NewRequest() resp, err := req.</description>
+    </item>
+    
+    <item>
+      <title>QQ空间魔力日志制作教程</title>
+      <link>https://idoubi.cc/posts/qq%E7%A9%BA%E9%97%B4%E9%AD%94%E5%8A%9B%E6%97%A5%E5%BF%97%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 27 Dec 2013 04:10:19 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/posts/qq%E7%A9%BA%E9%97%B4%E9%AD%94%E5%8A%9B%E6%97%A5%E5%BF%97%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B/</guid>
+      <description>看着日志图片上显示着自己的 QQ 头像、QQ 昵称、QQ 号码 是不是觉得很不可思议呢？是不是很想知道这些神奇的图片是怎么做出来的？ 那么接下来我就结合自己的经验给大家讲一讲这种魔力日志制作的原理和方法。
+制作原理：
+关于魔力日志的制作原理我就不详细说了，相信学过 php 的朋友都懂，上面的截图是网上给的解释，大家可以简单了解一下。看不懂也不要紧，没 php 基础也无所谓，请重点关注接下来的制作步骤。
+制作步骤：
+1、准备一张希望让别人看到的图片，可根据自己的创意自由发挥。例如：
+做好图片之后那么接下来要做的就是怎么样把看到这张图片的人的 QQ 信息显示在这张图片上了。
+2、下载源代码
+源代码里面包含了上面的那张百度搜索的图片，命名为 qq.png，如果大家想制作其他的版本只要重新制作一张 qq.png 图片即可。
+源代码下载地址：http://url.cn/WbjBGF
+源代码目录结构： ip 文件夹：获取浏览者主机 ip，用于空间定位。 font 文件夹：字体包 do.php：关键文件，用于获取浏览者的信息，包括 QQ 昵称，QQ 头像，QQ 号，登录地址等信息。 content.php：内容文件，存放向浏览器输出的内容。 no.png：默认图片，即日志内容页里面的图片（别人点进去才会看到）。 qq.png：目标图片，即想要让别人看到的图片。
+3、申请虚拟空间 要把做好的魔力日志图片发到空间让所有人看到，必须有一个虚拟空间，只有把代码和图片上传到空间，才能做出魔力日志。申请虚拟空间的方式有很多，有条件的朋友可以自己在网上买一个 php 空间，或者在网上找一个免费的 php 空间。这里推荐的是百度开发者空间。百度开发者空间申请流程：
+http://jingyan.baidu.com/article/ceb9fb10ebf3f68cad2ba012.html 
+4、测试服务器
+按照第三步给的链接教程将代码上传到百度开发者空间之后，在浏览器输入网址http://1.idoubi.duapp.com/do.php即可看到上传代码中的 no.png 图片，注意网址不要输错，1 是你按照教程填写的版本号，我这里是 1，第三步中的教程里面写的是 0。idoubi 是我自己填的域名，每个人按照自己填的域名和版本号来输入网址。
+如果能看到这张默认图片的话，证明服务器配置正确，接下来就可以去空间写日志了。
+5、发表魔力日志
+复制地址http://1.idoubi.duapp.com/do.php，在腾讯微博粘贴并广播（网上说可以直接用这个地址，但是我试了不行），生成短地址http://url.cn/Uy8PZJ。复制短地址。
+进入自己的 QQ 空间写日志，插入图片，选择插入网络图片，输入在腾讯微博生成的短地址，添加，即可插入 no.png 这张网络图片。点击发表，魔力日志制作成功。 返回个人中心查看，即可看到根据浏览者对象生成的图片，形式为浏览者的 QQ 信息与 qq.png 图片组合（在源代码未修改情况下，qq.png 不起作用，这里的背景图是白色的）而成的一张图片。（由于浏览器缓存问题，发表日志后立刻回个人中心查看可能看到的还是 no.png 那张图片。这种情况下可以换个 QQ 进入空间看看效果。）</description>
+    </item>
+    
+  </channel>
+</rss>

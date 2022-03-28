@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Courses on 艾逗笔</title>
+    <link>https://idoubi.cc/courses/</link>
+    <description>Recent content in Courses on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright><atom:link href="https://idoubi.cc/courses/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>https://idoubi.cc/courses/cloud-native-devops/readme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/courses/cloud-native-devops/readme/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>K8S 基本概念与常用操作</title>
+      <link>https://idoubi.cc/courses/cloud-native-devops/02/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/courses/cloud-native-devops/02/</guid>
+      <description>基本概念 常用操作  管理多集群   创建集群的 kubeconfig 文件  vi ~/.kube/cls1-config
+vi ~/.kube/cls2-config
+设置 KUBECONFIG 变量  export KUBECONFIG=$KUBECONFIG:~/.kube/cls1-config:~/.kube/cls2-config
+查看集群上下文  kubectl config get-contexts</description>
+    </item>
+    
+    <item>
+      <title>使用 Helm 管理 K8S 集群</title>
+      <link>https://idoubi.cc/courses/cloud-native-devops/03/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/courses/cloud-native-devops/03/</guid>
+      <description>搭建本地 Helm 仓库 使用腾讯云 Helm 仓库 </description>
+    </item>
+    
+    <item>
+      <title>搭建本地开发集群</title>
+      <link>https://idoubi.cc/courses/cloud-native-devops/01/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/courses/cloud-native-devops/01/</guid>
+      <description>ddd </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,459 @@
+<html lang="en-US">
+
+<head>
+    
+<title>开发一个自己的composer包 - 艾逗笔</title>
+
+<meta property="og:title" content="开发一个自己的composer包 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="php的composer类似于node的包管理机制，都是可以通过一些命令操作下载开发者发布的功能包，并且包之间可以互相依赖，管理起来比较方便。下面根据自己踩过的坑总结一下如何创建一个自己的composer包。
+[&amp;hellip;] 在packages目录下面创建一个自己的composer包：mikephp-db，composer.json里面填写包的基本信息，src目录下面是包的功能代码。 &amp;hellip;">
+    <meta property="og:description" content="php的composer类似于node的包管理机制，都是可以通过一些命令操作下载开发者发布的功能包，并且包之间可以互相依赖，管理起来比较方便。下面根据自己踩过的坑总结一下如何创建一个自己的composer包。
+[&amp;hellip;] 在packages目录下面创建一个自己的composer包：mikephp-db，composer.json里面填写包的基本信息，src目录下面是包的功能代码。 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/posts/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85/">开发一个自己的composer包</a>
+                                        </h2>
+                                        
+                                        <div class="post-byline">Published on
+                                            <a class="date" href="javascript:;">2017/08/21</a>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <blockquote>
+<p>php的composer类似于node的包管理机制，都是可以通过一些命令操作下载开发者发布的功能包，并且包之间可以互相依赖，管理起来比较方便。下面根据自己踩过的坑总结一下如何创建一个自己的composer包。</p>
+</blockquote>
+<h2 id="创建一个composer包">创建一个composer包</h2>
+<p>在packages目录下面创建一个自己的composer包：mikephp-db，composer.json里面填写包的基本信息，src目录下面是包的功能代码。</p>
+<p><img src="http://blogcdn.idoustudio.com/1.png" alt=""></p>
+<p>composer.json的内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+	<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;mikephp/db&#34;</span>,
+	<span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;this is a libriary for db oprate&#34;</span>,
+	<span style="color:#f92672">&#34;autoload&#34;</span>: {
+		<span style="color:#f92672">&#34;psr-4&#34;</span>: {
+			<span style="color:#f92672">&#34;Db\\&#34;</span>: <span style="color:#e6db74">&#34;src/&#34;</span>
+		}
+	}
+}
+</code></pre></div><blockquote>
+<p>包的名称叫：mikephp/db，一旦包发布到网上，其他开发者就可以通过<code>composer require mikephp/db</code>来下载使用这个包。autoload配置使用psr-4自动加载规范，把<code>Db</code>命名空间映射到包的<code>src</code>目录下</p>
+</blockquote>
+<p>Mysql.php的内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>;<span style="color:#f92672">?</span><span style="color:#a6e22e">php</span>  
+
+<span style="color:#66d9ef">namespace</span> <span style="color:#a6e22e">Db</span>;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Mysql</span> {
+
+	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> __construct() {
+		<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#39;this is mysql db&#39;</span>;
+	}
+}
+</code></pre></div><blockquote>
+<p>包的src下的功能文件都应该使用命令空间，如果功能文件在src的一级目录，例如<code>src/Mysql.php</code>，命名空间是Db，如果是二级目录，例如<code>src/Pdo/Mysql.php</code>，那么命名空间就应该是<code>Db\Pdo</code>，在使用功能类的时候就通过<code>new Db\Mysql()</code>或者<code>Db\Pdo\Mysql()</code>使用</p>
+</blockquote>
+<h2 id="开发过程中调试创建的composer包">开发过程中调试创建的composer包</h2>
+<p>在把自己创建的composer包发布到网上供其他开发者使用前，我们需要不断调试以验证包的功能是否能正常使用。可以在项目不依赖composer包的前提下，通过配置autoload自动加载来关联开发中的composer包。下面的例子以composer为项目根目录，需要使用packages里面的正在开发的包。composer.json文件里面填写此项目需要依赖或者关联的包，如果有配置require，则在执行<code>composer install</code>或者<code>composer update</code>的时候，被依赖的包会被下载到vendor目录下。此处演示在项目根目录下通过autoload自动加载关联开发中的composer包，此情况下被关联的包不会被下载到vendor下。</p>
+<p><img src="http://blogcdn.idoustudio.com/2.png" alt=""></p>
+<p>composer.json的内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+	<span style="color:#f92672">&#34;require&#34;</span>: {
+	},
+	<span style="color:#f92672">&#34;autoload&#34;</span>: {
+		<span style="color:#f92672">&#34;psr-4&#34;</span>: {
+			<span style="color:#f92672">&#34;Db\\&#34;</span>: <span style="color:#e6db74">&#34;packages/mikephp-db/src/&#34;</span>
+		}
+	}
+}
+</code></pre></div><blockquote>
+<p>使用psr-4自动加载规范，把Db命名空间映射到自己创建的composer包的src目录下</p>
+</blockquote>
+<p>改好composer.json后执行一项<code>composer update</code>，此操作只会更新vendor目录下的autoload.php，不会下载包到vendor目录。</p>
+<p>在测试文件中调试自己的composer包
+test.php的内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>;<span style="color:#f92672">?</span><span style="color:#a6e22e">php</span>  
+
+<span style="color:#66d9ef">require</span> <span style="color:#e6db74">&#39;vendor/autoload.php&#39;</span>;
+
+$mysql <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Db\Mysql</span>();
+</code></pre></div><p>运行test.php</p>
+<p><img src="http://blogcdn.idoustudio.com/3.png" alt=""></p>
+<h2 id="为项目添加需要依赖的composer包">为项目添加需要依赖的composer包</h2>
+<p>在composer包开发完成后，就可以在项目的composer.json中配置require来创建依赖，此种情况下通过<code>composer install</code>或者<code>composer update</code>会把包下载到vendor目录下</p>
+<p>1、本地下载
+在把已开发完成的composer包发布到网上前，可以通过配置repositories来依赖包。</p>
+<p>修改根目录下的composer.json</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+	<span style="color:#f92672">&#34;require&#34;</span>: {
+		<span style="color:#f92672">&#34;mikephp/db&#34;</span>: <span style="color:#e6db74">&#34;dev-master&#34;</span>
+	},
+	<span style="color:#f92672">&#34;repositories&#34;</span>: [
+		{
+			<span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;path&#34;</span>,
+			<span style="color:#f92672">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;packages/mikephp-db&#34;</span>
+		}
+	]
+}
+</code></pre></div><p>使用composer安装包</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#a6e22e">composer</span> <span style="color:#a6e22e">update</span>
+</code></pre></div><p>使用<code>composer update</code>之后的目录</p>
+<p><img src="http://blogcdn.idoustudio.com/4.png" alt=""></p>
+<blockquote>
+<p>使用本地依赖的方式，composer包会被下载到vendor目录，但是包里面是没有内容的，只是通过软连接的方式关联到了本地包的实际位置。</p>
+</blockquote>
+<p>2、Github下载</p>
+<p>可以把开发完成的composer包上传到<a href="https://github.com">github</a>，然后配置项目的repository进行下载
+修改composer.json</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+	<span style="color:#f92672">&#34;require&#34;</span>: {
+		<span style="color:#f92672">&#34;mikephp/db&#34;</span>: <span style="color:#e6db74">&#34;dev-master&#34;</span>
+	},
+	<span style="color:#f92672">&#34;repositories&#34;</span>: [
+		{
+			<span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;git&#34;</span>,
+			<span style="color:#f92672">&#34;url&#34;</span>: <span style="color:#e6db74">&#34;https://github.com/mikemintang/db.git&#34;</span>
+		}
+	]
+}
+</code></pre></div><p>使用<code>composer update</code>之后的目录</p>
+<p><img src="http://blogcdn.idoustudio.com/5.png" alt=""></p>
+<p>3、Packagist加载</p>
+<p>可以把开发完成的composer包发布到<a href="https://packagist.org">Packagist</a>，在使用composer下载依赖包的时候默认会在Packagist搜索包并下载。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+	<span style="color:#f92672">&#34;require&#34;</span>: {
+		<span style="color:#f92672">&#34;mikephp/db&#34;</span>: <span style="color:#e6db74">&#34;dev-master&#34;</span>
+	}
+}
+</code></pre></div><p>使用<code>composer update</code>之后的目录</p>
+<p><img src="http://blogcdn.idoustudio.com/6.png" alt=""></p>
+<h2 id="遇到的坑">遇到的坑</h2>
+<p>在配置repositories下载composer包的过程中可能会遇到下图所示的报错信息，这种情况下要检查项目的composer.json填写的包的信息是否有误，version配置项要使用<code>dev-master</code>。应该是包的版本设置问题，需要好好研究一下composer包的版本设置规范。
+<img src="http://blogcdn.idoustudio.com/7.png" alt=""></p>
+<h2 id="总结">总结</h2>
+<p>本文根据一个实际的例子简要总结了如何开发自己的composer包并在项目中调试或使用。composer对于php而已是一个非常有利的工具，弥补了php在原生没有包管理机制上的不足。在项目开发过程中我们可以通过使用一些开源的composer包来提高开发效率，也可以把自己在项目开发者比较经常用到的一些技术或者工具类封装成composer包，发布到网上供其他开发者使用。</p>
+<p>composer开发相关的一些资料或链接：</p>
+<ul>
+<li>官网：https://getcomposer.org/</li>
+<li>中文文档：http://docs.phpcomposer.com/</li>
+<li>国内镜像：https://pkg.phpcomposer.com/</li>
+<li>包管理平台：https://packagist.org/</li>
+</ul>
+
+
+                                        
+                                        
+                                        
+                                        <div class="rp4wp-related-posts">
+                                            <h3>相关文章</h3>
+                                            <ul>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/">在php中使用curl多线程下载图片</a>
+                                                    </div>
+                                                </li>
+                                                
+                                                <li>
+                                                    <div class="rp4wp-related-post-content">
+                                                        <a
+                                                            href="/posts/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">AES加解密在php接口请求过程中的应用</a>
+                                                    </div>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                    
+                                    <div class="post-meta">
+                                        
+                                        <div class="post-categories">
+                                        <span>Categories&nbsp;&nbsp;</span>
+                                        
+                                        <a href="/categories/%e5%bc%80%e5%8f%91%e7%ac%94%e8%ae%b0" title="View all posts in PHP8">开发笔记</a>&nbsp;&nbsp;
+                                        
+                                        </div>
+                                        
+                                        
+                                        <div class="post-tags">
+                                            <ul>
+                                            
+                                            <li>
+                                                <a href="/tags/composer" title="View all posts tagged match">composer</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="/tags/php" title="View all posts tagged match">php</a>
+                                            </li>
+                                            
+                                            </ul>
+                                        </div>
+                                        
+                                        
+                                        <nav class="further-reading">
+                                            
+                                            <div class="previous">
+                                                <span>&lt;&lt; Prev</span>
+                                                <a href="/posts/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/"
+                                                    rel="prev">在php中使用curl多线程下载图片</a> </div>
+                                            
+                                            
+                                            <div class="next">
+                                                <span>Next >></span>
+                                                <a href="/posts/%E5%85%AB%E6%9C%88%E4%B9%A6%E8%AF%84%E4%BA%8C%E5%88%99/">八月书评二则</a> 
+                                            </div>
+                                            
+                                        </nav>
+                                    </div>
+                                    
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi-mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

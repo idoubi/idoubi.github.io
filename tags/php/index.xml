@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>php on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/php/</link>
+    <description>Recent content in php on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Mon, 21 Aug 2017 17:04:20 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开发一个自己的composer包</title>
+      <link>https://idoubi.cc/legacy/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85/</link>
+      <pubDate>Mon, 21 Aug 2017 17:04:20 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84composer%E5%8C%85/</guid>
+      <description>php的composer类似于node的包管理机制，都是可以通过一些命令操作下载开发者发布的功能包，并且包之间可以互相依赖，管理起来比较方便。下面根据自己踩过的坑总结一下如何创建一个自己的composer包。
+ 创建一个composer包 在packages目录下面创建一个自己的composer包：mikephp-db，composer.json里面填写包的基本信息，src目录下面是包的功能代码。
+composer.json的内容
+{ &amp;#34;name&amp;#34;: &amp;#34;mikephp/db&amp;#34;, &amp;#34;description&amp;#34;: &amp;#34;this is a libriary for db oprate&amp;#34;, &amp;#34;autoload&amp;#34;: { &amp;#34;psr-4&amp;#34;: { &amp;#34;Db\\&amp;#34;: &amp;#34;src/&amp;#34; } } }  包的名称叫：mikephp/db，一旦包发布到网上，其他开发者就可以通过composer require mikephp/db来下载使用这个包。autoload配置使用psr-4自动加载规范，把Db命名空间映射到包的src目录下
+ Mysql.php的内容
+&amp;amp;lt;?php namespace Db; class Mysql { public function __construct() { echo &amp;#39;this is mysql db&amp;#39;; } }  包的src下的功能文件都应该使用命令空间，如果功能文件在src的一级目录，例如src/Mysql.php，命名空间是Db，如果是二级目录，例如src/Pdo/Mysql.php，那么命名空间就应该是Db\Pdo，在使用功能类的时候就通过new Db\Mysql()或者Db\Pdo\Mysql()使用
+ 开发过程中调试创建的composer包 在把自己创建的composer包发布到网上供其他开发者使用前，我们需要不断调试以验证包的功能是否能正常使用。可以在项目不依赖composer包的前提下，通过配置autoload自动加载来关联开发中的composer包。下面的例子以composer为项目根目录，需要使用packages里面的正在开发的包。composer.json文件里面填写此项目需要依赖或者关联的包，如果有配置require，则在执行composer install或者composer update的时候，被依赖的包会被下载到vendor目录下。此处演示在项目根目录下通过autoload自动加载关联开发中的composer包，此情况下被关联的包不会被下载到vendor下。
+composer.json的内容
+{ &amp;#34;require&amp;#34;: { }, &amp;#34;autoload&amp;#34;: { &amp;#34;psr-4&amp;#34;: { &amp;#34;Db\\&amp;#34;: &amp;#34;packages/mikephp-db/src/&amp;#34; } } }  使用psr-4自动加载规范，把Db命名空间映射到自己创建的composer包的src目录下</description>
+    </item>
+    
+    <item>
+      <title>在php中使用curl多线程下载图片</title>
+      <link>https://idoubi.cc/legacy/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/</link>
+      <pubDate>Fri, 30 Dec 2016 10:25:39 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%9C%A8php%E4%B8%AD%E4%BD%BF%E7%94%A8curl%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87/</guid>
+      <description>遇到一个需求：要下载这个网站http://www.laredoute.com/上面的商品图片到本地。 分析了一下，这个网站是一个国外的站点，受 cdn 节点的影响，在国内打开的速度比较慢。另一方面，要下载的商品图片较大，单张图片的大小有超过 200kb 的。 现在的需求是，要在短时间内批量下载该网站上面的商品图片到本地，鉴于这两点考虑，如果使用 php 来做的话，单纯的用 file_get_contents 可能行不通，于是想到了用 php 的 curl 库来处理。
+ 虽然用 curl 来下载图片比起用 file_get_contents 来处理效率更高，稳定性更好，但是如果使用 curl 单线程来处理的话，效率并不会得到非常明显的提升。所幸的是，curl 库提供了 curl_multi 功能，让我们可以使用 curl 多线程来处理业务逻辑，可以显著的提升效率。下面拿下载上述站点上面的 8 张图片为例，分别使用 curl 单线程和 curl 多线程来进行图片下载，并对两者的效率做一个比较。
+single.php：curl 单线程下载图片 &amp;lt;?php /** * 单线程下载远程图片 * @author 艾逗笔&amp;lt;765532665@qq.com&amp;gt; */ set_time_limit(300); // 设置程序执行超时时间为5分钟  // 要下载的图片数组 $pics = array( &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_90_CO_1_2850804.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_2_2850799.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/57/02/02/57020206_1_CO_1_057020206-9be173d2-6bc3-44ba-b9cb-111010ed0051.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/1200by1200/37/01/01/37010132_10_CO_1_2850800.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/42/350042687_1_CO_1_7639577.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/34/350034174_1_CO_1_7669890.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/42/350042718_1_CO_1_7009919.jpg&amp;#39;, &amp;#39;http://media.laredoute.com/products/641by641/35/00/39/350039748_1_CO_3_6958274.jpg&amp;#39; ); $beginTime = time(); // 开始下载图片的时间 $lastTime = $beginTime; // 上一次下载图片的时间 $count = 0; // 计数器 echo &amp;#39;begin download at &amp;#39; .</description>
+    </item>
+    
+    <item>
+      <title>AES加解密在php接口请求过程中的应用</title>
+      <link>https://idoubi.cc/legacy/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Tue, 25 Oct 2016 12:10:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/aes%E5%8A%A0%E8%A7%A3%E5%AF%86%E5%9C%A8php%E6%8E%A5%E5%8F%A3%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+      <description>在 php 请求接口的时候，我们经常需要考虑的一个问题就是数据的安全性，因为数据传输过程中很有可能会被用 fillder 这样的抓包工具进行截获。一种比较好的解决方案就是在客户端请求发起之前先对要请求的数据进行加密，服务端 api 接收到请求数据后再对数据进行解密处理，返回结果给客户端的时候也对要返回的数据进行加密，客户端接收到返回数据的时候再解密。因此整个 api 请求过程中数据的安全性有了一定程度的提高。
+今天结合一个简单的 demo 给大家分享一下 AES 加解密技术在 php 接口请求中的应用。
+AES 加解密基础类： &amp;lt;?php /** * 加密基础类 */ class Crypt_AES { protected $_cipher = &amp;#34;rijndael-128&amp;#34;; protected $_mode = &amp;#34;cbc&amp;#34;; protected $_key; protected $_iv = null; protected $_descriptor = null; /** * 是否按照PKCS #7 的标准进行填充 * 为否默认将填充“&amp;amp;#92;&amp;amp;#48;”补位 * @var boolean */ protected $_PKCS7 = false; /** * 构造函数，对于密钥key应区分2进制字符串和16进制的。 * 如需兼容PKCS#7标准，应选项设置开启PKCS7，默认关闭 * @param string $key * @param mixed $iv 向量值 * @param array $options */ public function __construct($key = null, $iv = null, $options = null) { if (null !</description>
+    </item>
+    
+  </channel>
+</rss>

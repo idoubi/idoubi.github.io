@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>压力测试 on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</link>
+    <description>Recent content in 压力测试 on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Mon, 15 Feb 2016 09:06:02 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用Apache的ab工具进行网站性能压力测试</title>
+      <link>https://idoubi.cc/legacy/%E4%BD%BF%E7%94%A8apache%E7%9A%84ab%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Mon, 15 Feb 2016 09:06:02 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E4%BD%BF%E7%94%A8apache%E7%9A%84ab%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%AB%99%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</guid>
+      <description>年前给中百仓促超市做了微信摇一摇抽奖的功能开发，顾客凭借在中百购物的发票联可以在微信中参与抽奖。由于中百仓储超市微信公众号的关注量较大，客户担心太多用户同时参与抽奖的话会导致服务器崩溃而不能给用户提供正常的服务，因此要求我们对中百仓促超市微信公众号接入的网站性能进行压力测试。下面总结一下使用 Apache 的 ab 工具进行压力测试的过程。
+装了 wampserver 的情况下可以直接使用 ab 工具，win+R 后输入 cmd 弹出 dos 命令窗口，进入 wamp 的安装目录并且启动 ab 工具。
+1000 请求，200 并发下的压力测试结果： 1000 请求，300 并发下的压力测试结果： 1000 请求，100 并发下的压力测试结果： 由上面的测试结果分析可知，这台服务器的最佳并发量应该控制在 100 以下。
+参考资料：
+如何使用 Apache 的 ab 工具进行网站性能测试：
+http://jingyan.baidu.com/article/e3c78d647a57833c4c85f502.html
+ab 压力测试 命令详解与结果分析：
+http://lihuipeng007.blog.163.com/blog/static/121084388201082542924962/
+压力测试所用工具下载：
+wampserver：https://www.baidu.com/s?ie=UTF-8&amp;amp;wd=wampserver
+测试程序：
+&amp;lt;?php class Test { function yao($invoice, $mobile) { $key = &amp;#39;a63d590******190af93fe5387045795&amp;#39;; $corpid = &amp;#39;1**1&amp;#39;; $action = &amp;#39;check&amp;#39;; $tel = $mobile; $reciptnum = $invoice; $tmpArr = array($key, $corpid, $action, $tel, $reciptnum); sort($tmpArr); $tmpStr = implode($tmpArr); $sign = sha1($tmpStr); $url = &amp;#39;http://1************3:8001/lottery/ws/api/win?</description>
+    </item>
+    
+  </channel>
+</rss>

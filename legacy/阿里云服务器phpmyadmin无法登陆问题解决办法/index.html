@@ -1,0 +1,276 @@
+<html lang="en-US">
+
+<head>
+    
+<title>阿里云服务器phpmyadmin无法登陆问题及其解决办法 - 艾逗笔</title>
+
+<meta property="og:title" content="阿里云服务器phpmyadmin无法登陆问题及其解决办法 - 艾逗笔">
+
+
+
+    
+
+
+
+    
+    <meta property="description" content="比起一般的虚拟主机，阿里云服务器在访问速度和稳定性方面都有很突出的优势。我是半年前开始使用阿里云的，用的是最低的配置，55 块钱一个月，由于不懂得 Linux 服务器和 shell 编程，所以在买下阿里云服务器之后用的是阿里云官方提供的一键安装 web 服务。http://help.aliyun.com/view/13435438.html
+使用一键安装 web 教程配置好的阿里云服务器使用起来还 &amp;hellip;">
+    <meta property="og:description" content="比起一般的虚拟主机，阿里云服务器在访问速度和稳定性方面都有很突出的优势。我是半年前开始使用阿里云的，用的是最低的配置，55 块钱一个月，由于不懂得 Linux 服务器和 shell 编程，所以在买下阿里云服务器之后用的是阿里云官方提供的一键安装 web 服务。http://help.aliyun.com/view/13435438.html
+使用一键安装 web 教程配置好的阿里云服务器使用起来还 &amp;hellip;">
+    
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="https://blogcdn.idoustudio.com/idoubi.jpeg" type="image/x-icon" />
+
+
+
+<link rel="stylesheet" href="/css/style.min.css" />
+
+<link rel="stylesheet" href="/css/reset.min.css" />
+
+
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/highlight.min.js"></script>
+
+<script>
+hljs.configure({ ignoreUnescapedHTML: true })
+hljs.highlightAll();
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+
+
+
+<link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.1.0/build/styles/mono-blue.min.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body id="period" class="home blog">
+    <a class="skip-content" href="#main">Press "Enter" to skip to content</a>
+    <div id="overflow-container" class="overflow-container">
+        <header class="site-header" id="site-header" role="banner">
+    <div class="max-width">
+        <div id="title-container" class="title-container">
+            <div id="site-title" class="site-title"><a href="/">艾逗笔</a></div>
+            <p class="tagline">有逻辑的脑子万里挑一</p>
+        </div>
+        
+        <div id="menu-primary-container" class="menu-primary-container">
+            <div class="icon-container">
+            </div>
+            <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+                <nav class="menu">
+                    <ul id="menu-primary-items" class="menu-primary-items">
+                        
+                        
+                        <li id="menu-item-0"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/" aria-current="page" tabindex="0">首页</a></li>
+                        
+                        <li id="menu-item-1"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/notes/" aria-current="page" tabindex="1">笔记</a></li>
+                        
+                        <li id="menu-item-2"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/posts/" aria-current="page" tabindex="2">文章</a></li>
+                        
+                        <li id="menu-item-3"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/works/" aria-current="page" tabindex="3">项目</a></li>
+                        
+                        <li id="menu-item-4"
+                            class="menu-item menu-item-type-custom menu-item-object-custom ">
+                            <a href="/about" aria-current="page" tabindex="4">关于</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+        <div id="primary-container" class="primary-container">
+            <div class="max-width">
+                <section id="main" class="main" role="main">
+                    <div id="loop-container" class="loop-container">
+                        <div
+                            class="post type-post status-publish format-standard hentry entry">
+                            <article>
+                                <div class="post-container">
+                                    <div class="post-header">
+                                        <h2 class="post-title">
+                                            <a href="/legacy/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8phpmyadmin%E6%97%A0%E6%B3%95%E7%99%BB%E9%99%86%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">阿里云服务器phpmyadmin无法登陆问题及其解决办法</a>
+                                        </h2>
+                                        
+                                    </div>
+                                    <div class="post-content">
+                                        <p>比起一般的虚拟主机，阿里云服务器在访问速度和稳定性方面都有很突出的优势。我是半年前开始使用阿里云的，用的是最低的配置，55 块钱一个月，由于不懂得 Linux 服务器和 shell 编程，所以在买下阿里云服务器之后用的是阿里云官方提供的一键安装 web 服务。<a href="http://help.aliyun.com/view/13435438.html">http://help.aliyun.com/view/13435438.html</a></p>
+<p>使用一键安装 web 教程配置好的阿里云服务器使用起来还是挺方便的，就是偶尔会出现一些莫名其妙的问题，比如数据库登录不上，无法更改网站根目录之类的，可惜的是我不懂 linux 服务器，所以出现了什么问题只能求助别人或者各种百度，这样挺不方便的。看来要找个时间好好学一学 linux 服务器。</p>
+<p>记录一下使用阿里云服务器以来遇到最多的数据库登录不上的问题及解决办法：</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/09/QQ%E5%9B%BE%E7%89%8720140907121345.png" alt=""></p>
+<p>通过 xftp 操作阿里云服务器上的文件，提交表单的时候遇到断网，表单提交失败，再去提交的时候就提示数据库连接错误，这时候去访问 phpmyadmin 就会提示 2002 错误，百度解决办法的时候看到的都是说需要更改配置文件，把'127.0.0.1&rsquo;改成&rsquo;localhost&rsquo;之类的。<a href="http://www.jb51.net/article/30175.htm">http://www.jb51.net/article/30175.htm</a></p>
+<p>仿照着去修改了配置文件之后，发现问题还是没有解决。于是用了阿里云的快照回滚，把文件恢复到早期的一个阶段。</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/09/QQ%E6%88%AA%E5%9B%BE20140907122957.jpg" alt=""></p>
+<p>快照回滚之后，阿里云恢复到早期的一个状态，重启系统之后再去访问网址，提示页面打不开。刚开始百度了好久都没找到解决的办法，最后实在搞不定了就求助了一个懂 linux 的小伙伴，才知道原来是阿里云系统重启之后需要重新启动服务。</p>
+<p><img src="http://blogcdn.idoustudio.com/2014/09/QQ%E5%9B%BE%E7%89%8720140906195625.jpg" alt=""></p>
+<p>简单的两行代码就把阿里云服务启动了，再去访问网站就妥了。</p>
+<p>有时间一定要好好学习 linux 系统和 shell 编程。</p>
+<p> </p>
+
+
+                                        
+                                    </div>
+
+                                    
+
+                                    
+
+                                    
+                                    
+                                    <div style="width: 100%;height: 1px;border:1px solid #f8f8f8;margin: 50px 0 30px;"></div>
+                                    <script src="https://utteranc.es/client.js"
+                                            repo="idoubi/idoubi.github.io"
+                                            issue-term="title"
+                                            theme="github-light"
+                                            crossorigin="anonymous"
+                                            async>
+                                    </script>
+                                    
+                                    
+
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
+    <h1 class="screen-reader-text">Sidebar</h1>
+    
+
+    
+    
+    <section id="text-2" class="widget widget_text">
+        <div class="textwidget">
+            
+            <div id="profile">
+                <div id="profile_picture"><img src="https://blogcdn.idoustudio.com/idoubi.jpeg"></div>
+                <div id="profile_intro">
+                    <p><span class="name"></span></p>
+                    <p class="intro">全栈开发者，爱好造轮子。</p>
+                </div>
+            </div>
+            
+            <p>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ready(function () {
+                            var menuPrimaryContainer = $('#menu-primary-container');
+                            var profile = $('#text-2');
+                            $('#toggle-navigation').click(function () {
+                                if (menuPrimaryContainer.hasClass('open')) {
+                                    profile.removeClass('open');
+                                } else {
+                                    profile.addClass('open');
+                                }
+                            });
+                        });
+                    })(jQuery);
+                </script>
+            </p>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="text-5" class="widget widget_text">
+        <h2 class="widget-title">开源项目</h2>
+        <div class="textwidget">
+            <div id="projects" style="line-height: 22px;">
+                
+                <a href="https://github.com/idoubi/douchat/"
+                    target="_blank">douchat</a>: &nbsp;一款简洁、高效的微信开发框架<br>
+                
+                <a href="https://github.com/idoubi/gonews"
+                    target="_blank">gonews</a>: &nbsp;Golang 每日新闻检索平台<br>
+                
+                <a href="https://github.com/idoubi/sql2struct"
+                    target="_blank">sql2struct</a>: &nbsp;根据 SQL 语句生成 Golang 结构体的工具<br>
+                
+                <a href="https://github.com/idoubi/goz"
+                    target="_blank">goz</a>: &nbsp;在 Go 中发起 HTTP 请求的工具库<br>
+                
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    <section id="qrcode" class="widget widget_media_image">
+        <h2 class="widget-title">微信公众号</h2>
+        <img width="258" height="258"
+            src="https://blogcdn.idoustudio.com/idoubi_mp.jpeg"
+            class="image wp-image-5514  attachment-full size-full" alt=""
+            style="max-width: 100%; height: auto;"
+            sizes="(max-width: 258px) 100vw, 258px">
+    </section>
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+    
+</aside>
+            </div>
+        </div>
+
+        <footer id="site-footer" class="site-footer" role="contentinfo">
+    <div class="max-width">
+    </div>
+    <div class="footer">
+        <div id="footercontent">
+            © 艾逗笔 2021 All rights reserved.<br/>
+            Built with Hugo Theme <a href="https://github.com/idoubi/hugo-theme-period" target="_blank">Period</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8351b6d4626d5881d439ea1f6184baa";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+    </div>
+    
+</body>
+
+</html>

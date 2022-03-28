@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ajax on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/ajax/</link>
+    <description>Recent content in ajax on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Fri, 17 Oct 2014 11:15:17 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/ajax/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ajax在新闻资讯类产品中的应用</title>
+      <link>https://idoubi.cc/legacy/ajax%E5%9C%A8%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF%E7%B1%BB%E4%BA%A7%E5%93%81%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Fri, 17 Oct 2014 11:15:17 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/ajax%E5%9C%A8%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF%E7%B1%BB%E4%BA%A7%E5%93%81%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/</guid>
+      <description>最近一直在做一款叫做“高校头条”的新闻资讯类产品，初衷是想通过数据抓取的技术把大学生最常浏览的新闻资讯类信息汇集到一起，通过一定的算法分析，根据用户的兴趣给他们推荐相应的内容。微信端产品已经上线一段时间了，目前在捣鼓安卓端需要怎么做，希望等安卓端做出来之后就开始推广给所有人用。
+所谓的微信端“高校头条”，其实就是在微信中链接了一个 wap 站点，使用 bootstrap 做了一个移动端适配的前台，使用 weiphp 作为后台，通过在后台设置抓取地址和一定的抓取规则，使用 curl 技术抓取各个微信订阅号里面的内容，再把抓取到的内容存储到数据库，在 wap 站点直接输出数据库里面的新闻资讯信息，在微信端通过关键词查询获取相应的内容。整个产品的实现原理就是这样子，今天想要总结的一个技术是：通过 ajax 调用数据，在 wap 站点输出新闻列表。
+AJAX 即“Asynchronous Javascript And XML[1] ”（异步 JavaScript 和 XML[1] ），是指一种创建交互式网页应用的网页开发技术。百度百科上是这么解释的。ajax 也是业内评价非常高的一种技术，一般功能较为完善的网站都或多或少使用了 ajax。ajax 最主要的特点是异步，使用异步最主要的作用是提高用户体验，也许我们会经常遇到，在点击某一个网站链接的时候，浏览器跳转半天都不能把我们想看的内容呈现出来，这时候网页浏览者的耐心肯定会受到很大的挑战，也就是所谓的用户体验极差。而使用 ajax 获取数据，一般网页是不会出现这种情况的，ajax 可以设置局部刷新，我们只要把需要通过点击链接而切换内容的区域设置成 ajax 获取数据就行了，这样用户点击某个链接的时候，网站是不会整体跳转的，也不会出现一片空白的情况，用户看到所需内容所等待的时间也非常少，很明显的提高了用户体验。
+不知不觉废话又说了一大堆。现在要开始进入正题了。
+先来看一下这两张图片。这是”高校头条“wap 网站上的新闻展示页面，导航栏我们分了”本校“、”考研“、”就业“、”创业“几个栏目。很明显我们希望用户点击每个栏目之后，下面会展示对应栏目下的新闻列表。在没学会 ajax 之前我是怎么做的呢？
+&amp;lt;nav class=&amp;#34;table-responsive&amp;#34;&amp;gt; &amp;lt;table class=&amp;#34;table&amp;#34;&amp;gt; &amp;lt;tr&amp;gt;	&amp;lt;td&amp;gt;&amp;lt;if condition=&amp;#34;$column_id eq &amp;#39;&amp;#39;&amp;#34;&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;school_id&amp;#39;=&amp;gt;$school_id))}&amp;#34; class=&amp;#34;active&amp;#34;&amp;gt;&amp;lt;else/&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;school_id&amp;#39;=&amp;gt;$school_id))}&amp;#34;&amp;gt;&amp;lt;/if&amp;gt;本校&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt; &amp;lt;volist name=&amp;#34;columnList&amp;#34; id=&amp;#34;vo&amp;#34;&amp;gt; &amp;lt;td&amp;gt;&amp;lt;if condition=&amp;#34;$column_id eq $vo[&amp;#39;id&amp;#39;]&amp;#34;&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;column_id&amp;#39;=&amp;gt;$vo[&amp;#39;id&amp;#39;]))}&amp;#34; class=&amp;#34;active&amp;#34;&amp;gt;&amp;lt;else/&amp;gt;&amp;lt;a href=&amp;#34;{:U(&amp;#39;index&amp;#39;,array(&amp;#39;column_id&amp;#39;=&amp;gt;$vo[&amp;#39;id&amp;#39;]))}&amp;#34;&amp;gt;&amp;lt;/if&amp;gt;{$vo.column_name}&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt; &amp;lt;/volist&amp;gt; &amp;lt;/tr&amp;gt; &amp;lt;/table&amp;gt; &amp;lt;/nav&amp;gt; 就像上面代码看到的，我是对每个栏目设置一个&amp;lt;a&amp;gt;标签，然后点击每个栏目之后跳转到 index 方法，传递参数 school_id 或者 column_id 进行处理，然后在 index 方法中根据传递过来的参数去数据库中调用对应栏目下面的新闻，再把调用到的数据输出到前台页面显示。使用这种方法，用户每一次点击栏目时，都会跳转到 index 方法对应的模板 html，所以会在浏览器上看到一个圆圈来回转动（微信浏览器最新版是一条绿色的直线往右挺进）。如果网速慢一点的话，这样的浏览新闻的方式肯定会让用户奔溃，跳转半天看不到所需要的页面是很正常的事情。</description>
+    </item>
+    
+  </channel>
+</rss>

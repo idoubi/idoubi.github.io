@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vue on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/vue/</link>
+    <description>Recent content in vue on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Tue, 09 Jan 2018 16:50:37 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/vue/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于go&#43;vue实现的golang每日新闻数据浏览与检索平台</title>
+      <link>https://idoubi.cc/legacy/%E5%9F%BA%E4%BA%8Ego-vue%E5%AE%9E%E7%8E%B0%E7%9A%84golang%E6%AF%8F%E6%97%A5%E6%96%B0%E9%97%BB%E6%95%B0%E6%8D%AE%E6%B5%8F%E8%A7%88%E4%B8%8E%E6%A3%80%E7%B4%A2%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Tue, 09 Jan 2018 16:50:37 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/legacy/%E5%9F%BA%E4%BA%8Ego-vue%E5%AE%9E%E7%8E%B0%E7%9A%84golang%E6%AF%8F%E6%97%A5%E6%96%B0%E9%97%BB%E6%95%B0%E6%8D%AE%E6%B5%8F%E8%A7%88%E4%B8%8E%E6%A3%80%E7%B4%A2%E5%B9%B3%E5%8F%B0/</guid>
+      <description>介绍 gonews是基于go+vue实现的golang每日新闻浏览与检索平台
+ 项目地址： Github 线上Demo：GoNews 数据来源：GoCN每日新闻  项目截图 部署  获取新闻数据  git clone https://github.com/gocn/news /data/news  获取源码  go get -u github.com/mikemintang/gonews  解析数据  nohup gonews -d /data/news &amp;gt; /data/log/gonews.log 2&amp;gt;&amp;amp;1  启动Api  nohup gonews -a api -p 8017 &amp;gt; /data/log/gonews.log 2&amp;gt;&amp;amp;1 &amp;amp;  前端部署  cd $GOPATH/src/github.com/mikemintang/gonews/web npm install npm run build  Nginx配置  server { listen 80; server_name gonews.idoubi.cc; index index.html index.htm index.php; root /data/go/src/mikemintang/gonews/web; location /api { rewrite ^.</description>
+    </item>
+    
+  </channel>
+</rss>

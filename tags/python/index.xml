@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on 艾逗笔</title>
+    <link>https://idoubi.cc/tags/python/</link>
+    <description>Recent content in python on 艾逗笔</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>© 艾逗笔 2021 All rights reserved.</copyright>
+    <lastBuildDate>Fri, 28 May 2021 10:29:34 +0000</lastBuildDate><atom:link href="https://idoubi.cc/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 Linux 系统通过源码安装 Python3</title>
+      <link>https://idoubi.cc/notes/install-python-in-linux/</link>
+      <pubDate>Fri, 28 May 2021 10:29:34 +0000</pubDate>
+      
+      <guid>https://idoubi.cc/notes/install-python-in-linux/</guid>
+      <description> 打开 python 源码下载页  https://www.python.org/ftp/python/
+下载源码  wget https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz 解压缩  tar -zxvf Python-3.9.5.tgz 安装  cd Python-3.9.5 ./configure --prefix=/usr/local/python3 make &amp;amp;&amp;amp; make install 设置环境变量  export PATH=$PATH:/usr/local/python3/bin 备份原来版本  python --version pip --version which python which pip mv /usr/bin/python /usr/bin/python2.7.5 mv /usr/bin/pip /usr/bin/pip2.7.5 使用新版本  ln -s /usr/local/python3/bin/python3 /usr/bin/python ln -s /usr/local/python3/bin/pip3 /usr/bin/pip 查看新版本  python --version pip --version </description>
+    </item>
+    
+  </channel>
+</rss>
